@@ -1,0 +1,6 @@
+February 21, 2014
+Start: 12:56 PM
+End: 1:21 PM
+Nathan, Mike, and Lucas
+
+Allocated work: Mike will do the IMS class, Nathan will start the DatabaseController class, Lucas will mock up a sample database for us to work with. Terry can write the controller interface.
