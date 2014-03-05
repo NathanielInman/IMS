@@ -1,23 +1,26 @@
 package inventorymanagementsystem;
 
+
 /**
  *
  * @author Mike
- * This was all done with NetBeans' Java GUI editor.
+ * Most of this was done with NetBeans' Java GUI editor.
  * Icons used are from https://www.iconfinder.com/search/?q=iconset:linecons-free-vector-icons-pack
  * We'll need to include credit as specified by the Creative Commons license on that page if we use
  *  these in the final product.
  * The search icon was resized to 16x16 pixels.
  */
 public class IMSGUI extends javax.swing.JFrame {
-
     /**
      * Creates new form IMSGUI
      */
     public IMSGUI() {
         initComponents();
     }
-
+    public void setController(IMSController newController){
+        controllerDisplay.removeAll();
+        controllerDisplay.add(newController);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -28,6 +31,7 @@ public class IMSGUI extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
+        controllerDisplay = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
@@ -47,11 +51,29 @@ public class IMSGUI extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("...This pane will be populated by the other controller classes...");
-        jScrollPane1.setViewportView(jLabel4);
+        jLabel4.setText("This area should be populated with an IMSController.");
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Mike\\Pictures\\kerleycc.png")); // NOI18N
+        javax.swing.GroupLayout controllerDisplayLayout = new javax.swing.GroupLayout(controllerDisplay);
+        controllerDisplay.setLayout(controllerDisplayLayout);
+        controllerDisplayLayout.setHorizontalGroup(
+            controllerDisplayLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(controllerDisplayLayout.createSequentialGroup()
+                .addGap(162, 162, 162)
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(223, Short.MAX_VALUE))
+        );
+        controllerDisplayLayout.setVerticalGroup(
+            controllerDisplayLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(controllerDisplayLayout.createSequentialGroup()
+                .addGap(197, 197, 197)
+                .addComponent(jLabel4)
+                .addContainerGap(254, Short.MAX_VALUE))
+        );
+
+        jScrollPane1.setViewportView(controllerDisplay);
+        controllerDisplay.getAccessibleContext().setAccessibleName("");
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/inventorymanagementsystem/Images/kerleycc.png"))); // NOI18N
 
         jTextField1.setText("Search");
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
@@ -60,7 +82,7 @@ public class IMSGUI extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Mike\\Downloads\\PolarisUI-Free\\Polaris UI Free\\Linecons\\PNG\\16\\search.png")); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/inventorymanagementsystem/Images/search.png"))); // NOI18N
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -68,7 +90,7 @@ public class IMSGUI extends javax.swing.JFrame {
         });
 
         jLabel2.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\Mike\\Downloads\\PolarisUI-Free\\Polaris UI Free\\Linecons\\PNG\\Original Size\\settings.png")); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/inventorymanagementsystem/Images/settings.png"))); // NOI18N
         jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jLabel2MouseEntered(evt);
@@ -268,6 +290,7 @@ public class IMSGUI extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel controllerDisplay;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
