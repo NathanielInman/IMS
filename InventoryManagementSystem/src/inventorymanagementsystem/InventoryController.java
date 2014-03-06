@@ -4,6 +4,9 @@
  */
 package inventorymanagementsystem;
 
+import java.awt.Dimension;
+import javax.swing.JPanel;
+
 /**
  *
  * @author Mike
@@ -11,8 +14,15 @@ package inventorymanagementsystem;
 public class InventoryController extends IMSController{
     public InventoryController(){
         // Just an example...
-        addRow();
-        addRow();
-        addRow();
+        for(int i=0; i<2; i++){
+            showInventory();
+        }
+    }
+    private void showInventory(){
+        JPanel row = addRow();
+        JPanel firstThing = this.addTextField("test text");
+        row.add(firstThing);
+        row.add(addTextField("Second thing lalala test text #2"));
+        this.add(row);
     }
 }

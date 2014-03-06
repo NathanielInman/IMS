@@ -1,5 +1,7 @@
 package inventorymanagementsystem;
 
+import javax.swing.BoxLayout;
+
 
 /**
  *
@@ -18,8 +20,12 @@ public class IMSGUI extends javax.swing.JFrame {
         initComponents();
     }
     public void setController(IMSController newController){
+        controllerDisplay.setLayout(new BoxLayout(controllerDisplay,BoxLayout.X_AXIS));
         controllerDisplay.removeAll();
+        newController.setAlignmentY(0);
         controllerDisplay.add(newController);
+        newController.setSize(controllerDisplay.getSize());
+        newController.updatePanel();
     }
     /**
      * This method is called from within the constructor to initialize the form.
