@@ -1,6 +1,29 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <Form version="1.3" maxVersion="1.8" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+  <NonVisualComponents>
+    <Container class="javax.swing.JPopupMenu" name="gearMenu">
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
+        <Property name="useNullLayout" type="boolean" value="true"/>
+      </Layout>
+    </Container>
+    <Component class="javax.swing.JMenuItem" name="gearMenuLog">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Log in/out"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JMenuItem" name="gearMenuPH0">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="I am a placeholder."/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JMenuItem" name="gearMenuPH1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Me too!"/>
+      </Properties>
+    </Component>
+  </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
   </Properties>
@@ -148,6 +171,7 @@
         </Property>
       </Properties>
       <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabel2MouseClicked"/>
         <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabel2MouseEntered"/>
       </Events>
     </Component>

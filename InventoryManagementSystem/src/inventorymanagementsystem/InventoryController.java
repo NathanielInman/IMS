@@ -12,6 +12,7 @@ import javax.swing.JPanel;
  * @author Mike
  */
 public class InventoryController extends IMSController{
+    public static final int[] ROW_CODES = {IMSController.CODE_STRING, IMSController.CODE_NUMBER};
     public InventoryController(){
         // Just an example...
         for(int i=0; i<2; i++){

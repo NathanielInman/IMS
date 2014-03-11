@@ -36,6 +36,10 @@ public class IMSGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        gearMenu = new javax.swing.JPopupMenu();
+        gearMenuLog = new javax.swing.JMenuItem();
+        gearMenuPH0 = new javax.swing.JMenuItem();
+        gearMenuPH1 = new javax.swing.JMenuItem();
         jScrollPane1 = new javax.swing.JScrollPane();
         controllerDisplay = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
@@ -54,6 +58,12 @@ public class IMSGUI extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         jList3 = new javax.swing.JList();
+
+        gearMenuLog.setText("Log in/out");
+
+        gearMenuPH0.setText("I am a placeholder.");
+
+        gearMenuPH1.setText("Me too!");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -98,6 +108,9 @@ public class IMSGUI extends javax.swing.JFrame {
         jLabel2.setBackground(new java.awt.Color(255, 255, 255));
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/inventorymanagementsystem/Images/settings.png"))); // NOI18N
         jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel2MouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jLabel2MouseEntered(evt);
             }
@@ -254,6 +267,14 @@ public class IMSGUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jLabel2MouseEntered
 
+    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
+        // This makes a menu appear when the gear icon is clicked.
+        gearMenu.show(evt.getComponent(),evt.getX(), evt.getY());
+        gearMenu.add(gearMenuLog);
+        gearMenu.add(gearMenuPH0);
+        gearMenu.add(gearMenuPH1);
+    }//GEN-LAST:event_jLabel2MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -297,6 +318,10 @@ public class IMSGUI extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel controllerDisplay;
+    private javax.swing.JPopupMenu gearMenu;
+    private javax.swing.JMenuItem gearMenuLog;
+    private javax.swing.JMenuItem gearMenuPH0;
+    private javax.swing.JMenuItem gearMenuPH1;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

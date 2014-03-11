@@ -21,6 +21,8 @@ import javax.swing.border.Border;
  */
 public class IMSController extends JPanel{
     private static int MAXIMUM_ROW_HEIGHT = 50;
+    protected static int CODE_NUMBER = 0;
+    protected static int CODE_STRING = 1;
     private static Border fieldBorder = BorderFactory.createBevelBorder(BevelBorder.RAISED);
     public IMSController(){
         super();
