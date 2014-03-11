@@ -18,14 +18,12 @@ public class IMSGUI extends javax.swing.JFrame {
      */
     public IMSGUI() {
         initComponents();
+        jScrollPane1.getVerticalScrollBar().setUnitIncrement(16);
     }
     public void setController(IMSController newController){
         controllerDisplay.setLayout(new BoxLayout(controllerDisplay,BoxLayout.X_AXIS));
         controllerDisplay.removeAll();
-        newController.setAlignmentY(0);
         controllerDisplay.add(newController);
-        newController.setSize(controllerDisplay.getSize());
-        newController.updatePanel();
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -310,7 +308,6 @@ public class IMSGUI extends javax.swing.JFrame {
          * Create and display the form
          */
         java.awt.EventQueue.invokeLater(new Runnable() {
-
             public void run() {
                 new IMSGUI().setVisible(true);
             }

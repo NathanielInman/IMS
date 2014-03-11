@@ -4,7 +4,8 @@
  */
 package inventorymanagementsystem;
 
-import java.awt.Dimension;
+import java.util.ArrayList;
+import java.util.Arrays;
 import javax.swing.JPanel;
 
 /**
@@ -15,15 +16,25 @@ public class InventoryController extends IMSController{
     public static final int[] ROW_CODES = {IMSController.CODE_STRING, IMSController.CODE_NUMBER};
     public InventoryController(){
         // Just an example...
-        for(int i=0; i<2; i++){
-            showInventory();
+        for(int i=0; i<20; i++){
+            rows.add(new ArrayList<>(Arrays.asList("TestText","100")));
+            rows.add(new ArrayList<>(Arrays.asList("Lalala","42")));
+            rows.add(new ArrayList<>(Arrays.asList("Seven","7")));
+            rows.add(new ArrayList<>(Arrays.asList("Eighty-five","85")));
         }
+        this.sortRowsBy(1);
+        showInventory();
+        showInventory();
+        showInventory();
     }
     private void showInventory(){
-        JPanel row = addRow();
-        JPanel firstThing = this.addTextField("test text");
-        row.add(firstThing);
-        row.add(addTextField("Second thing lalala test text #2"));
-        this.add(row);
+        clearInventory();
+        int j;
+        for(int i=0; i<rows.size(); i++){
+            for(j=0; j<rows.get(i).size(); j++){
+                addTextField(rows.get(i).get(j), rowConstraint(i, j));
+            }
+        }
+        this.add(new JPanel(),endConstraint());
     }
 }
