@@ -24,9 +24,18 @@ public class DatabaseController {
            sql = "SELECT * FROM Inventory";
            ResultSet rs = stmt.executeQuery(sql);
            while(rs.next()){
-               int id= rs.getInt("NUMBER");
+               int id= rs.getInt("ID");
                String name=rs.getString("NAME");
-               System.out.println(id+":"+name);
+               Long price=rs.getLong("PRICE");
+               Long wholesale=rs.getLong("WHOLESALE");
+               String categories=rs.getString("CATEGORIES");
+               int vendor=rs.getInt("VENDORID");
+               int royalty=rs.getInt("ROYALTYID");
+               String description=rs.getString("DESCRIPTION");
+               //image = rs.getBlob("PICTURE");
+               int stockpreferred=rs.getInt("STOCKPREFERRED");
+               int stockcurrent=rs.getInt("STOCKCURRENT");
+               System.out.println(id+":"+name+":"+price+":"+wholesale+":"+categories+":"+vendor+":"+royalty+":"+description+":"+stockpreferred+":"+stockcurrent);
            } //end while
            rs.close();
            stmt.close();
