@@ -20,25 +20,53 @@ import javax.swing.border.Border;
  * 
  */
 public class IMSController extends JPanel{
+    // The height of each row, in pixels
     private static int MAXIMUM_ROW_HEIGHT = 50;
+    // These are internal codes for all of the controllers so that they know
+    // what kind of data they're handling in each column
     protected static int CODE_NUMBER = 0;
     protected static int CODE_STRING = 1;
     private static Border fieldBorder = BorderFactory.createBevelBorder(BevelBorder.RAISED);
+    // Each row is a string-based ArrayList, so the rows object is an ArrayList
+    // based on string-based ArrayLists
     protected ArrayList<ArrayList<String>> rows = new ArrayList<>();
+    // Each subclass will have their own row code configuration
     public static final int[] ROW_CODES = {};
     protected GridBagLayout displayLayout = new GridBagLayout();
     public IMSController(){
         super();
         this.setLayout(displayLayout);
     }
+    /**
+     * This method simply removes all display objects.
+     */
     protected void clearInventory(){
         this.removeAll();
     }
+    /**
+     * This creates a basic component building block for a single cell.
+     * 
+     * Other methods may use this as a starting point before adding text or
+     * pictures and the like.
+     * 
+     * @return JPanel   The newly created display cell is returned.
+     */
     protected JPanel newComponent(){
         JPanel comp = new JPanel();
         comp.setPreferredSize(new Dimension(this.getWidth(),MAXIMUM_ROW_HEIGHT));
         return comp;
     }
+    /**
+     * This function returns the GridBagConstraints appropriate for the row
+     * number and data type of a cell.
+     * 
+     * GridBagConstraints are sort of like glue that dictate spacing in the
+     * GridBagLayout.
+     * 
+     * @param row                   The row of the cell in question.
+     * @param field                 The cell's IMSController data type.
+     * @return GridBagConstraints   The newly created GridBagConstraints.
+     */
     protected GridBagConstraints rowConstraint(int row, int field){
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.HORIZONTAL;
@@ -47,6 +75,15 @@ public class IMSController extends JPanel{
         c.gridy = row;
         return c;
     }
+    /**
+     * This function returns the last GridBagConstraints, which differs slightly
+     * from the others.
+     * 
+     * Without using a special one here to fill space, the existing rows stretch
+     * to the bottom if there aren't enough to fill the pane.
+     * 
+     * @return GridBagConstraints
+     */
     protected GridBagConstraints endConstraint(){
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.BOTH;
@@ -56,12 +93,29 @@ public class IMSController extends JPanel{
         c.gridy = rows.size();
         return c;
     }
+    /**
+     * This creates a text cell.
+     * 
+     * It uses the newComponent function as a base.
+     * 
+     * @param text  The text to appear in the cell.
+     * @param c     The GridBagConstraints to position it properly.
+     */
     protected void addTextField(String text, GridBagConstraints c){
         JPanel textField = newComponent();
         textField.add(new JLabel(text));
         textField.setBorder(fieldBorder);
         this.add(textField, c);
     }
+    /**
+     * This returns the IMSController data code of a given column.
+     * 
+     * It's called ROW_CODES because it's all the codes in a single row. In
+     * hindsight, that probably doesn't make as much sense as COLUMN_ROWS.
+     * 
+     * @param field     The column index to check.
+     * @return int      The data type of the column.
+     */
     private int getRowCode(int field){
         if(field<0 || field>=ROW_CODES.length){
             // ERROR!
@@ -69,6 +123,13 @@ public class IMSController extends JPanel{
         }
         return ROW_CODES[field];
     }
+    /**
+     * This sorts the rows array based on a particular column.
+     * 
+     * We used Bubble Sort.
+     * 
+     * @param field     The column index to sort on.
+     */
     protected void sortRowsBy(int field){
         int j;
         int comparison=0;

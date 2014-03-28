@@ -24,9 +24,14 @@ public class InventoryController extends IMSController{
         }
         this.sortRowsBy(1);
         showInventory();
-        showInventory();
-        showInventory();
     }
+    /**
+     * This function displays the rows of data.
+     * 
+     * It uses the IMSController's functionality. Instead of adding all text
+     * fields, we should have it check the ROW_CODES to determine what kind
+     * of data to add.
+     */
     private void showInventory(){
         clearInventory();
         int j;
