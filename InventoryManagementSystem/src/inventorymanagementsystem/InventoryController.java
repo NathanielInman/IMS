@@ -13,17 +13,12 @@ import javax.swing.JPanel;
  * @author Mike
  */
 public class InventoryController extends IMSController{
-    public static final int[] ROW_CODES = {IMSController.CODE_STRING, IMSController.CODE_NUMBER};
     public InventoryController(){
         // Just an example...
-        for(int i=0; i<20; i++){
-            rows.add(new ArrayList<>(Arrays.asList("TestText","100")));
-            rows.add(new ArrayList<>(Arrays.asList("Lalala","42")));
-            rows.add(new ArrayList<>(Arrays.asList("Seven","7")));
-            rows.add(new ArrayList<>(Arrays.asList("Eighty-five","85")));
+        for(int i=0; i<100; i++){
+            rows.add(new ArrayList<>(Arrays.asList("Text"+(99-i),String.valueOf(i))));
         }
         this.sortRowsBy(1);
-        showInventory();
     }
     /**
      * This function displays the rows of data.
@@ -32,7 +27,8 @@ public class InventoryController extends IMSController{
      * fields, we should have it check the ROW_CODES to determine what kind
      * of data to add.
      */
-    private void showInventory(){
+    @Override
+    public void showInventory(){
         clearInventory();
         int j;
         for(int i=0; i<rows.size(); i++){
@@ -41,5 +37,16 @@ public class InventoryController extends IMSController{
             }
         }
         this.add(new JPanel(),endConstraint());
+        this.validate();
+    }
+    @Override
+    protected int[] getRowCodes(){
+        int[] rowCodes = {IMSController.CODE_STRING, IMSController.CODE_NUMBER};
+        return rowCodes;
+    }
+    @Override
+    protected String[] getColumnNames(){
+        String[] columnNames = {"Name","Number"};
+        return columnNames;
     }
 }

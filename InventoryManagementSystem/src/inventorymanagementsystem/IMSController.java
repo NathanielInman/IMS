@@ -6,12 +6,13 @@
 package inventorymanagementsystem;
 
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
-import javax.swing.BorderFactory;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
 
@@ -19,7 +20,7 @@ import javax.swing.border.Border;
  *
  * 
  */
-public class IMSController extends JPanel{
+public class IMSController extends JPanel implements MouseListener{
     // The height of each row, in pixels
     private static int MAXIMUM_ROW_HEIGHT = 50;
     // These are internal codes for all of the controllers so that they know
@@ -27,15 +28,115 @@ public class IMSController extends JPanel{
     protected static int CODE_NUMBER = 0;
     protected static int CODE_STRING = 1;
     private static Border fieldBorder = BorderFactory.createBevelBorder(BevelBorder.RAISED);
+    private static Border selectedBorder = BorderFactory.createBevelBorder(BevelBorder.LOWERED);
     // Each row is a string-based ArrayList, so the rows object is an ArrayList
     // based on string-based ArrayLists
     protected ArrayList<ArrayList<String>> rows = new ArrayList<>();
-    // Each subclass will have their own row code configuration
-    public static final int[] ROW_CODES = {};
     protected GridBagLayout displayLayout = new GridBagLayout();
+    protected static JPopupMenu itemMenu = new JPopupMenu();
+    protected static JMenuItem sortItem = new JMenuItem();
+    protected static JMenuItem editItem = new JMenuItem();
+    private static int activeColumn = -1;
+    private static int activeRow = -1;
     public IMSController(){
         super();
+        sortItem.setText("Sort by this column");
+        sortItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                sortItemActionPerformed(e);
+            }
+        });
+        editItem.setText("Edit value");
+        editItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                editItemActionPerformed(e);
+            }
+        });
+        itemMenu.add(sortItem);
+        itemMenu.add(editItem);
         this.setLayout(displayLayout);
+        this.addMouseListener(this);
+    }
+    protected int[] getRowCodes(){
+        int[] rowCodes = {};
+        return rowCodes;
+    }
+    protected String[] getColumnNames(){
+        String[] columnNames = {};
+        return columnNames;
+    }
+    public void editItemActionPerformed(java.awt.event.ActionEvent e){
+        String oldValue = rows.get(activeRow).get(activeColumn);
+        String s = (String)JOptionPane.showInputDialog(this.getRootPane(),"New value:","Edit",JOptionPane.PLAIN_MESSAGE,null,null,oldValue);
+        if ((s != null) && (s.length() > 0)) {
+            // This does not actually change the database yet..!!
+            // It also does not validate data types.
+            rows.get(activeRow).set(activeColumn,s);
+            showInventory();
+            return;
+        }
+    }
+    public void sortItemActionPerformed(java.awt.event.ActionEvent e){
+        this.sortRowsBy(activeColumn);
+        this.showInventory();
+    }
+    public void showInventory(){
+        // This exists solely to be overwritten.
+    }
+    public void resetActivePosition(){
+        activeRow = -1;
+        activeColumn = -1;
+    }
+    @Override
+    public void mouseClicked(MouseEvent e){
+        if(SwingUtilities.isRightMouseButton(e)){
+            if(hasPermissionToEdit()){
+                editItem.setEnabled(true);
+            }else{
+                editItem.setEnabled(false);
+            }
+            resetActivePosition();
+            // Row number
+            int j = e.getY()/MAXIMUM_ROW_HEIGHT;
+            // Don't show the menu if you click below all the rows
+            if(j<rows.size()){
+                // Column number
+                int i = 0;
+                int totalWidth = displayLayout.getLayoutDimensions()[0][i];
+                while(totalWidth <= e.getX()){
+                    i += 1;
+                    totalWidth += displayLayout.getLayoutDimensions()[0][i];
+                }
+                activeRow = j;
+                activeColumn = i;
+                sortItem.setText("Sort by "+getColumnName(i));
+                itemMenu.show(e.getComponent(),e.getX(), e.getY());
+            }
+        }
+    }
+    /** This function returns the name of a column.
+     * 
+     * @param index     The index of the column (left is 0)
+     * @return String   The name of the column
+     */
+    public String getColumnName(int index){
+        if(index<0 || index>=this.getColumnNames().length){
+            // ERROR!
+            return "ERROR";
+        }else{
+            return this.getColumnNames()[index];
+        }
+    }
+    /**
+     * This method determines whether the current user can edit data.
+     * 
+     * Right now, it's just a placeholder function that doesn't actually check
+     * anything.
+     * 
+     * @return boolean  True if you can edit, false if not.
+     */
+    private boolean hasPermissionToEdit(){
+        return true;
     }
     /**
      * This method simply removes all display objects.
@@ -53,7 +154,8 @@ public class IMSController extends JPanel{
      */
     protected JPanel newComponent(){
         JPanel comp = new JPanel();
-        comp.setPreferredSize(new Dimension(this.getWidth(),MAXIMUM_ROW_HEIGHT));
+        //comp.setPreferredSize(new Dimension(this.getWidth(),MAXIMUM_ROW_HEIGHT));
+        comp.setPreferredSize(new Dimension(comp.getPreferredSize().width,MAXIMUM_ROW_HEIGHT));
         return comp;
     }
     /**
@@ -117,11 +219,11 @@ public class IMSController extends JPanel{
      * @return int      The data type of the column.
      */
     private int getRowCode(int field){
-        if(field<0 || field>=ROW_CODES.length){
+        if(field<0 || field>=this.getRowCodes().length){
             // ERROR!
             return 0;
         }
-        return ROW_CODES[field];
+        return this.getRowCodes()[field];
     }
     /**
      * This sorts the rows array based on a particular column.
@@ -156,5 +258,25 @@ public class IMSController extends JPanel{
             }
         }
 
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        //throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        //throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        //throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+        //throw new UnsupportedOperationException("Not supported yet.");
     }
 }

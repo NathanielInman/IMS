@@ -33,6 +33,7 @@ public class IMSGUI extends javax.swing.JFrame {
         controllerDisplay.setLayout(new BoxLayout(controllerDisplay,BoxLayout.X_AXIS));
         controllerDisplay.removeAll();
         controllerDisplay.add(newController);
+        newController.showInventory();
     }
     /**
      * This method is called from within the constructor to initialize the form.
