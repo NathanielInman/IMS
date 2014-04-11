@@ -16,8 +16,9 @@ import javax.swing.JPanel;
 public class InventoryController extends IMSController{
     public InventoryController(){
         DatabaseController db = new DatabaseController();
-        ArrayList categoryList = db.getCategory("Trophy");
+        ArrayList categoryList = db.getInventoryByCategory("Trophy");
         Iterator itr = categoryList.iterator();
+        db.getCategoryList();
         while(itr.hasNext()){       
             rows.add(new ArrayList<>(Arrays.asList(itr.next().toString(),itr.next().toString())));
         }
