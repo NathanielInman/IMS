@@ -6,19 +6,23 @@ package inventorymanagementsystem;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import javax.swing.JPanel;
 
 /**
  *
- * @author Mike
+ * @author Mike and Nate
  */
 public class InventoryController extends IMSController{
     public InventoryController(){
-        // Just an example...
-        for(int i=0; i<100; i++){
-            rows.add(new ArrayList<>(Arrays.asList("Text"+(99-i),String.valueOf(i))));
+        DatabaseController db = new DatabaseController();
+        ArrayList categoryList = db.getCategory("Trophy");
+        Iterator itr = categoryList.iterator();
+        while(itr.hasNext()){       
+            rows.add(new ArrayList<>(Arrays.asList(itr.next().toString(),itr.next().toString())));
         }
-        this.sortRowsBy(1);
+        this.sortRowsBy(0);
+        showInventory();
     }
     /**
      * This function displays the rows of data.
