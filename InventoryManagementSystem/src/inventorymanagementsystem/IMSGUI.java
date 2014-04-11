@@ -18,12 +18,22 @@ public class IMSGUI extends javax.swing.JFrame {
      */
     public IMSGUI() {
         initComponents();
+        // Setting the scroll bar's unit increment makes for faster mouse wheel scrolling
         jScrollPane1.getVerticalScrollBar().setUnitIncrement(16);
     }
+    /**
+     * This method allows us to choose the controller to display.
+     * 
+     * It clears the controllerDisplay JPanel, makes sure it's using the
+     * correct layout, and then adds the controller to it.
+     * 
+     * @param newController The controller to display
+     */
     public void setController(IMSController newController){
         controllerDisplay.setLayout(new BoxLayout(controllerDisplay,BoxLayout.X_AXIS));
         controllerDisplay.removeAll();
         controllerDisplay.add(newController);
+        newController.showInventory();
     }
     /**
      * This method is called from within the constructor to initialize the form.

@@ -14,7 +14,6 @@ import javax.swing.JPanel;
  * @author Mike
  */
 public class InventoryController extends IMSController{
-    public static final int[] ROW_CODES = {IMSController.CODE_STRING, IMSController.CODE_NUMBER};
     public InventoryController(){
         DatabaseController db = new DatabaseController();
         ArrayList categoryList = db.getCategory("Trophy");
@@ -25,7 +24,15 @@ public class InventoryController extends IMSController{
         this.sortRowsBy(0);
         showInventory();
     }
-    private void showInventory(){
+    /**
+     * This function displays the rows of data.
+     * 
+     * It uses the IMSController's functionality. Instead of adding all text
+     * fields, we should have it check the ROW_CODES to determine what kind
+     * of data to add.
+     */
+    @Override
+    public void showInventory(){
         clearInventory();
         int j;
         for(int i=0; i<rows.size(); i++){
@@ -34,5 +41,16 @@ public class InventoryController extends IMSController{
             }
         }
         this.add(new JPanel(),endConstraint());
+        this.validate();
+    }
+    @Override
+    protected int[] getRowCodes(){
+        int[] rowCodes = {IMSController.CODE_STRING, IMSController.CODE_NUMBER};
+        return rowCodes;
+    }
+    @Override
+    protected String[] getColumnNames(){
+        String[] columnNames = {"Name","Number"};
+        return columnNames;
     }
 }
