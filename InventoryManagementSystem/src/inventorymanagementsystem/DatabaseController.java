@@ -14,7 +14,7 @@ public class DatabaseController {
    static final String PASS = "KCC";
    DatabaseController(){}
    public ArrayList getCategory(String name){
-       
+        ArrayList returnResults = new ArrayList<>();
         Connection conn = null;
         Statement stmt = null;
         try{
@@ -27,10 +27,8 @@ public class DatabaseController {
            sql = "SELECT * FROM Inventory WHERE category='"+name+"'";
            ResultSet rs = stmt.executeQuery(sql);
            while(rs.next()){
-               int id= rs.getInt("id");
-               name=rs.getString("name");
-               System.out.println(id+":"+name);
-               new ArrayList<>(Arrays.asList("TestText","100")
+               returnResults.add(rs.getInt("id"));
+               returnResults.add(rs.getString("name"));
            } //end while
            rs.close();
            stmt.close();
@@ -47,6 +45,6 @@ public class DatabaseController {
             } //end try
        } //end try
        System.out.println("Finished.");
-       return null;
+       return returnResults;
    }
 } //end class

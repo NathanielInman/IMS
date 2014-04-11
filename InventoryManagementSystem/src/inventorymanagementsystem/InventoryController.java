@@ -6,6 +6,7 @@ package inventorymanagementsystem;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import javax.swing.JPanel;
 
 /**
@@ -15,16 +16,13 @@ import javax.swing.JPanel;
 public class InventoryController extends IMSController{
     public static final int[] ROW_CODES = {IMSController.CODE_STRING, IMSController.CODE_NUMBER};
     public InventoryController(){
-        // Just an example...
-        for(int i=0; i<20; i++){
-            rows.add(new ArrayList<>(Arrays.asList("TestText","100")));
-            rows.add(new ArrayList<>(Arrays.asList("Lalala","42")));
-            rows.add(new ArrayList<>(Arrays.asList("Seven","7")));
-            rows.add(new ArrayList<>(Arrays.asList("Eighty-five","85")));
+        DatabaseController db = new DatabaseController();
+        ArrayList categoryList = db.getCategory("Trophy");
+        Iterator itr = categoryList.iterator();
+        while(itr.hasNext()){       
+            rows.add(new ArrayList<>(Arrays.asList(itr.next().toString(),itr.next().toString())));
         }
-        this.sortRowsBy(1);
-        //showInventory();
-        //showInventory();
+        this.sortRowsBy(0);
         showInventory();
     }
     private void showInventory(){
