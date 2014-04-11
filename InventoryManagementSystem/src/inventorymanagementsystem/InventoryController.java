@@ -23,8 +23,8 @@ public class InventoryController extends IMSController{
             rows.add(new ArrayList<>(Arrays.asList("Eighty-five","85")));
         }
         this.sortRowsBy(1);
-        showInventory();
-        showInventory();
+        //showInventory();
+        //showInventory();
         showInventory();
     }
     private void showInventory(){
