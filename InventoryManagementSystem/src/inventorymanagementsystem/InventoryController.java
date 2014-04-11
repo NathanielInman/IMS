@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 
 /**
  *
- * @author Mike
+ * @author Mike and Nate
  */
 public class InventoryController extends IMSController{
     public InventoryController(){
