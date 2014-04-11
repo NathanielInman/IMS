@@ -1,8 +1,8 @@
-Thu Apr 10 19:40:16 CDT 2014 : Apache Derby Network Server - 10.8.2.2 - (1181258) started and ready to accept connections on port 1527
+Thu Apr 10 20:00:27 CDT 2014 : Apache Derby Network Server - 10.8.2.2 - (1181258) started and ready to accept connections on port 1527
 ----------------------------------------------------------------
-Thu Apr 10 19:40:17 CDT 2014:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.8.2.2 - (1181258): instance a816c00e-0145-4e3a-54ce-00002eff8dcc 
-on database directory C:\Users\Nate\Documents\GitHub\IMS\InventoryManagementSystem\database\KerleyCopyCenter  with class loader sun.misc.Launcher$AppClassLoader@69365360 
+Thu Apr 10 20:00:27 CDT 2014:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.8.2.2 - (1181258): instance a816c00e-0145-4e4c-cd8c-00002eff8dcc 
+on database directory C:\Users\Nate\Documents\GitHub\IMS\InventoryManagementSystem\database\KCC  with class loader sun.misc.Launcher$AppClassLoader@26c94114 
 Loaded from file:/C:/Program%20Files/Java/jdk1.7.0_17/db/lib/derby.jar
 java.vendor=Oracle Corporation
 java.runtime.version=1.7.0_17-b02
@@ -10,16 +10,118 @@ user.dir=C:\Program Files\Java\jdk1.7.0_17\db
 derby.system.home=C:\Users\Nate\Documents\GitHub\IMS\InventoryManagementSystem\database
 Database Class Loader started - derby.database.classpath=''
 ----------------------------------------------------------------
-Thu Apr 10 19:40:18 CDT 2014:
-Shutting down instance a816c00e-0145-4e3a-54ce-00002eff8dcc on database directory C:\Users\Nate\Documents\GitHub\IMS\InventoryManagementSystem\database\KerleyCopyCenter with class loader sun.misc.Launcher$AppClassLoader@69365360 
-Thu Apr 10 19:40:19 CDT 2014 Thread[DRDAConnThread_4,5,main] (DATABASE = KerleyCopyCenter), (DRDAID = {2}), Database 'KerleyCopyCenter' shutdown.
+Thu Apr 10 20:00:29 CDT 2014:
+Shutting down instance a816c00e-0145-4e4c-cd8c-00002eff8dcc on database directory C:\Users\Nate\Documents\GitHub\IMS\InventoryManagementSystem\database\KCC with class loader sun.misc.Launcher$AppClassLoader@26c94114 
+Thu Apr 10 20:00:29 CDT 2014 Thread[DRDAConnThread_4,5,main] (DATABASE = KCC), (DRDAID = {2}), Database 'KCC' shutdown.
 ----------------------------------------------------------------
-Thu Apr 10 19:40:52 CDT 2014:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.8.2.2 - (1181258): instance 6c44409f-0145-4e3a-54ce-00002eff8dcc 
-on database directory C:\Users\Nate\Documents\GitHub\IMS\InventoryManagementSystem\database\KerleyCopyCenter  with class loader sun.misc.Launcher$AppClassLoader@69365360 
+Thu Apr 10 20:00:34 CDT 2014:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.8.2.2 - (1181258): instance 6c44409f-0145-4e4c-cd8c-00002eff8dcc 
+on database directory C:\Users\Nate\Documents\GitHub\IMS\InventoryManagementSystem\database\KCC  with class loader sun.misc.Launcher$AppClassLoader@26c94114 
 Loaded from file:/C:/Program%20Files/Java/jdk1.7.0_17/db/lib/derby.jar
 java.vendor=Oracle Corporation
 java.runtime.version=1.7.0_17-b02
 user.dir=C:\Program Files\Java\jdk1.7.0_17\db
 derby.system.home=C:\Users\Nate\Documents\GitHub\IMS\InventoryManagementSystem\database
 Database Class Loader started - derby.database.classpath=''
+Thu Apr 10 20:12:24 CDT 2014 Thread[DRDAConnThread_4,5,main] Cleanup action starting
+java.sql.SQLException: Database 'KerleyCopyCenter' not found.
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory40.getSQLException(Unknown Source)
+	at org.apache.derby.impl.jdbc.Util.newEmbedSQLException(Unknown Source)
+	at org.apache.derby.impl.jdbc.Util.newEmbedSQLException(Unknown Source)
+	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection.newSQLException(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection.handleDBNotFound(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection.<init>(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection30.<init>(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection40.<init>(Unknown Source)
+	at org.apache.derby.jdbc.Driver40.getNewEmbedConnection(Unknown Source)
+	at org.apache.derby.jdbc.InternalDriver.connect(Unknown Source)
+	at org.apache.derby.jdbc.EmbeddedDriver.connect(Unknown Source)
+	at org.apache.derby.impl.drda.Database.makeConnection(Unknown Source)
+	at org.apache.derby.impl.drda.DRDAConnThread.getConnFromDatabaseName(Unknown Source)
+	at org.apache.derby.impl.drda.DRDAConnThread.verifyUserIdPassword(Unknown Source)
+	at org.apache.derby.impl.drda.DRDAConnThread.parseSECCHK(Unknown Source)
+	at org.apache.derby.impl.drda.DRDAConnThread.parseDRDAConnection(Unknown Source)
+	at org.apache.derby.impl.drda.DRDAConnThread.processCommands(Unknown Source)
+	at org.apache.derby.impl.drda.DRDAConnThread.run(Unknown Source)
+Caused by: java.sql.SQLException: Database 'KerleyCopyCenter' not found.
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(Unknown Source)
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory40.wrapArgsForTransportAcrossDRDA(Unknown Source)
+	... 19 more
+============= begin nested exception, level (1) ===========
+java.sql.SQLException: Database 'KerleyCopyCenter' not found.
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(Unknown Source)
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory40.wrapArgsForTransportAcrossDRDA(Unknown Source)
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory40.getSQLException(Unknown Source)
+	at org.apache.derby.impl.jdbc.Util.newEmbedSQLException(Unknown Source)
+	at org.apache.derby.impl.jdbc.Util.newEmbedSQLException(Unknown Source)
+	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection.newSQLException(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection.handleDBNotFound(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection.<init>(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection30.<init>(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection40.<init>(Unknown Source)
+	at org.apache.derby.jdbc.Driver40.getNewEmbedConnection(Unknown Source)
+	at org.apache.derby.jdbc.InternalDriver.connect(Unknown Source)
+	at org.apache.derby.jdbc.EmbeddedDriver.connect(Unknown Source)
+	at org.apache.derby.impl.drda.Database.makeConnection(Unknown Source)
+	at org.apache.derby.impl.drda.DRDAConnThread.getConnFromDatabaseName(Unknown Source)
+	at org.apache.derby.impl.drda.DRDAConnThread.verifyUserIdPassword(Unknown Source)
+	at org.apache.derby.impl.drda.DRDAConnThread.parseSECCHK(Unknown Source)
+	at org.apache.derby.impl.drda.DRDAConnThread.parseDRDAConnection(Unknown Source)
+	at org.apache.derby.impl.drda.DRDAConnThread.processCommands(Unknown Source)
+	at org.apache.derby.impl.drda.DRDAConnThread.run(Unknown Source)
+============= end nested exception, level (1) ===========
+Cleanup action completed
+Thu Apr 10 20:12:24 CDT 2014 Thread[DRDAConnThread_4,5,main] (DATABASE = KerleyCopyCenter), (DRDAID = {4}), Database 'KerleyCopyCenter' not found.
+Thu Apr 10 20:12:37 CDT 2014 Thread[DRDAConnThread_4,5,main] (XID = 411), (SESSIONID = 2), (DATABASE = KCC), (DRDAID = {5}), Cleanup action starting
+java.sql.SQLNonTransientConnectionException: Connection authentication failure occurred.  Reason: Invalid authentication..
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory40.getSQLException(Unknown Source)
+	at org.apache.derby.impl.jdbc.Util.newEmbedSQLException(Unknown Source)
+	at org.apache.derby.impl.jdbc.Util.newEmbedSQLException(Unknown Source)
+	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection.newSQLException(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection.checkUserCredentials(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection.<init>(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection30.<init>(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection40.<init>(Unknown Source)
+	at org.apache.derby.jdbc.Driver40.getNewEmbedConnection(Unknown Source)
+	at org.apache.derby.jdbc.InternalDriver.connect(Unknown Source)
+	at org.apache.derby.jdbc.EmbeddedDriver.connect(Unknown Source)
+	at org.apache.derby.impl.drda.Database.makeConnection(Unknown Source)
+	at org.apache.derby.impl.drda.DRDAConnThread.getConnFromDatabaseName(Unknown Source)
+	at org.apache.derby.impl.drda.DRDAConnThread.verifyUserIdPassword(Unknown Source)
+	at org.apache.derby.impl.drda.DRDAConnThread.parseSECCHK(Unknown Source)
+	at org.apache.derby.impl.drda.DRDAConnThread.parseDRDAConnection(Unknown Source)
+	at org.apache.derby.impl.drda.DRDAConnThread.processCommands(Unknown Source)
+	at org.apache.derby.impl.drda.DRDAConnThread.run(Unknown Source)
+Caused by: java.sql.SQLException: Connection authentication failure occurred.  Reason: Invalid authentication..
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(Unknown Source)
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory40.wrapArgsForTransportAcrossDRDA(Unknown Source)
+	... 19 more
+============= begin nested exception, level (1) ===========
+java.sql.SQLException: Connection authentication failure occurred.  Reason: Invalid authentication..
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(Unknown Source)
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory40.wrapArgsForTransportAcrossDRDA(Unknown Source)
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory40.getSQLException(Unknown Source)
+	at org.apache.derby.impl.jdbc.Util.newEmbedSQLException(Unknown Source)
+	at org.apache.derby.impl.jdbc.Util.newEmbedSQLException(Unknown Source)
+	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection.newSQLException(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection.checkUserCredentials(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection.<init>(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection30.<init>(Unknown Source)
+	at org.apache.derby.impl.jdbc.EmbedConnection40.<init>(Unknown Source)
+	at org.apache.derby.jdbc.Driver40.getNewEmbedConnection(Unknown Source)
+	at org.apache.derby.jdbc.InternalDriver.connect(Unknown Source)
+	at org.apache.derby.jdbc.EmbeddedDriver.connect(Unknown Source)
+	at org.apache.derby.impl.drda.Database.makeConnection(Unknown Source)
+	at org.apache.derby.impl.drda.DRDAConnThread.getConnFromDatabaseName(Unknown Source)
+	at org.apache.derby.impl.drda.DRDAConnThread.verifyUserIdPassword(Unknown Source)
+	at org.apache.derby.impl.drda.DRDAConnThread.parseSECCHK(Unknown Source)
+	at org.apache.derby.impl.drda.DRDAConnThread.parseDRDAConnection(Unknown Source)
+	at org.apache.derby.impl.drda.DRDAConnThread.processCommands(Unknown Source)
+	at org.apache.derby.impl.drda.DRDAConnThread.run(Unknown Source)
+============= end nested exception, level (1) ===========
+Cleanup action completed
+Thu Apr 10 20:12:37 CDT 2014 Thread[DRDAConnThread_4,5,main] (DATABASE = KCC), (DRDAID = {5}), Connection authentication failure occurred.  Reason: Invalid authentication..

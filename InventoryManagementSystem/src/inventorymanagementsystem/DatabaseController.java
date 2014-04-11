@@ -9,8 +9,8 @@ import java.sql.*;
 public class DatabaseController {
    static final String JDBC_DRIVER = "org.apache.derby.jdbc.ClientDriver";
    static final String DB_URL = "jdbc:derby://localhost:1527/KCC"; //jdbc:derby://localhost:1527/KCC [KerleyCopyCenter on KERLEYCOPYCENTER]
-   static final String USER = "KerleyCopyCenter";
-   static final String PASS = "KerleyCopyCenter";
+   static final String USER = "KCC";
+   static final String PASS = "KCC";
    public static void main(String[] args){
        Connection conn = null;
        Statement stmt = null;
@@ -24,8 +24,8 @@ public class DatabaseController {
            sql = "SELECT * FROM Inventory";
            ResultSet rs = stmt.executeQuery(sql);
            while(rs.next()){
-               int id= rs.getInt("NUMBER");
-               String name=rs.getString("NAME");
+               int id= rs.getInt("id");
+               String name=rs.getString("name");
                System.out.println(id+":"+name);
            } //end while
            rs.close();
