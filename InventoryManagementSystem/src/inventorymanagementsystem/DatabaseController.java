@@ -102,6 +102,44 @@ public class DatabaseController {
        return returnResults;
    } //end getCategory()
    /*
+    * This method will send a request name, where the result will be that request names password if it exists
+    * and 'Invalid' if that request name doesn't exist. The handling logic will indicate that the username does
+    * not exist or credentials are invalid. 
+    */
+   public String checkCredentials(String name){
+        String returnResult = "Invalid";
+        Statement stmt = null;
+        Connection conn;
+        try{
+           Class.forName(JDBC_DRIVER);
+           System.out.println("Connecting to database...");
+           conn = DriverManager.getConnection(DB_URL,USER,PASS);
+           System.out.println("Creating statement...");
+           stmt = conn.createStatement();
+           String sql;
+           sql = "SELECT password FROM users where name='"+name+"'";
+           try (ResultSet rs = stmt.executeQuery(sql)){
+                while(rs.next()){
+                    returnResult=rs.getString("password"); //regardless of how many users there are, just return the last one
+                } //end while
+           } //end try
+           stmt.close();
+           conn.close();
+       }catch(SQLException se){ //errors in the SQL processing
+           se.printStackTrace();
+       }catch(Exception e){ //errors relating to Class.forName
+           e.printStackTrace();
+       }finally{ //clean up regardless of success
+            try{
+                if(stmt!=null)stmt.close();
+            }catch(SQLException se){
+                se.printStackTrace();
+            } //end try
+       } //end try
+       System.out.println("Finished.");
+       return returnResult; //return the password if successful, or 'Invalid' if not
+   } //end checkCredentials()
+   /*
     * This method will get a list of all the vendors
     */
    public ArrayList getVendorList(){
