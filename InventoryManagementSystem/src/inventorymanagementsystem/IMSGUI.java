@@ -1,6 +1,8 @@
 package inventorymanagementsystem;
 
+import java.awt.Point;
 import javax.swing.BoxLayout;
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
 
@@ -47,11 +49,18 @@ public class IMSGUI extends javax.swing.JFrame {
         gearMenuLog = new javax.swing.JMenuItem();
         gearMenuPH0 = new javax.swing.JMenuItem();
         gearMenuPH1 = new javax.swing.JMenuItem();
+        logMenu = new javax.swing.JDialog();
+        userField = new java.awt.TextField();
+        passwordField = new java.awt.TextField();
+        label1 = new java.awt.Label();
+        label2 = new java.awt.Label();
+        logOKButton = new java.awt.Button();
+        logCancelButton = new java.awt.Button();
         jLabel1 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        userDisplay = new javax.swing.JLabel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -64,11 +73,91 @@ public class IMSGUI extends javax.swing.JFrame {
         jList3 = new javax.swing.JList();
         controllerDisplay = new javax.swing.JPanel();
 
-        gearMenuLog.setText("Log in/out");
+        gearMenuLog.setText("Log in");
+        gearMenuLog.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                gearMenuLogMouseClicked(evt);
+            }
+        });
+        gearMenuLog.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                gearMenuLogActionPerformed(evt);
+            }
+        });
 
         gearMenuPH0.setText("I am a placeholder.");
 
         gearMenuPH1.setText("Me too!");
+
+        logMenu.setAlwaysOnTop(true);
+
+        userField.setForeground(java.awt.Color.BLACK);
+        userField.setName("usernameField");
+
+        passwordField.setEchoChar('\u2022');
+        passwordField.setForeground(java.awt.Color.BLACK);
+        passwordField.setName("passwordField");
+
+        label1.setText("User name:");
+
+        label2.setText("Password:");
+
+        logOKButton.setForeground(java.awt.Color.BLACK);
+        logOKButton.setLabel("OK");
+        logOKButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                logOKButtonActionPerformed(evt);
+            }
+        });
+
+        logCancelButton.setForeground(java.awt.Color.BLACK);
+        logCancelButton.setLabel("Cancel");
+        logCancelButton.setName("");
+        logCancelButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                logCancelButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout logMenuLayout = new javax.swing.GroupLayout(logMenu.getContentPane());
+        logMenu.getContentPane().setLayout(logMenuLayout);
+        logMenuLayout.setHorizontalGroup(
+            logMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(logMenuLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(logMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(logOKButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(logMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(logMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(logMenuLayout.createSequentialGroup()
+                        .addGroup(logMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(userField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(passwordField, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, logMenuLayout.createSequentialGroup()
+                        .addGap(0, 67, Short.MAX_VALUE)
+                        .addComponent(logCancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(60, 60, 60))))
+        );
+        logMenuLayout.setVerticalGroup(
+            logMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(logMenuLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(logMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(userField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(logMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(logMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(logOKButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(logCancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -100,8 +189,9 @@ public class IMSGUI extends javax.swing.JFrame {
             }
         });
 
-        jLabel3.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jLabel3.setText("Hello, Ann!");
+        userDisplay.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        userDisplay.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        userDisplay.setText("Hello!");
 
         jList1.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Trophies", "Vinyl", "Paper", "Toner", "Other" };
@@ -216,12 +306,12 @@ public class IMSGUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 435, Short.MAX_VALUE)
-                        .addGap(7, 7, 7)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel3)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(userDisplay, javax.swing.GroupLayout.DEFAULT_SIZE, 221, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel2))
                     .addComponent(controllerDisplay, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
@@ -240,7 +330,7 @@ public class IMSGUI extends javax.swing.JFrame {
                             .addComponent(jLabel2)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel3)
+                                .addComponent(userDisplay)
                                 .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(controllerDisplay, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
@@ -272,6 +362,49 @@ public class IMSGUI extends javax.swing.JFrame {
         gearMenu.add(gearMenuPH1);
     }//GEN-LAST:event_jLabel2MouseClicked
 
+    private void gearMenuLogMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_gearMenuLogMouseClicked
+
+    }//GEN-LAST:event_gearMenuLogMouseClicked
+
+    private void gearMenuLogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gearMenuLogActionPerformed
+        if(IMSController.loggedIn){
+            logOut();
+        }else{
+            Point p = this.getRootPane().getLocationOnScreen();
+            passwordField.setText(null);
+            logMenu.setLocation(p.x+this.getRootPane().getWidth()/2-logMenu.getWidth()/2, p.y+this.getRootPane().getHeight()/2-logMenu.getHeight()/2);
+            logMenu.pack();
+            logMenu.setVisible(true);
+        }
+    }//GEN-LAST:event_gearMenuLogActionPerformed
+
+    private void logOKButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logOKButtonActionPerformed
+        if(passwordField.getText().equals(IMSController.db.checkCredentials(userField.getText()))){
+            logIn(userField.getText());
+            logMenu.setVisible(false);
+        }else{
+            logMenu.setVisible(false);
+            JOptionPane.showMessageDialog(this, "Invalid login!", "Error", JOptionPane.OK_OPTION);
+            logMenu.setVisible(true);
+        }
+    }//GEN-LAST:event_logOKButtonActionPerformed
+
+    private void logIn(String user){
+        IMSController.logIn(user);
+        gearMenuLog.setText("Log out");
+        userDisplay.setText("Hello, "+IMSController.activeUser+"!");
+    }
+    
+    private void logOut(){
+        IMSController.logOut();
+        gearMenuLog.setText("Log in");
+        userDisplay.setText("Hello!");
+    }
+    
+    private void logCancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logCancelButtonActionPerformed
+        logMenu.setVisible(false);
+    }//GEN-LAST:event_logCancelButtonActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel controllerDisplay;
     private javax.swing.JPopupMenu gearMenu;
@@ -281,7 +414,6 @@ public class IMSGUI extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JList jList1;
     private javax.swing.JList jList2;
     private javax.swing.JList jList3;
@@ -293,5 +425,13 @@ public class IMSGUI extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextField jTextField1;
+    private java.awt.Label label1;
+    private java.awt.Label label2;
+    private java.awt.Button logCancelButton;
+    private javax.swing.JDialog logMenu;
+    private java.awt.Button logOKButton;
+    private java.awt.TextField passwordField;
+    private javax.swing.JLabel userDisplay;
+    private java.awt.TextField userField;
     // End of variables declaration//GEN-END:variables
 }

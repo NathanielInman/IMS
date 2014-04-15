@@ -43,6 +43,9 @@ public class IMSController extends JPanel implements MouseListener{
     protected JPanel columnLabels = new JPanel();
     private static int activeColumn = -1;
     private static int activeRow = -1;
+    public static DatabaseController db = new DatabaseController();
+    public static boolean loggedIn = false;
+    public static String activeUser = null;
     public IMSController(){
         super();
         sortItem.setText("Sort by this column");
@@ -61,13 +64,12 @@ public class IMSController extends JPanel implements MouseListener{
         itemMenu.add(editItem);
         this.setLayout(displayLayout);
         rowDisplay.setLayout(rowLayout);
-        columnLabels.setLayout(rowLayout);
+        //columnLabels.setLayout(rowLayout);
         this.addMouseListener(this);
         rowScroll = new JScrollPane(rowDisplay);
         rowScroll.setLayout(new ScrollPaneLayout());
         // Setting the scroll bar's unit increment makes for faster mouse wheel scrolling
         rowScroll.getVerticalScrollBar().setUnitIncrement(16);
-        rowScroll.getHorizontalScrollBar().setUnitIncrement(16);
         //rowScroll.add(rowDisplay);
     }
     protected int[] getRowCodes(){
@@ -81,6 +83,14 @@ public class IMSController extends JPanel implements MouseListener{
     protected Double[] getColumnWeights(){
         Double[] columnWeights = {};
         return columnWeights;
+    }
+    public static void logIn(String user){
+        loggedIn = true;
+        activeUser = user;
+    }
+    public static void logOut(){
+        loggedIn = false;
+        activeUser = null;
     }
     public void editItemActionPerformed(java.awt.event.ActionEvent e){
         String oldValue = rows.get(activeRow).get(activeColumn);
@@ -153,7 +163,7 @@ public class IMSController extends JPanel implements MouseListener{
      * @return boolean  True if you can edit, false if not.
      */
     private boolean hasPermissionToEdit(){
-        return true;
+        return loggedIn;
     }
     /**
      * This method resets the display panes.
@@ -187,7 +197,7 @@ public class IMSController extends JPanel implements MouseListener{
     protected JPanel newComponent(){
         JPanel comp = new JPanel();
         //comp.setPreferredSize(new Dimension(this.getWidth(),MAXIMUM_ROW_HEIGHT));
-        comp.setPreferredSize(new Dimension(comp.getPreferredSize().width,MAXIMUM_ROW_HEIGHT));
+        //comp.setPreferredSize(new Dimension(comp.getPreferredSize().width,MAXIMUM_ROW_HEIGHT));
         return comp;
     }
     /**
@@ -221,7 +231,7 @@ public class IMSController extends JPanel implements MouseListener{
     protected GridBagConstraints endConstraint(){
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.BOTH;
-        c.weightx = 1;
+        c.weightx = 0;
         c.weighty = 1;
         c.gridx = 0;
         c.gridy = rows.size();
@@ -247,17 +257,25 @@ public class IMSController extends JPanel implements MouseListener{
         c.anchor = GridBagConstraints.LINE_START;
         columnLabels.removeAll();
         JPanel textField;
+        JTextArea textLabel;
         for(int i=0; i<this.getColumnNames().length; i++){
             c.weightx = this.getColumnWeights()[i];
             textField = new JPanel();
-            textField.add(new JLabel(this.getColumnName(i)));
+            textLabel = new JTextArea(this.getColumnName(i));
+            textLabel.setEditable(false);
+            textLabel.setLineWrap(true);
+            //textLabel.setBounds(0, 0, 10, 10);
+            textLabel.setSize(rowDisplay.getComponent(i).getSize());
+            textField.add(textLabel);
             textField.setBorder(fieldBorder);
+            //textField.setSize(rowDisplay.getComponent(i).getSize());
+            textField.setSize(rowDisplay.getComponent(i).getSize());
             //textField.setMaximumSize(rowDisplay.getComponent(i).getMaximumSize());
             //textField.setMinimumSize(rowDisplay.getComponent(i).getMinimumSize());
             columnLabels.add(textField,c);
             /*JLabel label = new JLabel(this.getColumnName(i));
-            columnLabels.add(label);
-            label.setLocation(displayLayout.getLayoutDimensions()[0][i], 0);*/
+            label.setLocation(this.getX()+(int)(this.getWidth()*this.getColumnWeights()[i]), 0);
+            columnLabels.add(label);*/
         }
     }
     /**

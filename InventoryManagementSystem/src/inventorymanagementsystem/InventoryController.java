@@ -14,7 +14,6 @@ import javax.swing.JPanel;
  */
 public class InventoryController extends IMSController{
     public InventoryController(){
-        DatabaseController db = new DatabaseController();
         ArrayList categoryList = db.getInventoryByCategory("Trophy");
         Iterator itr = categoryList.iterator();
         db.getCategoryList();
@@ -54,7 +53,7 @@ public class InventoryController extends IMSController{
             }
         }
         rowDisplay.add(new JPanel(),endConstraint());
-        this.setColumnLabels();
+        //this.setColumnLabels();
         this.validate();
     }
     @Override
