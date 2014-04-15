@@ -67,7 +67,7 @@ public class IMSController extends JPanel implements MouseListener{
         this.setLayout(displayLayout);
         rowDisplay.setLayout(rowLayout);
         //columnLabels.setLayout(rowLayout);
-        this.addMouseListener(this);
+        rowDisplay.addMouseListener(this);
         rowScroll = new JScrollPane(rowDisplay);
         rowScroll.setLayout(new ScrollPaneLayout());
         // Setting the scroll bar's unit increment makes for faster mouse wheel scrolling
@@ -102,7 +102,6 @@ public class IMSController extends JPanel implements MouseListener{
             // It also does not validate data types.
             rows.get(activeRow).set(activeColumn,s);
             showInventory();
-            return;
         }
     }
     public void sortItemActionPerformed(java.awt.event.ActionEvent e){
@@ -125,18 +124,24 @@ public class IMSController extends JPanel implements MouseListener{
                 editItem.setEnabled(false);
             }
             resetActivePosition();
+            // I decided to do it this way instead of putting a listener on every
+            //  single entry. I assume it's faster this way.
             // Row number
-            int j = (e.getY()-columnLabels.getHeight())/MAXIMUM_ROW_HEIGHT;
+            int j = 0;
+            while(e.getY()>rowDisplay.getComponent(j).getY()+rowDisplay.getComponent(j).getHeight()){
+                j += this.getRowCodes().length;
+            }
+            
             // Don't show the menu if you click below all the rows
-            if(j<rows.size()&&j>=0){
+            if(j/this.getRowCodes().length<rows.size()&&j>=0){
                 // Column number
                 int i = 0;
-                int totalWidth = rowLayout.getLayoutDimensions()[j][i];
+                int totalWidth = rowDisplay.getComponent(j).getWidth();
                 while(totalWidth <= e.getX()){
                     i += 1;
-                    totalWidth += rowLayout.getLayoutDimensions()[j][i];
+                    totalWidth += rowDisplay.getComponent(j+i).getWidth();
                 }
-                activeRow = j;
+                activeRow = j/this.getRowCodes().length;
                 activeColumn = i;
                 sortItem.setText("Sort by "+getColumnName(i));
                 itemMenu.show(e.getComponent(),e.getX(), e.getY());
@@ -256,7 +261,7 @@ public class IMSController extends JPanel implements MouseListener{
         rowDisplay.add(textField, c);
     }
     protected void setColumnLabels(){
-        GridBagConstraints c = new GridBagConstraints();
+        GridBagConstraints c;
         columnLabels.removeAll();
         JPanel textField;
         JTextArea textLabel;

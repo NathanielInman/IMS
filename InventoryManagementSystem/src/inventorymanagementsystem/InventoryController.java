@@ -30,9 +30,10 @@ public class InventoryController extends IMSController{
                         currentRow.add("-");
                     }
                 }
+                
+                //rows.add(new ArrayList<>(Arrays.asList(itr.next().toString(),itr.next().toString(),itr.next().toString(),itr.next().toString(),itr.next().toString(),itr.next().toString(),itr.next().toString(),itr.next().toString(),itr.next().toString())));
             }
             rows.add(currentRow);
-            //rows.add(new ArrayList<>(Arrays.asList(itr.next().toString(),itr.next().toString(),itr.next().toString(),itr.next().toString(),itr.next().toString(),itr.next().toString(),itr.next().toString(),itr.next().toString(),itr.next().toString())));
         }
         this.sortRowsBy(0);
     }
