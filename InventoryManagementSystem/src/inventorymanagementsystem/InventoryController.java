@@ -53,7 +53,7 @@ public class InventoryController extends IMSController{
             }
         }
         rowDisplay.add(new JPanel(),endConstraint());
-        //this.setColumnLabels();
+        this.setColumnLabels();
         this.validate();
     }
     @Override
@@ -68,7 +68,7 @@ public class InventoryController extends IMSController{
     }
     @Override
     protected Double[] getColumnWeights(){
-        Double[] columnWeights = {0.1,0.3,0.2,0.2,0.3,0.1,0.1,0.5,0.3,0.2};
+        Double[] columnWeights = {0.1,0.4,0.2,0.2,0.3,0.1,0.1,0.8,0.3,0.2};
         return columnWeights;
     }
 }

@@ -5,6 +5,7 @@
  */
 package inventorymanagementsystem;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -12,6 +13,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import javax.swing.*;
+import javax.swing.SpringLayout.Constraints;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
 
@@ -179,7 +181,9 @@ public class IMSController extends JPanel implements MouseListener{
         c.gridx = 0;
         c.weighty = 0;
         c.weightx = 1;
-        this.add(columnLabels,c);
+        JPanel temp = new JPanel();
+        temp.setLayout(new BoxLayout(temp,BoxLayout.X_AXIS));
+        this.add(columnLabels, c);
         //columnLabels.setMinimumSize(new Dimension(0,20));
         c.fill = GridBagConstraints.BOTH;
         c.gridy = 1;
@@ -253,29 +257,31 @@ public class IMSController extends JPanel implements MouseListener{
     }
     protected void setColumnLabels(){
         GridBagConstraints c = new GridBagConstraints();
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.anchor = GridBagConstraints.LINE_START;
         columnLabels.removeAll();
         JPanel textField;
         JTextArea textLabel;
+        columnLabels.setLayout(rowLayout);
+        //columnLabels.setLayout(new BoxLayout(columnLabels, BoxLayout.X_AXIS));
         for(int i=0; i<this.getColumnNames().length; i++){
-            c.weightx = this.getColumnWeights()[i];
             textField = new JPanel();
             textLabel = new JTextArea(this.getColumnName(i));
             textLabel.setEditable(false);
-            textLabel.setLineWrap(true);
+            textLabel.setForeground(Color.WHITE);
+            //textLabel.setLineWrap(true);
+            textLabel.setAlignmentX(LEFT_ALIGNMENT);
+            textLabel.setOpaque(false);
+            textField.setLayout(new BoxLayout(textField, BoxLayout.X_AXIS));
             //textLabel.setBounds(0, 0, 10, 10);
-            textLabel.setSize(rowDisplay.getComponent(i).getSize());
+            //textLabel.setSize(rowDisplay.getComponent(i).getSize());
             textField.add(textLabel);
             textField.setBorder(fieldBorder);
             //textField.setSize(rowDisplay.getComponent(i).getSize());
-            textField.setSize(rowDisplay.getComponent(i).getSize());
-            //textField.setMaximumSize(rowDisplay.getComponent(i).getMaximumSize());
-            //textField.setMinimumSize(rowDisplay.getComponent(i).getMinimumSize());
-            columnLabels.add(textField,c);
-            /*JLabel label = new JLabel(this.getColumnName(i));
-            label.setLocation(this.getX()+(int)(this.getWidth()*this.getColumnWeights()[i]), 0);
-            columnLabels.add(label);*/
+            //textField.setMinimumSize(new Dimension(0,0));
+            textField.setPreferredSize(new Dimension(rowDisplay.getComponent(i).getPreferredSize().width,textField.getPreferredSize().height));
+            textField.setLocation(rowDisplay.getComponent(i).getX(),0);
+            c = rowLayout.getConstraints(rowDisplay.getComponent(i));
+            //c.fill = GridBagConstraints.NONE;
+            columnLabels.add(textField, c);
         }
     }
     /**
