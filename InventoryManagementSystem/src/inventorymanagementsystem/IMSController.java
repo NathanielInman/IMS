@@ -5,17 +5,16 @@
  */
 package inventorymanagementsystem;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.Iterator;
 import javax.swing.*;
 import javax.swing.SpringLayout.Constraints;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
+import javax.swing.text.Style;
 
 /**
  *
@@ -73,6 +72,30 @@ public class IMSController extends JPanel implements MouseListener{
         // Setting the scroll bar's unit increment makes for faster mouse wheel scrolling
         rowScroll.getVerticalScrollBar().setUnitIncrement(16);
         //rowScroll.add(rowDisplay);
+    }
+    public void filterByCategory(String category){
+        rows = new ArrayList<ArrayList<String>>();
+        ArrayList categoryList = db.getInventoryByCategory(category);
+        Iterator itr = categoryList.iterator();
+        db.getCategoryList();
+        ArrayList currentRow;
+        while(itr.hasNext()){
+            currentRow = new ArrayList<>();
+            for(int i=0; i<getRowCodes().length; i++){
+                try{
+                    currentRow.add(itr.next().toString());
+                }catch(NullPointerException npe){
+                    if(getRowCodes()[i]==IMSController.CODE_NUMBER || getRowCodes()[i]==IMSController.CODE_PRICE){
+                        currentRow.add("0");
+                    }else{
+                        currentRow.add("-");
+                    }
+                }
+                //rows.add(new ArrayList<>(Arrays.asList(itr.next().toString(),itr.next().toString(),itr.next().toString(),itr.next().toString(),itr.next().toString(),itr.next().toString(),itr.next().toString(),itr.next().toString(),itr.next().toString())));
+            }
+            rows.add(currentRow);
+        }
+        showInventory();
     }
     protected int[] getRowCodes(){
         int[] rowCodes = {};
@@ -176,9 +199,9 @@ public class IMSController extends JPanel implements MouseListener{
      * This method resets the display panes.
      */
     protected void clearInventory(){
-        //rowDisplay.removeAll();
+        rowDisplay.removeAll();
         this.removeAll();
-        //rowScroll.removeAll();
+        this.repaint();
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.HORIZONTAL;
         c.anchor = GridBagConstraints.PAGE_START;
@@ -186,10 +209,7 @@ public class IMSController extends JPanel implements MouseListener{
         c.gridx = 0;
         c.weighty = 0;
         c.weightx = 1;
-        JPanel temp = new JPanel();
-        temp.setLayout(new BoxLayout(temp,BoxLayout.X_AXIS));
         this.add(columnLabels, c);
-        //columnLabels.setMinimumSize(new Dimension(0,20));
         c.fill = GridBagConstraints.BOTH;
         c.gridy = 1;
         c.weighty = 1;
@@ -207,6 +227,7 @@ public class IMSController extends JPanel implements MouseListener{
         JPanel comp = new JPanel();
         //comp.setPreferredSize(new Dimension(this.getWidth(),MAXIMUM_ROW_HEIGHT));
         //comp.setPreferredSize(new Dimension(comp.getPreferredSize().width,MAXIMUM_ROW_HEIGHT));
+        comp.setBackground(Color.getHSBColor(0, 0, .1f));
         return comp;
     }
     /**
@@ -222,7 +243,7 @@ public class IMSController extends JPanel implements MouseListener{
      */
     protected GridBagConstraints rowConstraint(int row, int field){
         GridBagConstraints c = new GridBagConstraints();
-        c.fill = GridBagConstraints.HORIZONTAL;
+        c.fill = GridBagConstraints.BOTH;
         c.weightx = this.getColumnWeights()[field];
         c.gridx = field;
         c.gridy = row;
@@ -256,8 +277,13 @@ public class IMSController extends JPanel implements MouseListener{
      */
     protected void addTextField(String text, GridBagConstraints c){
         JPanel textField = newComponent();
-        textField.add(new JLabel(text));
         textField.setBorder(fieldBorder);
+        JTextArea textArea = new JTextArea();
+        textArea.setText(text);
+        textArea.setEditable(false);
+        textArea.setLineWrap(true);
+        textArea.setOpaque(false);
+        textField.add(textArea);
         rowDisplay.add(textField, c);
     }
     protected void setColumnLabels(){
@@ -272,20 +298,14 @@ public class IMSController extends JPanel implements MouseListener{
             textLabel = new JTextArea(this.getColumnName(i));
             textLabel.setEditable(false);
             textLabel.setForeground(Color.WHITE);
-            //textLabel.setLineWrap(true);
             textLabel.setAlignmentX(LEFT_ALIGNMENT);
             textLabel.setOpaque(false);
             textField.setLayout(new BoxLayout(textField, BoxLayout.X_AXIS));
-            //textLabel.setBounds(0, 0, 10, 10);
-            //textLabel.setSize(rowDisplay.getComponent(i).getSize());
             textField.add(textLabel);
             textField.setBorder(fieldBorder);
-            //textField.setSize(rowDisplay.getComponent(i).getSize());
-            //textField.setMinimumSize(new Dimension(0,0));
             textField.setPreferredSize(new Dimension(rowDisplay.getComponent(i).getPreferredSize().width,textField.getPreferredSize().height));
             textField.setLocation(rowDisplay.getComponent(i).getX(),0);
             c = rowLayout.getConstraints(rowDisplay.getComponent(i));
-            //c.fill = GridBagConstraints.NONE;
             columnLabels.add(textField, c);
         }
     }

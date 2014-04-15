@@ -14,28 +14,8 @@ import javax.swing.JPanel;
  */
 public class InventoryController extends IMSController{
     public InventoryController(){
-        ArrayList categoryList = db.getInventoryByCategory("Trophy");
-        Iterator itr = categoryList.iterator();
-        db.getCategoryList();
-        ArrayList currentRow;
-        while(itr.hasNext()){
-            currentRow = new ArrayList<>();
-            for(int i=0; i<getRowCodes().length; i++){
-                try{
-                    currentRow.add(itr.next().toString());
-                }catch(NullPointerException npe){
-                    if(getRowCodes()[i]==IMSController.CODE_NUMBER || getRowCodes()[i]==IMSController.CODE_PRICE){
-                        currentRow.add("0");
-                    }else{
-                        currentRow.add("-");
-                    }
-                }
-                
-                //rows.add(new ArrayList<>(Arrays.asList(itr.next().toString(),itr.next().toString(),itr.next().toString(),itr.next().toString(),itr.next().toString(),itr.next().toString(),itr.next().toString(),itr.next().toString(),itr.next().toString())));
-            }
-            rows.add(currentRow);
-        }
-        this.sortRowsBy(0);
+        filterByCategory("Trophy");
+        //this.sortRowsBy(0);
     }
     /**
      * This function displays the rows of data.
@@ -55,7 +35,7 @@ public class InventoryController extends IMSController{
         }
         rowDisplay.add(new JPanel(),endConstraint());
         this.setColumnLabels();
-        this.validate();
+        this.revalidate();
     }
     @Override
     protected int[] getRowCodes(){

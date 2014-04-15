@@ -1,11 +1,8 @@
 package inventorymanagementsystem;
 
 import java.awt.Point;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
 import javax.swing.BoxLayout;
 import javax.swing.JOptionPane;
-import javax.swing.UIManager;
 
 
 /**
@@ -21,8 +18,13 @@ public class IMSGUI extends javax.swing.JFrame {
     /**
      * Creates new form IMSGUI
      */
+    private IMSController controller;
     public IMSGUI() {
         initComponents();
+        updateCategoriesFromDB();
+    }
+    public void updateCategoriesFromDB(){
+        inventoryList.setListData(IMSController.db.getCategoryList().toArray());
     }
     /**
      * This method allows us to choose the controller to display.
@@ -33,10 +35,11 @@ public class IMSGUI extends javax.swing.JFrame {
      * @param newController The controller to display
      */
     public void setController(IMSController newController){
+        controller = newController;
         controllerDisplay.setLayout(new BoxLayout(controllerDisplay,BoxLayout.X_AXIS));
         controllerDisplay.removeAll();
         controllerDisplay.add(newController);
-        newController.showInventory();
+        controller.showInventory();
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -63,24 +66,19 @@ public class IMSGUI extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         userDisplay = new javax.swing.JLabel();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
-        jPanel1 = new javax.swing.JPanel();
+        categoryPane = new javax.swing.JTabbedPane();
+        inventoryPane = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList();
-        jPanel2 = new javax.swing.JPanel();
+        inventoryList = new javax.swing.JList();
+        vendorPane = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jList2 = new javax.swing.JList();
-        jPanel3 = new javax.swing.JPanel();
+        vendorList = new javax.swing.JList();
+        salesPane = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jList3 = new javax.swing.JList();
+        salesList = new javax.swing.JList();
         controllerDisplay = new javax.swing.JPanel();
 
         gearMenuLog.setText("Log in");
-        gearMenuLog.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                gearMenuLogMouseClicked(evt);
-            }
-        });
         gearMenuLog.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 gearMenuLogActionPerformed(evt);
@@ -189,95 +187,101 @@ public class IMSGUI extends javax.swing.JFrame {
         userDisplay.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         userDisplay.setText("Hello!");
 
-        jList1.setModel(new javax.swing.AbstractListModel() {
+        inventoryList.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Trophies", "Vinyl", "Paper", "Toner", "Other" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane2.setViewportView(jList1);
+        inventoryList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        inventoryList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                inventoryListValueChanged(evt);
+            }
+        });
+        jScrollPane2.setViewportView(inventoryList);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout inventoryPaneLayout = new javax.swing.GroupLayout(inventoryPane);
+        inventoryPane.setLayout(inventoryPaneLayout);
+        inventoryPaneLayout.setHorizontalGroup(
+            inventoryPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 168, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(inventoryPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(inventoryPaneLayout.createSequentialGroup()
                     .addContainerGap()
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
                     .addContainerGap()))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        inventoryPaneLayout.setVerticalGroup(
+            inventoryPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 297, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(inventoryPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(inventoryPaneLayout.createSequentialGroup()
                     .addContainerGap()
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 275, Short.MAX_VALUE)
                     .addContainerGap()))
         );
 
-        jTabbedPane1.addTab("Inventory", jPanel1);
+        categoryPane.addTab("Inventory", inventoryPane);
 
-        jList2.setModel(new javax.swing.AbstractListModel() {
+        vendorList.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "I don't know", "What vendors", "To put here" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane3.setViewportView(jList2);
+        jScrollPane3.setViewportView(vendorList);
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout vendorPaneLayout = new javax.swing.GroupLayout(vendorPane);
+        vendorPane.setLayout(vendorPaneLayout);
+        vendorPaneLayout.setHorizontalGroup(
+            vendorPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 168, Short.MAX_VALUE)
-            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel2Layout.createSequentialGroup()
+            .addGroup(vendorPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(vendorPaneLayout.createSequentialGroup()
                     .addContainerGap()
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
                     .addContainerGap()))
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        vendorPaneLayout.setVerticalGroup(
+            vendorPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 297, Short.MAX_VALUE)
-            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel2Layout.createSequentialGroup()
+            .addGroup(vendorPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(vendorPaneLayout.createSequentialGroup()
                     .addContainerGap()
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 275, Short.MAX_VALUE)
                     .addContainerGap()))
         );
 
-        jTabbedPane1.addTab("Vendors", jPanel2);
+        categoryPane.addTab("Vendors", vendorPane);
 
-        jList3.setModel(new javax.swing.AbstractListModel() {
+        salesList.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Not sure", "What goes", "Here either" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane4.setViewportView(jList3);
+        jScrollPane4.setViewportView(salesList);
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout salesPaneLayout = new javax.swing.GroupLayout(salesPane);
+        salesPane.setLayout(salesPaneLayout);
+        salesPaneLayout.setHorizontalGroup(
+            salesPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 168, Short.MAX_VALUE)
-            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel3Layout.createSequentialGroup()
+            .addGroup(salesPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(salesPaneLayout.createSequentialGroup()
                     .addContainerGap()
                     .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
                     .addContainerGap()))
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        salesPaneLayout.setVerticalGroup(
+            salesPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 297, Short.MAX_VALUE)
-            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel3Layout.createSequentialGroup()
+            .addGroup(salesPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(salesPaneLayout.createSequentialGroup()
                     .addContainerGap()
                     .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 275, Short.MAX_VALUE)
                     .addContainerGap()))
         );
 
-        jTabbedPane1.addTab("Royalties", jPanel3);
+        categoryPane.addTab("Sales", salesPane);
 
         javax.swing.GroupLayout controllerDisplayLayout = new javax.swing.GroupLayout(controllerDisplay);
         controllerDisplay.setLayout(controllerDisplayLayout);
@@ -298,7 +302,7 @@ public class IMSGUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTabbedPane1))
+                    .addComponent(categoryPane))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -320,7 +324,7 @@ public class IMSGUI extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTabbedPane1))
+                        .addComponent(categoryPane))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
@@ -358,10 +362,6 @@ public class IMSGUI extends javax.swing.JFrame {
         gearMenu.add(gearMenuPH1);
     }//GEN-LAST:event_jLabel2MouseClicked
 
-    private void gearMenuLogMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_gearMenuLogMouseClicked
-
-    }//GEN-LAST:event_gearMenuLogMouseClicked
-
     private void gearMenuLogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gearMenuLogActionPerformed
         if(IMSController.loggedIn){
             logOut();
@@ -390,6 +390,10 @@ public class IMSGUI extends javax.swing.JFrame {
         logMenu.setVisible(false);
     }//GEN-LAST:event_logCancelButtonActionPerformed
 
+    private void inventoryListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_inventoryListValueChanged
+        controller.filterByCategory(inventoryList.getSelectedValue().toString());
+    }//GEN-LAST:event_inventoryListValueChanged
+
     private void logIn(String user){
         IMSController.logIn(user);
         gearMenuLog.setText("Log out");
@@ -403,32 +407,32 @@ public class IMSGUI extends javax.swing.JFrame {
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTabbedPane categoryPane;
     private javax.swing.JPanel controllerDisplay;
     private javax.swing.JPopupMenu gearMenu;
     private javax.swing.JMenuItem gearMenuLog;
     private javax.swing.JMenuItem gearMenuPH0;
     private javax.swing.JMenuItem gearMenuPH1;
+    private javax.swing.JList inventoryList;
+    private javax.swing.JPanel inventoryPane;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JList jList1;
-    private javax.swing.JList jList2;
-    private javax.swing.JList jList3;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JButton logCancelButton;
     private javax.swing.JDialog logMenu;
     private javax.swing.JButton logOKButton;
     private java.awt.TextField passwordField;
+    private javax.swing.JList salesList;
+    private javax.swing.JPanel salesPane;
     private javax.swing.JLabel userDisplay;
     private java.awt.TextField userField;
+    private javax.swing.JList vendorList;
+    private javax.swing.JPanel vendorPane;
     // End of variables declaration//GEN-END:variables
 }
