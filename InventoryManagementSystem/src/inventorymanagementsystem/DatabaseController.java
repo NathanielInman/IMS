@@ -38,16 +38,16 @@ public class DatabaseController {
                 while(rs.next()){
                     returnResults.add(rs.getInt("id"));
                     returnResults.add(rs.getString("name"));
-                    System.out.print(rs.getDouble("price")+",");
-                    System.out.print(rs.getDouble("wholesale")+",");
-                    System.out.print(rs.getString("category")+",");
-                    System.out.print(rs.getString("vendor_id")+",");
-                    System.out.print(rs.getString("royalty_id")+",");
-                    System.out.print(rs.getString("description")+",");
-                    System.out.print(rs.getBlob("picture")+",");
-                    System.out.println(rs.getString("preferred_stock"));
+                    returnResults.add(rs.getDouble("price"));
+                    returnResults.add(rs.getDouble("wholesale"));
+                    returnResults.add(rs.getString("category"));
+                    returnResults.add(rs.getString("vendor_id"));
+                    returnResults.add(rs.getString("royalty_id"));
+                    returnResults.add(rs.getString("description"));
+                    returnResults.add(rs.getBlob("picture"));
+                    returnResults.add(rs.getString("preferred_stock"));
                 } //end while
-           } //end try
+           }//end try
            stmt.close();
            conn.close();
        }catch(SQLException se){ //errors in the SQL processing
@@ -64,7 +64,6 @@ public class DatabaseController {
        System.out.println("Finished.");
        return returnResults;
    } //end getCategory()
-   
    /*
     * This method will get a list of all the categories
     */

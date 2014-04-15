@@ -19,8 +19,6 @@ public class IMSGUI extends javax.swing.JFrame {
      */
     public IMSGUI() {
         initComponents();
-        // Setting the scroll bar's unit increment makes for faster mouse wheel scrolling
-        jScrollPane1.getVerticalScrollBar().setUnitIncrement(16);
     }
     /**
      * This method allows us to choose the controller to display.
@@ -49,9 +47,6 @@ public class IMSGUI extends javax.swing.JFrame {
         gearMenuLog = new javax.swing.JMenuItem();
         gearMenuPH0 = new javax.swing.JMenuItem();
         gearMenuPH1 = new javax.swing.JMenuItem();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        controllerDisplay = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
@@ -67,6 +62,7 @@ public class IMSGUI extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         jList3 = new javax.swing.JList();
+        controllerDisplay = new javax.swing.JPanel();
 
         gearMenuLog.setText("Log in/out");
 
@@ -75,28 +71,6 @@ public class IMSGUI extends javax.swing.JFrame {
         gearMenuPH1.setText("Me too!");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jLabel4.setText("This area should be populated with an IMSController.");
-
-        javax.swing.GroupLayout controllerDisplayLayout = new javax.swing.GroupLayout(controllerDisplay);
-        controllerDisplay.setLayout(controllerDisplayLayout);
-        controllerDisplayLayout.setHorizontalGroup(
-            controllerDisplayLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(controllerDisplayLayout.createSequentialGroup()
-                .addGap(162, 162, 162)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(223, Short.MAX_VALUE))
-        );
-        controllerDisplayLayout.setVerticalGroup(
-            controllerDisplayLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(controllerDisplayLayout.createSequentialGroup()
-                .addGap(197, 197, 197)
-                .addComponent(jLabel4)
-                .addContainerGap(254, Short.MAX_VALUE))
-        );
-
-        jScrollPane1.setViewportView(controllerDisplay);
-        controllerDisplay.getAccessibleContext().setAccessibleName("");
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/inventorymanagementsystem/Images/TOESLogo.png"))); // NOI18N
@@ -149,11 +123,11 @@ public class IMSGUI extends javax.swing.JFrame {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 299, Short.MAX_VALUE)
+            .addGap(0, 297, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addContainerGap()
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 275, Short.MAX_VALUE)
                     .addContainerGap()))
         );
 
@@ -179,11 +153,11 @@ public class IMSGUI extends javax.swing.JFrame {
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 299, Short.MAX_VALUE)
+            .addGap(0, 297, Short.MAX_VALUE)
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel2Layout.createSequentialGroup()
                     .addContainerGap()
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 275, Short.MAX_VALUE)
                     .addContainerGap()))
         );
 
@@ -209,15 +183,26 @@ public class IMSGUI extends javax.swing.JFrame {
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 299, Short.MAX_VALUE)
+            .addGap(0, 297, Short.MAX_VALUE)
             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel3Layout.createSequentialGroup()
                     .addContainerGap()
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 275, Short.MAX_VALUE)
                     .addContainerGap()))
         );
 
         jTabbedPane1.addTab("Royalties", jPanel3);
+
+        javax.swing.GroupLayout controllerDisplayLayout = new javax.swing.GroupLayout(controllerDisplay);
+        controllerDisplay.setLayout(controllerDisplayLayout);
+        controllerDisplayLayout.setHorizontalGroup(
+            controllerDisplayLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        controllerDisplayLayout.setVerticalGroup(
+            controllerDisplayLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -231,14 +216,14 @@ public class IMSGUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jTextField1)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 435, Short.MAX_VALUE)
                         .addGap(7, 7, 7)
                         .addComponent(jButton1)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel3)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel2))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 590, Short.MAX_VALUE))
+                    .addComponent(controllerDisplay, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -249,7 +234,7 @@ public class IMSGUI extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                        .addComponent(jTabbedPane1))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
@@ -257,10 +242,12 @@ public class IMSGUI extends javax.swing.JFrame {
                                 .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel3)
                                 .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(controllerDisplay, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
+
+        controllerDisplay.getAccessibleContext().setAccessibleName("");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -295,14 +282,12 @@ public class IMSGUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JList jList1;
     private javax.swing.JList jList2;
     private javax.swing.JList jList3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
