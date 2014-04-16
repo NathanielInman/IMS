@@ -14,7 +14,8 @@ import javax.swing.JPanel;
  */
 public class InventoryController extends IMSController{
     public InventoryController(){
-        filterByCategory("Trophy");
+        showInventory();
+        //filterByCategory("Trophy");
         //this.sortRowsBy(0);
     }
     /**

@@ -8,6 +8,10 @@ package inventorymanagementsystem;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.font.FontRenderContext;
+import java.awt.font.LineBreakMeasurer;
+import java.text.AttributedCharacterIterator;
+import java.text.AttributedString;
 import java.util.ArrayList;
 import java.util.Iterator;
 import javax.swing.*;
@@ -226,6 +230,7 @@ public class IMSController extends JPanel implements MouseListener{
     protected JPanel newComponent(){
         JPanel comp = new JPanel();
         //comp.setPreferredSize(new Dimension(this.getWidth(),MAXIMUM_ROW_HEIGHT));
+        //comp.setPreferredSize(new Dimension(this.getWidth(),comp.getPreferredSize().height));
         //comp.setPreferredSize(new Dimension(comp.getPreferredSize().width,MAXIMUM_ROW_HEIGHT));
         comp.setBackground(Color.getHSBColor(0, 0, .1f));
         return comp;
@@ -281,10 +286,37 @@ public class IMSController extends JPanel implements MouseListener{
         JTextArea textArea = new JTextArea();
         textArea.setText(text);
         textArea.setEditable(false);
-        textArea.setLineWrap(true);
         textArea.setOpaque(false);
-        textField.add(textArea);
+        textArea.setLineWrap(true);
+        textField.setAlignmentX(LEFT_ALIGNMENT);
         rowDisplay.add(textField, c);
+        textField.add(textArea);
+        int textWidth = (int)(rowScroll.getWidth()*c.weightx/(sumArray(getColumnWeights())+1));
+        textArea.setPreferredSize(new Dimension(textWidth, Short.MAX_VALUE));
+        FontMetrics fm = textArea.getFontMetrics(textArea.getFont());
+        int textHeight = countLines(textArea, textWidth)*fm.getHeight();
+        textArea.setPreferredSize(new Dimension(textArea.getPreferredSize().width, textHeight));
+    }
+    private static int countLines(JTextArea textArea, int textWidth) {
+        AttributedString text = new AttributedString(textArea.getText());
+        FontRenderContext frc = textArea.getFontMetrics(textArea.getFont()).getFontRenderContext();
+        AttributedCharacterIterator charIt = text.getIterator();
+        LineBreakMeasurer lineMeasurer = new LineBreakMeasurer(charIt, frc);
+        float formatWidth = (float)textWidth;
+        lineMeasurer.setPosition(charIt.getBeginIndex());
+        int noLines = 0;
+        while (lineMeasurer.getPosition() < charIt.getEndIndex()) {
+            lineMeasurer.nextLayout(formatWidth);
+            noLines++;
+        }
+        return noLines;
+    }
+    private Double sumArray(Double[] arr){
+        Double sum = 0.0;
+        for(int i=0; i<arr.length; i++){
+            sum += arr[i];
+        }
+        return sum;
     }
     protected void setColumnLabels(){
         GridBagConstraints c;
@@ -293,20 +325,26 @@ public class IMSController extends JPanel implements MouseListener{
         JTextArea textLabel;
         columnLabels.setLayout(rowLayout);
         //columnLabels.setLayout(new BoxLayout(columnLabels, BoxLayout.X_AXIS));
-        for(int i=0; i<this.getColumnNames().length; i++){
-            textField = new JPanel();
-            textLabel = new JTextArea(this.getColumnName(i));
-            textLabel.setEditable(false);
-            textLabel.setForeground(Color.WHITE);
-            textLabel.setAlignmentX(LEFT_ALIGNMENT);
-            textLabel.setOpaque(false);
-            textField.setLayout(new BoxLayout(textField, BoxLayout.X_AXIS));
-            textField.add(textLabel);
-            textField.setBorder(fieldBorder);
-            textField.setPreferredSize(new Dimension(rowDisplay.getComponent(i).getPreferredSize().width,textField.getPreferredSize().height));
-            textField.setLocation(rowDisplay.getComponent(i).getX(),0);
-            c = rowLayout.getConstraints(rowDisplay.getComponent(i));
-            columnLabels.add(textField, c);
+        try{
+            for(int i=0; i<this.getColumnNames().length; i++){
+                textField = new JPanel();
+                textLabel = new JTextArea(this.getColumnName(i));
+                textLabel.setEditable(false);
+                textLabel.setForeground(Color.WHITE);
+                textLabel.setAlignmentX(LEFT_ALIGNMENT);
+                textLabel.setOpaque(false);
+                textField.setLayout(new BoxLayout(textField, BoxLayout.X_AXIS));
+                textField.add(textLabel);
+                textField.setBorder(fieldBorder);
+                textField.setBackground(Color.DARK_GRAY);
+                textField.setPreferredSize(new Dimension(rowDisplay.getComponent(i).getPreferredSize().width,textField.getPreferredSize().height));
+                textField.setLocation(rowDisplay.getComponent(i).getX(),0);
+                c = rowLayout.getConstraints(rowDisplay.getComponent(i));
+                columnLabels.add(textField, c);
+            }
+        }catch(ArrayIndexOutOfBoundsException aioobe){
+            // The controller is currently empty.
+            columnLabels.removeAll();
         }
     }
     /**
