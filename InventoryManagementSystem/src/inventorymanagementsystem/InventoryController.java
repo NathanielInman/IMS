@@ -18,26 +18,6 @@ public class InventoryController extends IMSController{
         //filterByCategory("Trophy");
         //this.sortRowsBy(0);
     }
-    /**
-     * This function displays the rows of data.
-     * 
-     * It uses the IMSController's functionality. Instead of adding all text
-     * fields, we should have it check the ROW_CODES to determine what kind
-     * of data to add.
-     */
-    @Override
-    public void showInventory(){
-        clearInventory();
-        int j;
-        for(int i=0; i<rows.size(); i++){
-            for(j=0; j<rows.get(i).size(); j++){
-                addTextField(rows.get(i).get(j), rowConstraint(i, j));
-            }
-        }
-        rowDisplay.add(new JPanel(),endConstraint());
-        this.setColumnLabels();
-        this.revalidate();
-    }
     @Override
     protected int[] getRowCodes(){
         int[] rowCodes = {IMSController.CODE_NUMBER, IMSController.CODE_STRING, IMSController.CODE_PRICE, IMSController.CODE_PRICE, IMSController.CODE_STRING, IMSController.CODE_NUMBER, IMSController.CODE_NUMBER, IMSController.CODE_STRING, IMSController.CODE_PICTURE, IMSController.CODE_NUMBER};

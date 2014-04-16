@@ -69,13 +69,11 @@ public class IMSController extends JPanel implements MouseListener{
         itemMenu.add(editItem);
         this.setLayout(displayLayout);
         rowDisplay.setLayout(rowLayout);
-        //columnLabels.setLayout(rowLayout);
         rowDisplay.addMouseListener(this);
         rowScroll = new JScrollPane(rowDisplay);
         rowScroll.setLayout(new ScrollPaneLayout());
         // Setting the scroll bar's unit increment makes for faster mouse wheel scrolling
         rowScroll.getVerticalScrollBar().setUnitIncrement(16);
-        //rowScroll.add(rowDisplay);
     }
     public void filterByCategory(String category){
         rows = new ArrayList<ArrayList<String>>();
@@ -135,8 +133,24 @@ public class IMSController extends JPanel implements MouseListener{
         this.sortRowsBy(activeColumn);
         this.showInventory();
     }
+    /**
+     * This function displays the rows of data.
+     * 
+     * It uses the IMSController's functionality. Instead of adding all text
+     * fields, we should have it check the ROW_CODES to determine what kind
+     * of data to add.
+     */
     public void showInventory(){
-        // This exists solely to be overwritten.
+        clearInventory();
+        int j;
+        for(int i=0; i<rows.size(); i++){
+            for(j=0; j<rows.get(i).size(); j++){
+                addTextField(rows.get(i).get(j), rowConstraint(i, j));
+            }
+        }
+        rowDisplay.add(new JPanel(),endConstraint());
+        this.setColumnLabels();
+        this.revalidate();
     }
     public void resetActivePosition(){
         activeRow = -1;
@@ -155,23 +169,24 @@ public class IMSController extends JPanel implements MouseListener{
             //  single entry. I assume it's faster this way.
             // Row number
             int j = 0;
-            while(e.getY()>rowDisplay.getComponent(j).getY()+rowDisplay.getComponent(j).getHeight()){
+            int rdY = e.getYOnScreen()-rowDisplay.getLocationOnScreen().y;
+            int rdX = e.getXOnScreen()-rowDisplay.getLocationOnScreen().x;
+            while(rdY>rowDisplay.getComponent(j).getY()+rowDisplay.getComponent(j).getHeight()){
                 j += this.getRowCodes().length;
             }
-            
             // Don't show the menu if you click below all the rows
             if(j/this.getRowCodes().length<rows.size()&&j>=0){
                 // Column number
                 int i = 0;
                 int totalWidth = rowDisplay.getComponent(j).getWidth();
-                while(totalWidth <= e.getX()){
+                while(totalWidth <= rdX){
                     i += 1;
                     totalWidth += rowDisplay.getComponent(j+i).getWidth();
                 }
                 activeRow = j/this.getRowCodes().length;
                 activeColumn = i;
                 sortItem.setText("Sort by "+getColumnName(i));
-                itemMenu.show(e.getComponent(),e.getX(), e.getY());
+                itemMenu.show(e.getComponent(),e.getXOnScreen()-e.getComponent().getLocationOnScreen().x, e.getYOnScreen()-e.getComponent().getLocationOnScreen().y);
             }
         }
     }
@@ -286,8 +301,17 @@ public class IMSController extends JPanel implements MouseListener{
         JTextArea textArea = new JTextArea();
         textArea.setText(text);
         textArea.setEditable(false);
-        textArea.setOpaque(false);
+        //textArea.setOpaque(false);
         textArea.setLineWrap(true);
+        textArea.addMouseListener(this);
+        /*while(textArea.getMouseListeners().length>0){
+            textArea.removeMouseListener(textArea.getMouseListeners()[0]);
+        }*/
+        /*while(textArea.getListeners(class).length>0){
+            textArea.removeContainerListener(textArea.getContainerListeners()[0]);
+        }*/
+        //System.out.println(textArea.getMouseListeners().length);
+        //textArea.setEnabled(false);
         textField.setAlignmentX(LEFT_ALIGNMENT);
         rowDisplay.add(textField, c);
         textField.add(textArea);
