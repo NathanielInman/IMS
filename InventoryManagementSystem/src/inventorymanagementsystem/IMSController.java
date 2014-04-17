@@ -77,9 +77,8 @@ public class IMSController extends JPanel implements MouseListener{
     }
     public void filterByCategory(String category){
         rows = new ArrayList<ArrayList<String>>();
-        ArrayList categoryList = db.getInventoryByCategory(category);
+        ArrayList categoryList = getByValue(category);
         Iterator itr = categoryList.iterator();
-        db.getCategoryList();
         ArrayList currentRow;
         while(itr.hasNext()){
             currentRow = new ArrayList<>();
@@ -98,6 +97,9 @@ public class IMSController extends JPanel implements MouseListener{
             rows.add(currentRow);
         }
         showInventory();
+    }
+    protected ArrayList getByValue(String value){
+        return new ArrayList();
     }
     protected int[] getRowCodes(){
         int[] rowCodes = {};
@@ -301,17 +303,10 @@ public class IMSController extends JPanel implements MouseListener{
         JTextArea textArea = new JTextArea();
         textArea.setText(text);
         textArea.setEditable(false);
-        //textArea.setOpaque(false);
+        textArea.setOpaque(false);
         textArea.setLineWrap(true);
+        textArea.setWrapStyleWord(true);
         textArea.addMouseListener(this);
-        /*while(textArea.getMouseListeners().length>0){
-            textArea.removeMouseListener(textArea.getMouseListeners()[0]);
-        }*/
-        /*while(textArea.getListeners(class).length>0){
-            textArea.removeContainerListener(textArea.getContainerListeners()[0]);
-        }*/
-        //System.out.println(textArea.getMouseListeners().length);
-        //textArea.setEnabled(false);
         textField.setAlignmentX(LEFT_ALIGNMENT);
         rowDisplay.add(textField, c);
         textField.add(textArea);
@@ -322,13 +317,16 @@ public class IMSController extends JPanel implements MouseListener{
         textArea.setPreferredSize(new Dimension(textArea.getPreferredSize().width, textHeight));
     }
     private static int countLines(JTextArea textArea, int textWidth) {
+        if(textArea.getText().length()==0){
+            return 1;
+        }
         AttributedString text = new AttributedString(textArea.getText());
         FontRenderContext frc = textArea.getFontMetrics(textArea.getFont()).getFontRenderContext();
         AttributedCharacterIterator charIt = text.getIterator();
         LineBreakMeasurer lineMeasurer = new LineBreakMeasurer(charIt, frc);
         float formatWidth = (float)textWidth;
         lineMeasurer.setPosition(charIt.getBeginIndex());
-        int noLines = 0;
+        int noLines = 1;
         while (lineMeasurer.getPosition() < charIt.getEndIndex()) {
             lineMeasurer.nextLayout(formatWidth);
             noLines++;

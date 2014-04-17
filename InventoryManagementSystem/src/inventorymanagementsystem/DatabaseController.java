@@ -22,7 +22,7 @@ public class DatabaseController {
    /*
     * This method will get all inventory items by the specified category name.
     */
-   public ArrayList getInventoryByCategory(String name){
+   public ArrayList getInventoryByColumn(String column, String value, int dataType){
         ArrayList returnResults = new ArrayList<>();
         Statement stmt = null;
         Connection conn;
@@ -33,7 +33,11 @@ public class DatabaseController {
            System.out.println("Creating statement...");
            stmt = conn.createStatement();
            String sql;
-           sql = "SELECT * FROM Inventory WHERE category='"+name+"'";
+           if(dataType==IMSController.CODE_NUMBER){
+                sql = "SELECT * FROM Inventory WHERE "+column+"="+Integer.parseInt(value);
+           }else{
+                sql = "SELECT * FROM Inventory WHERE "+column+"='"+value+"'";
+           }
            try (ResultSet rs = stmt.executeQuery(sql)){
                 while(rs.next()){
                     returnResults.add(rs.getInt("id"));
@@ -67,7 +71,7 @@ public class DatabaseController {
    /*
     * This method will get a list of all the categories
     */
-   public ArrayList getCategoryList(){
+   public ArrayList getCategoryList(String category, String controller){
         ArrayList returnResults = new ArrayList<>();
         Statement stmt = null;
         Connection conn;
@@ -78,10 +82,10 @@ public class DatabaseController {
            System.out.println("Creating statement...");
            stmt = conn.createStatement();
            String sql;
-           sql = "SELECT DISTINCT category FROM Inventory";
+           sql = "SELECT DISTINCT "+category+" FROM "+controller;
            try (ResultSet rs = stmt.executeQuery(sql)){
                 while(rs.next()){
-                    returnResults.add(rs.getString("category"));
+                    returnResults.add(rs.getString(category));
                 } //end while
            } //end try
            stmt.close();
@@ -141,28 +145,29 @@ public class DatabaseController {
    /*
     * This method will get a list of all the vendors
     */
-   public ArrayList getVendorList(){
+   public ArrayList getVendorsByName(String name){
         ArrayList returnResults = new ArrayList<>();
-        Statement stmt = null;
+        PreparedStatement stmt = null;
         Connection conn;
         try{
            Class.forName(JDBC_DRIVER);
            System.out.println("Connecting to database...");
            conn = DriverManager.getConnection(DB_URL,USER,PASS);
            System.out.println("Creating statement...");
-           stmt = conn.createStatement();
            String sql;
-           sql = "SELECT * FROM vendors";
-           try (ResultSet rs = stmt.executeQuery(sql)){
+           sql = "SELECT * FROM vendors WHERE name = ?";
+           stmt = conn.prepareStatement(sql);
+           stmt.setString(1, name);
+           try (ResultSet rs = stmt.executeQuery()){
                 while(rs.next()){
-                    System.out.print(rs.getString("id")+",");
-                    System.out.print(rs.getString("name")+",");
-                    System.out.print(rs.getString("phone")+",");
-                    System.out.print(rs.getString("extension")+",");
-                    System.out.print(rs.getString("address")+",");
-                    System.out.print(rs.getString("website")+",");
-                    System.out.print(rs.getString("email")+",");
-                    System.out.println(rs.getString("ppoc"));
+                    returnResults.add(rs.getString("id"));
+                    returnResults.add(rs.getString("name"));
+                    returnResults.add(rs.getString("phone"));
+                    returnResults.add(rs.getString("extension"));
+                    returnResults.add(rs.getString("address"));
+                    returnResults.add(rs.getString("website"));
+                    returnResults.add(rs.getString("email"));
+                    returnResults.add(rs.getString("ppoc"));
                 } //end while
            } //end try
            stmt.close();
@@ -180,7 +185,7 @@ public class DatabaseController {
        } //end try
        System.out.println("Finished.");
        return returnResults;
-   } //end getCategory()
+   } //end getVendorsByName()
    
    /*
     * This method will get a list of all the royalties

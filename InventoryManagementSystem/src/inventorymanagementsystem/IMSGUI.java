@@ -24,7 +24,8 @@ public class IMSGUI extends javax.swing.JFrame {
         updateCategoriesFromDB();
     }
     public void updateCategoriesFromDB(){
-        inventoryList.setListData(IMSController.db.getCategoryList().toArray());
+        inventoryList.setListData(IMSController.db.getCategoryList("category", "Inventory").toArray());
+        vendorList.setListData(IMSController.db.getCategoryList("name","Vendors").toArray());
     }
     /**
      * This method allows us to choose the controller to display.
@@ -36,10 +37,11 @@ public class IMSGUI extends javax.swing.JFrame {
      */
     public void setController(IMSController newController){
         controller = newController;
-        controllerDisplay.setLayout(new BoxLayout(controllerDisplay,BoxLayout.X_AXIS));
+        controller.clearInventory();
         controllerDisplay.removeAll();
+        controllerDisplay.setLayout(new BoxLayout(controllerDisplay,BoxLayout.X_AXIS));
         controllerDisplay.add(newController);
-        controller.showInventory();
+        //controller.showInventory();
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -228,6 +230,11 @@ public class IMSGUI extends javax.swing.JFrame {
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
+        vendorList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                vendorListValueChanged(evt);
+            }
+        });
         jScrollPane3.setViewportView(vendorList);
 
         javax.swing.GroupLayout vendorPaneLayout = new javax.swing.GroupLayout(vendorPane);
@@ -391,8 +398,14 @@ public class IMSGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_logCancelButtonActionPerformed
 
     private void inventoryListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_inventoryListValueChanged
+        this.setController(InventoryManagementSystem.getInventoryController());
         controller.filterByCategory(inventoryList.getSelectedValue().toString());
     }//GEN-LAST:event_inventoryListValueChanged
+
+    private void vendorListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_vendorListValueChanged
+        this.setController(InventoryManagementSystem.getVendorController());
+        controller.filterByCategory(vendorList.getSelectedValue().toString());
+    }//GEN-LAST:event_vendorListValueChanged
 
     private void logIn(String user){
         IMSController.logIn(user);

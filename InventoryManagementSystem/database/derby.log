@@ -1,7 +1,7 @@
-Wed Apr 16 15:14:14 CDT 2014 : Apache Derby Network Server - 10.8.1.2 - (1095077) started and ready to accept connections on port 1527
+Thu Apr 17 16:06:23 CDT 2014 : Apache Derby Network Server - 10.8.1.2 - (1095077) started and ready to accept connections on port 1527
 ----------------------------------------------------------------
-Wed Apr 16 15:14:15 CDT 2014:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.8.1.2 - (1095077): instance a816c00e-0145-6c2c-ec95-ffffba54585e 
+Thu Apr 17 16:06:23 CDT 2014:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.8.1.2 - (1095077): instance a816c00e-0145-7183-053a-ffffba54585e 
 on database directory C:\Users\Mike\Documents\GitHub\IMS\InventoryManagementSystem\database\KCC  with class loader sun.misc.Launcher$AppClassLoader@262505b7 
 Loaded from file:/C:/Program%20Files/Java/jdk1.7.0_02/db/lib/derby.jar
 java.vendor=Oracle Corporation

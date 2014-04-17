@@ -5,8 +5,6 @@
 package inventorymanagementsystem;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-import javax.swing.JPanel;
 
 /**
  *
@@ -14,7 +12,7 @@ import javax.swing.JPanel;
  */
 public class InventoryController extends IMSController{
     public InventoryController(){
-        showInventory();
+        //showInventory();
         //filterByCategory("Trophy");
         //this.sortRowsBy(0);
     }
@@ -32,5 +30,9 @@ public class InventoryController extends IMSController{
     protected Double[] getColumnWeights(){
         Double[] columnWeights = {0.1,0.4,0.2,0.2,0.3,0.1,0.1,0.8,0.3,0.2};
         return columnWeights;
+    }
+    @Override
+    protected ArrayList getByValue(String value){
+        return db.getInventoryByColumn("category", value,IMSController.CODE_STRING);
     }
 }
