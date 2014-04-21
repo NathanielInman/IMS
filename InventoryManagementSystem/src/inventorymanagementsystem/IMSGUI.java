@@ -94,11 +94,10 @@ public class IMSGUI extends javax.swing.JFrame {
         logMenu.setAlwaysOnTop(true);
 
         userField.setForeground(java.awt.Color.BLACK);
-        userField.setName("usernameField");
+        userField.setName("usernameField"); // NOI18N
 
-        passwordField.setEchoChar('\u2022');
         passwordField.setForeground(java.awt.Color.BLACK);
-        passwordField.setName("passwordField");
+        passwordField.setName("passwordField"); // NOI18N
 
         logOKButton.setText("OK");
         logOKButton.addActionListener(new java.awt.event.ActionListener() {
@@ -288,7 +287,7 @@ public class IMSGUI extends javax.swing.JFrame {
                     .addContainerGap()))
         );
 
-        categoryPane.addTab("Sales", salesPane);
+        categoryPane.addTab("Royalties", salesPane);
 
         javax.swing.GroupLayout controllerDisplayLayout = new javax.swing.GroupLayout(controllerDisplay);
         controllerDisplay.setLayout(controllerDisplayLayout);

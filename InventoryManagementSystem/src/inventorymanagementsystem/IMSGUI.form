@@ -83,7 +83,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="java.awt.Color.BLACK" type="code"/>
             </Property>
-            <Property name="name" type="java.lang.String" value="usernameField"/>
+            <Property name="name" type="java.lang.String" value="usernameField" noResource="true"/>
           </Properties>
         </Component>
         <Component class="java.awt.TextField" name="passwordField">
@@ -92,7 +92,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="java.awt.Color.BLACK" type="code"/>
             </Property>
-            <Property name="name" type="java.lang.String" value="passwordField"/>
+            <Property name="name" type="java.lang.String" value="passwordField" noResource="true"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="logOKButton">
@@ -129,6 +129,7 @@
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
   </SyntheticProperties>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
@@ -378,8 +379,8 @@
         <Container class="javax.swing.JPanel" name="salesPane">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="Sales">
-                <Property name="tabTitle" type="java.lang.String" value="Sales"/>
+              <JTabbedPaneConstraints tabName="Royalties">
+                <Property name="tabTitle" type="java.lang.String" value="Royalties"/>
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>
