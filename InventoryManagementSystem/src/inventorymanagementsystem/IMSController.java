@@ -230,7 +230,8 @@ public class IMSController extends JPanel implements MouseListener{
         c.gridx = 0;
         c.weighty = 0;
         c.weightx = 1;
-        this.add(columnLabels, c);
+        //rowScroll.add(columnLabels, c);
+        rowScroll.setColumnHeaderView(columnLabels);
         c.fill = GridBagConstraints.BOTH;
         c.gridy = 1;
         c.weighty = 1;

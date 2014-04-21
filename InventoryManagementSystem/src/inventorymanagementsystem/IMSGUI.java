@@ -96,6 +96,7 @@ public class IMSGUI extends javax.swing.JFrame {
         userField.setForeground(java.awt.Color.BLACK);
         userField.setName("usernameField"); // NOI18N
 
+        passwordField.setEchoChar('\u2022');
         passwordField.setForeground(java.awt.Color.BLACK);
         passwordField.setName("passwordField"); // NOI18N
 
@@ -312,7 +313,7 @@ public class IMSGUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 329, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
