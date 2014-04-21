@@ -36,12 +36,11 @@ public class IMSGUI extends javax.swing.JFrame {
      * @param newController The controller to display
      */
     public void setController(IMSController newController){
+        controller = null;
         controller = newController;
-        controller.clearInventory();
         controllerDisplay.removeAll();
         controllerDisplay.setLayout(new BoxLayout(controllerDisplay,BoxLayout.X_AXIS));
         controllerDisplay.add(newController);
-        //controller.showInventory();
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -398,13 +397,27 @@ public class IMSGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_logCancelButtonActionPerformed
 
     private void inventoryListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_inventoryListValueChanged
-        this.setController(InventoryManagementSystem.getInventoryController());
-        controller.filterByCategory(inventoryList.getSelectedValue().toString());
+        try{
+            //this.setController(InventoryManagementSystem.getInventoryController());
+            this.setController(new InventoryController(controllerDisplay));
+            controller.filterByCategory(inventoryList.getSelectedValue().toString());
+            vendorList.clearSelection();
+        }catch(NullPointerException npe){
+            // It was set to null by a different function.
+            // Nothing has been selected, so we won't show anything.
+        }
     }//GEN-LAST:event_inventoryListValueChanged
 
     private void vendorListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_vendorListValueChanged
-        this.setController(InventoryManagementSystem.getVendorController());
-        controller.filterByCategory(vendorList.getSelectedValue().toString());
+        try{
+            //this.setController(InventoryManagementSystem.getVendorController());
+            this.setController(new VendorController(controllerDisplay));
+            controller.filterByCategory(vendorList.getSelectedValue().toString());
+            inventoryList.clearSelection();
+        }catch(NullPointerException npe){
+            // It was set to null by a different function.
+            // Nothing has been selected, so we won't show anything.
+        }
     }//GEN-LAST:event_vendorListValueChanged
 
     private void logIn(String user){

@@ -5,16 +5,15 @@
 package inventorymanagementsystem;
 
 import java.util.ArrayList;
+import javax.swing.JPanel;
 
 /**
  *
  * @author Mike and Nate
  */
 public class InventoryController extends IMSController{
-    public InventoryController(){
-        //showInventory();
-        //filterByCategory("Trophy");
-        //this.sortRowsBy(0);
+    public InventoryController(JPanel displayPanel){
+        super(displayPanel);
     }
     @Override
     protected int[] getRowCodes(){

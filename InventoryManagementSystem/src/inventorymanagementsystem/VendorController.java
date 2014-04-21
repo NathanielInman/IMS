@@ -21,7 +21,8 @@ import javax.swing.JTextPane;
 public class VendorController extends IMSController{
     private JPanel vendorInfo = new JPanel();
     private ArrayList<String> activeVendor = new ArrayList<String>();
-    public VendorController(){
+    public VendorController(JPanel displayPanel){
+        super(displayPanel);
         showInventory();
     }
     public void setActiveVendor(String vendorName){
@@ -54,10 +55,7 @@ public class VendorController extends IMSController{
      * This method resets the display panes.
      */
     @Override
-    protected void clearInventory(){
-        rowDisplay.removeAll();
-        this.removeAll();
-        this.repaint();
+    protected void prepareInventory(){
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.HORIZONTAL;
         c.anchor = GridBagConstraints.PAGE_START;
@@ -67,10 +65,11 @@ public class VendorController extends IMSController{
         c.weightx = 1;
         this.add(vendorInfo, c);
         updateVendorInfo();
-        c.gridy = 1;
-        this.add(columnLabels, c);
+        vendorInfo.setMinimumSize(new Dimension(0,vendorInfo.getPreferredSize().height));
+        //this.add(columnLabels, c);
+        rowScroll.setColumnHeaderView(columnLabels);
         c.fill = GridBagConstraints.BOTH;
-        c.gridy = 2;
+        c.gridy = 1;
         c.weighty = 1;
         this.add(rowScroll,c);
     }

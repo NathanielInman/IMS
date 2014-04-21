@@ -33,25 +33,26 @@ public class IMSController extends JPanel implements MouseListener{
     protected static int CODE_STRING = 1;
     protected static int CODE_PRICE = 2;
     protected static int CODE_PICTURE = 3;
-    private static Border fieldBorder = BorderFactory.createBevelBorder(BevelBorder.RAISED);
-    private static Border selectedBorder = BorderFactory.createBevelBorder(BevelBorder.LOWERED);
+    private Border fieldBorder = BorderFactory.createBevelBorder(BevelBorder.RAISED);
+    private Border selectedBorder = BorderFactory.createBevelBorder(BevelBorder.LOWERED);
     // Each row is a string-based ArrayList, so the rows object is an ArrayList
     // based on string-based ArrayLists
     protected ArrayList<ArrayList<String>> rows = new ArrayList<>();
     protected GridBagLayout displayLayout = new GridBagLayout();
     protected GridBagLayout rowLayout = new GridBagLayout();
-    protected static JPopupMenu itemMenu = new JPopupMenu();
-    protected static JMenuItem sortItem = new JMenuItem();
-    protected static JMenuItem editItem = new JMenuItem();
+    protected JPopupMenu itemMenu = new JPopupMenu();
+    protected JMenuItem sortItem = new JMenuItem();
+    protected JMenuItem editItem = new JMenuItem();
     protected JPanel rowDisplay = new JPanel();
     protected JScrollPane rowScroll;
     protected JPanel columnLabels = new JPanel();
-    private static int activeColumn = -1;
-    private static int activeRow = -1;
+    private int activeColumn = -1;
+    private int activeRow = -1;
     public static DatabaseController db = new DatabaseController();
     public static boolean loggedIn = false;
     public static String activeUser = null;
-    public IMSController(){
+    private JPanel displayPanel;
+    public IMSController(JPanel displayPanel){
         super();
         sortItem.setText("Sort by this column");
         sortItem.addActionListener(new java.awt.event.ActionListener() {
@@ -74,9 +75,10 @@ public class IMSController extends JPanel implements MouseListener{
         rowScroll.setLayout(new ScrollPaneLayout());
         // Setting the scroll bar's unit increment makes for faster mouse wheel scrolling
         rowScroll.getVerticalScrollBar().setUnitIncrement(16);
+        this.displayPanel = displayPanel;
     }
     public void filterByCategory(String category){
-        rows = new ArrayList<ArrayList<String>>();
+        rows.clear();
         ArrayList categoryList = getByValue(category);
         Iterator itr = categoryList.iterator();
         ArrayList currentRow;
@@ -92,11 +94,10 @@ public class IMSController extends JPanel implements MouseListener{
                         currentRow.add("-");
                     }
                 }
-                //rows.add(new ArrayList<>(Arrays.asList(itr.next().toString(),itr.next().toString(),itr.next().toString(),itr.next().toString(),itr.next().toString(),itr.next().toString(),itr.next().toString(),itr.next().toString(),itr.next().toString())));
             }
             rows.add(currentRow);
         }
-        showInventory();
+        this.showInventory();
     }
     protected ArrayList getByValue(String value){
         return new ArrayList();
@@ -138,20 +139,18 @@ public class IMSController extends JPanel implements MouseListener{
     /**
      * This function displays the rows of data.
      * 
-     * It uses the IMSController's functionality. Instead of adding all text
-     * fields, we should have it check the ROW_CODES to determine what kind
-     * of data to add.
      */
     public void showInventory(){
         clearInventory();
+        prepareInventory();
         int j;
         for(int i=0; i<rows.size(); i++){
             for(j=0; j<rows.get(i).size(); j++){
                 addTextField(rows.get(i).get(j), rowConstraint(i, j));
             }
         }
-        rowDisplay.add(new JPanel(),endConstraint());
         this.setColumnLabels();
+        rowDisplay.add(new JPanel(),endConstraint());
         this.revalidate();
     }
     public void resetActivePosition(){
@@ -223,6 +222,8 @@ public class IMSController extends JPanel implements MouseListener{
         rowDisplay.removeAll();
         this.removeAll();
         this.repaint();
+    }
+    protected void prepareInventory(){
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.HORIZONTAL;
         c.anchor = GridBagConstraints.PAGE_START;
@@ -230,7 +231,6 @@ public class IMSController extends JPanel implements MouseListener{
         c.gridx = 0;
         c.weighty = 0;
         c.weightx = 1;
-        //rowScroll.add(columnLabels, c);
         rowScroll.setColumnHeaderView(columnLabels);
         c.fill = GridBagConstraints.BOTH;
         c.gridy = 1;
@@ -309,13 +309,14 @@ public class IMSController extends JPanel implements MouseListener{
         textArea.setWrapStyleWord(true);
         textArea.addMouseListener(this);
         textField.setAlignmentX(LEFT_ALIGNMENT);
-        rowDisplay.add(textField, c);
-        textField.add(textArea);
-        int textWidth = (int)(rowScroll.getWidth()*c.weightx/(sumArray(getColumnWeights())+1));
+        //int textWidth = (int)(rowScroll.getWidth()*c.weightx/(sumArray(getColumnWeights())+1));
+        int textWidth = (int)(displayPanel.getWidth()*c.weightx/(sumArray(getColumnWeights())+1));
         textArea.setPreferredSize(new Dimension(textWidth, Short.MAX_VALUE));
         FontMetrics fm = textArea.getFontMetrics(textArea.getFont());
         int textHeight = countLines(textArea, textWidth)*fm.getHeight();
-        textArea.setPreferredSize(new Dimension(textArea.getPreferredSize().width, textHeight));
+        textArea.setPreferredSize(new Dimension(textWidth, textHeight));
+        textField.add(textArea);
+        rowDisplay.add(textField, c);
     }
     private static int countLines(JTextArea textArea, int textWidth) {
         if(textArea.getText().length()==0){
@@ -347,7 +348,6 @@ public class IMSController extends JPanel implements MouseListener{
         JPanel textField;
         JTextArea textLabel;
         columnLabels.setLayout(rowLayout);
-        //columnLabels.setLayout(new BoxLayout(columnLabels, BoxLayout.X_AXIS));
         try{
             for(int i=0; i<this.getColumnNames().length; i++){
                 textField = new JPanel();
@@ -395,7 +395,7 @@ public class IMSController extends JPanel implements MouseListener{
      */
     protected void sortRowsBy(int field){
         int j;
-        int comparison=0;
+        int comparison;
         boolean flag = true;
         ArrayList<String> temp;
         while(flag){
@@ -411,6 +411,9 @@ public class IMSController extends JPanel implements MouseListener{
                     comparison = rows.get(j).get(field).compareToIgnoreCase(rows.get(j+1).get(field));
                 }else if(getRowCode(field)==IMSController.CODE_PICTURE){
                     comparison = 0;
+                }else{
+                    System.out.println("Unrecognized row code: "+getRowCode(field)+". Aborting sort...");
+                    return;
                 }
                 if (comparison > 0 ){
                     temp = rows.get(j);
