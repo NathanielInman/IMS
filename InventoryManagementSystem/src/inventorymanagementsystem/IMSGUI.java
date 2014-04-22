@@ -26,6 +26,7 @@ public class IMSGUI extends javax.swing.JFrame {
     public void updateCategoriesFromDB(){
         inventoryList.setListData(IMSController.db.getCategoryList("category", "Inventory").toArray());
         vendorList.setListData(IMSController.db.getCategoryList("name","Vendors").toArray());
+        salesList.setListData(new Object[0]);
     }
     /**
      * This method allows us to choose the controller to display.
@@ -188,8 +189,14 @@ public class IMSGUI extends javax.swing.JFrame {
         userDisplay.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         userDisplay.setText("Hello!");
 
+        categoryPane.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                categoryPaneStateChanged(evt);
+            }
+        });
+
         inventoryList.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Trophies", "Vinyl", "Paper", "Toner", "Other" };
+            String[] strings = { "Error loading database..." };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
@@ -225,7 +232,7 @@ public class IMSGUI extends javax.swing.JFrame {
         categoryPane.addTab("Inventory", inventoryPane);
 
         vendorList.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "I don't know", "What vendors", "To put here" };
+            String[] strings = { "Error loading database..." };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
@@ -260,7 +267,7 @@ public class IMSGUI extends javax.swing.JFrame {
         categoryPane.addTab("Vendors", vendorPane);
 
         salesList.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Not sure", "What goes", "Here either" };
+            String[] strings = { "Error loading database..." };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
@@ -293,7 +300,7 @@ public class IMSGUI extends javax.swing.JFrame {
         controllerDisplay.setLayout(controllerDisplayLayout);
         controllerDisplayLayout.setHorizontalGroup(
             controllerDisplayLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 647, Short.MAX_VALUE)
         );
         controllerDisplayLayout.setVerticalGroup(
             controllerDisplayLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -419,6 +426,15 @@ public class IMSGUI extends javax.swing.JFrame {
             // Nothing has been selected, so we won't show anything.
         }
     }//GEN-LAST:event_vendorListValueChanged
+
+    private void categoryPaneStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_categoryPaneStateChanged
+        if(categoryPane.getSelectedComponent()==salesPane){
+            inventoryList.clearSelection();
+            vendorList.clearSelection();
+            this.setController(new RoyaltiesController(controllerDisplay));
+            controller.filterByCategory("name");
+        }
+    }//GEN-LAST:event_categoryPaneStateChanged
 
     private void logIn(String user){
         IMSController.logIn(user);

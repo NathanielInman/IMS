@@ -190,7 +190,7 @@ public class DatabaseController {
    /*
     * This method will get a list of all the royalties
     */
-   public ArrayList getRoyaltyList(){
+   public ArrayList getRoyalties(){
         ArrayList returnResults = new ArrayList<>();
         Statement stmt = null;
         Connection conn;
@@ -204,15 +204,15 @@ public class DatabaseController {
            sql = "SELECT * FROM Royalties";
            try (ResultSet rs = stmt.executeQuery(sql)){
                 while(rs.next()){
-                    System.out.print(rs.getString("id")+",");
-                    System.out.print(rs.getString("name")+",");
-                    System.out.print(rs.getString("phone")+",");
-                    System.out.print(rs.getString("extension")+",");
-                    System.out.print(rs.getString("address")+",");
-                    System.out.print(rs.getString("website")+",");
-                    System.out.print(rs.getString("email")+",");
-                    System.out.print(rs.getString("ppoc")+",");
-                    System.out.println(rs.getString("royalty"));
+                    returnResults.add(rs.getString("id"));
+                    returnResults.add(rs.getString("name"));
+                    returnResults.add(rs.getString("phone"));
+                    returnResults.add(rs.getString("extension"));
+                    returnResults.add(rs.getString("address"));
+                    returnResults.add(rs.getString("website"));
+                    returnResults.add(rs.getString("email"));
+                    returnResults.add(rs.getString("ppoc"));
+                    returnResults.add(rs.getString("royalty"));
                 } //end while
            } //end try
            stmt.close();
