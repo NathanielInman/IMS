@@ -1,7 +1,7 @@
-Tue Apr 22 16:02:15 CDT 2014 : Apache Derby Network Server - 10.8.3.0 - (1405108) started and ready to accept connections on port 1527
+Tue Apr 22 16:20:23 CDT 2014 : Apache Derby Network Server - 10.8.3.0 - (1405108) started and ready to accept connections on port 1527
 ----------------------------------------------------------------
-Tue Apr 22 16:02:16 CDT 2014:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.8.3.0 - (1405108): instance a816c00e-0145-8b3f-09cb-ffff954b54c2 
+Tue Apr 22 16:20:24 CDT 2014:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.8.3.0 - (1405108): instance a816c00e-0145-8b4f-a420-ffff954b54c2 
 on database directory C:\Users\Lucas\Documents\GitHub\IMS\InventoryManagementSystem\database\KCC  with class loader sun.misc.Launcher$AppClassLoader@47858e 
 Loaded from file:/C:/Program%20Files/Java/jdk1.7.0_51/db/lib/derby.jar
 java.vendor=Oracle Corporation
@@ -13,4 +13,4 @@ os.version=6.1
 derby.system.home=C:\Users\Lucas\Documents\GitHub\IMS\InventoryManagementSystem\database
 Database Class Loader started - derby.database.classpath=''
 ----------------------------------------------------------------
-Tue Apr 22 16:16:46 CDT 2014: Shutting down Derby engine
+Tue Apr 22 16:37:12 CDT 2014: Shutting down Derby engine
