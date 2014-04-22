@@ -1,17 +1,14 @@
-Mon Apr 21 19:28:03 CDT 2014 : Apache Derby Network Server - 10.8.1.2 - (1095077) started and ready to accept connections on port 1527
+Tue Apr 22 15:27:55 CDT 2014 : Apache Derby Network Server - 10.8.3.0 - (1405108) started and ready to accept connections on port 1527
 ----------------------------------------------------------------
-Mon Apr 21 19:28:04 CDT 2014:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.8.1.2 - (1095077): instance a816c00e-0145-86d5-1999-ffffba54585e 
-on database directory C:\Users\Mike\Documents\GitHub\IMS\InventoryManagementSystem\database\KCC  with class loader sun.misc.Launcher$AppClassLoader@262505b7 
-Loaded from file:/C:/Program%20Files/Java/jdk1.7.0_02/db/lib/derby.jar
+Tue Apr 22 15:27:55 CDT 2014:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.8.3.0 - (1405108): instance a816c00e-0145-8b1f-9b1c-ffff954b54c2 
+on database directory C:\Users\Lucas\Documents\GitHub\IMS\InventoryManagementSystem\database\KCC  with class loader sun.misc.Launcher$AppClassLoader@47858e 
+Loaded from file:/C:/Program%20Files/Java/jdk1.7.0_51/db/lib/derby.jar
 java.vendor=Oracle Corporation
-java.runtime.version=1.7.0_02-b13
-user.dir=C:\Program Files\Java\jdk1.7.0_02\db
-derby.system.home=C:\Users\Mike\Documents\GitHub\IMS\InventoryManagementSystem\database
+java.runtime.version=1.7.0_51-b13
+user.dir=C:\Program Files\Java\jdk1.7.0_51\db
+os.name=Windows 7
+os.arch=x86
+os.version=6.1
+derby.system.home=C:\Users\Lucas\Documents\GitHub\IMS\InventoryManagementSystem\database
 Database Class Loader started - derby.database.classpath=''
-----------------------------------------------------------------
-Mon Apr 21 19:47:04 CDT 2014: Shutting down Derby engine
-----------------------------------------------------------------
-Mon Apr 21 19:47:04 CDT 2014:
-Shutting down instance a816c00e-0145-86d5-1999-ffffba54585e on database directory C:\Users\Mike\Documents\GitHub\IMS\InventoryManagementSystem\database\KCC with class loader sun.misc.Launcher$AppClassLoader@262505b7 
-----------------------------------------------------------------

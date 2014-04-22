@@ -52,10 +52,6 @@ public class IMSGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        gearMenu = new javax.swing.JPopupMenu();
-        gearMenuLog = new javax.swing.JMenuItem();
-        gearMenuPH0 = new javax.swing.JMenuItem();
-        gearMenuPH1 = new javax.swing.JMenuItem();
         logMenu = new javax.swing.JDialog();
         userField = new java.awt.TextField();
         passwordField = new java.awt.TextField();
@@ -66,7 +62,6 @@ public class IMSGUI extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
         userDisplay = new javax.swing.JLabel();
         categoryPane = new javax.swing.JTabbedPane();
         inventoryPane = new javax.swing.JPanel();
@@ -79,17 +74,7 @@ public class IMSGUI extends javax.swing.JFrame {
         jScrollPane4 = new javax.swing.JScrollPane();
         salesList = new javax.swing.JList();
         controllerDisplay = new javax.swing.JPanel();
-
-        gearMenuLog.setText("Log in");
-        gearMenuLog.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                gearMenuLogActionPerformed(evt);
-            }
-        });
-
-        gearMenuPH0.setText("I am a placeholder.");
-
-        gearMenuPH1.setText("Me too!");
+        logInButton = new javax.swing.JButton();
 
         logMenu.setAlwaysOnTop(true);
 
@@ -174,20 +159,9 @@ public class IMSGUI extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/inventorymanagementsystem/Images/settings.png"))); // NOI18N
-        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel2MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jLabel2MouseEntered(evt);
-            }
-        });
-
         userDisplay.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         userDisplay.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        userDisplay.setText("Hello!");
+        userDisplay.setText("Please Log in!");
 
         categoryPane.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -307,6 +281,13 @@ public class IMSGUI extends javax.swing.JFrame {
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
+        logInButton.setText("Log in");
+        logInButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                logInButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -319,13 +300,13 @@ public class IMSGUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 329, Short.MAX_VALUE)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 308, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(userDisplay, javax.swing.GroupLayout.DEFAULT_SIZE, 221, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel2))
+                        .addComponent(userDisplay, javax.swing.GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(logInButton))
                     .addComponent(controllerDisplay, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -339,13 +320,12 @@ public class IMSGUI extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(categoryPane))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(userDisplay)
-                                .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(userDisplay)
+                            .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(logInButton))
+                        .addGap(18, 18, 18)
                         .addComponent(controllerDisplay, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -362,31 +342,6 @@ public class IMSGUI extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jLabel2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel2MouseEntered
-
-    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
-        // This makes a menu appear when the gear icon is clicked.
-        gearMenu.show(evt.getComponent(),evt.getX(), evt.getY());
-        gearMenu.add(gearMenuLog);
-        gearMenu.add(gearMenuPH0);
-        gearMenu.add(gearMenuPH1);
-    }//GEN-LAST:event_jLabel2MouseClicked
-
-    private void gearMenuLogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gearMenuLogActionPerformed
-        if(IMSController.loggedIn){
-            logOut();
-        }else{
-            Point p = this.getRootPane().getLocationOnScreen();
-            passwordField.setText(null);
-            logMenu.getRootPane().setDefaultButton(logOKButton);
-            logMenu.setLocation(p.x+this.getRootPane().getWidth()/2-logMenu.getWidth()/2, p.y+this.getRootPane().getHeight()/2-logMenu.getHeight()/2);
-            logMenu.pack();
-            logMenu.setVisible(true);
-        }
-    }//GEN-LAST:event_gearMenuLogActionPerformed
 
     private void logOKButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logOKButtonActionPerformed
         if (passwordField.getText().equals(IMSController.db.checkCredentials(userField.getText()))) {
@@ -436,30 +391,39 @@ public class IMSGUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_categoryPaneStateChanged
 
+    private void logInButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logInButtonActionPerformed
+        // TODO add your handling code here:
+         if(IMSController.loggedIn){
+            logOut();
+        }else{
+            Point p = this.getRootPane().getLocationOnScreen();
+            passwordField.setText(null);
+            logMenu.getRootPane().setDefaultButton(logOKButton);
+            logMenu.setLocation(p.x+this.getRootPane().getWidth()/2-logMenu.getWidth()/2, p.y+this.getRootPane().getHeight()/2-logMenu.getHeight()/2);
+            logMenu.pack();
+            logMenu.setVisible(true);
+        }
+    }//GEN-LAST:event_logInButtonActionPerformed
+
     private void logIn(String user){
         IMSController.logIn(user);
-        gearMenuLog.setText("Log out");
+        logInButton.setText("Log out");
         userDisplay.setText("Hello, "+IMSController.activeUser+"!");
     }
     
     private void logOut(){
         IMSController.logOut();
-        gearMenuLog.setText("Log in");
-        userDisplay.setText("Hello!");
+        logInButton.setText("Log in");
+        userDisplay.setText("Please Log in!");
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTabbedPane categoryPane;
     private javax.swing.JPanel controllerDisplay;
-    private javax.swing.JPopupMenu gearMenu;
-    private javax.swing.JMenuItem gearMenuLog;
-    private javax.swing.JMenuItem gearMenuPH0;
-    private javax.swing.JMenuItem gearMenuPH1;
     private javax.swing.JList inventoryList;
     private javax.swing.JPanel inventoryPane;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane2;
@@ -467,6 +431,7 @@ public class IMSGUI extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JButton logCancelButton;
+    private javax.swing.JButton logInButton;
     private javax.swing.JDialog logMenu;
     private javax.swing.JButton logOKButton;
     private java.awt.TextField passwordField;
