@@ -19,39 +19,65 @@ public class DatabaseController {
    
    DatabaseController(){}
    
-   /*
-    * This method will get all inventory items by the specified category name.
-    */
-   public ArrayList getInventoryByColumn(String column, String value, int dataType){
-        ArrayList returnResults = new ArrayList<>();
-        Statement stmt = null;
-        Connection conn;
-        try{
+   private ArrayList getResultSet(PreparedStatement stmt, String sql, int controllerType, String[] strings){
+      
+       ArrayList returnResults = new ArrayList<>();
+       Connection conn;
+       try{
            Class.forName(JDBC_DRIVER);
            System.out.println("Connecting to database...");
            conn = DriverManager.getConnection(DB_URL,USER,PASS);
            System.out.println("Creating statement...");
-           stmt = conn.createStatement();
-           String sql;
-           if(dataType==IMSController.CODE_NUMBER){
-                sql = "SELECT * FROM Inventory WHERE "+column+"="+Integer.parseInt(value);
-           }else{
-                sql = "SELECT * FROM Inventory WHERE "+column+"='"+value+"'";
+           stmt = conn.prepareStatement(sql);
+           for(int i=0; i<strings.length; i++){
+               
+               stmt.setString(i+1, strings[i]);
            }
-           try (ResultSet rs = stmt.executeQuery(sql)){
-                while(rs.next()){
-                    returnResults.add(rs.getInt("id"));
-                    returnResults.add(rs.getString("name"));
-                    returnResults.add(rs.getDouble("price"));
-                    returnResults.add(rs.getDouble("wholesale"));
-                    returnResults.add(rs.getString("category"));
-                    returnResults.add(rs.getString("vendor_id"));
-                    returnResults.add(rs.getString("royalty_id"));
-                    returnResults.add(rs.getString("description"));
-                    returnResults.add(rs.getBlob("picture"));
-                    returnResults.add(rs.getString("preferred_stock"));
-                } //end while
-           }//end try
+           if(controllerType == IMSController.TYPE_INVENTORY){
+                try (ResultSet rs = stmt.executeQuery()){
+                    while(rs.next()){
+                        returnResults.add(rs.getInt("id"));
+                        returnResults.add(rs.getString("name"));
+                        returnResults.add(rs.getDouble("price"));
+                        returnResults.add(rs.getDouble("wholesale"));
+                        returnResults.add(rs.getString("category"));
+                        returnResults.add(rs.getString("vendor_id"));
+                        returnResults.add(rs.getString("royalty_id"));
+                        returnResults.add(rs.getString("description"));
+                        returnResults.add(rs.getBlob("picture"));
+                        returnResults.add(rs.getString("preferred_stock"));
+                    }
+                }
+           } 
+           else if(controllerType == IMSController.TYPE_VENDOR) {
+               try (ResultSet rs = stmt.executeQuery()){
+                    while(rs.next()){
+                        returnResults.add(rs.getString("id"));
+                        returnResults.add(rs.getString("name"));
+                        returnResults.add(rs.getString("phone"));
+                        returnResults.add(rs.getString("extension"));
+                        returnResults.add(rs.getString("address"));
+                        returnResults.add(rs.getString("website"));
+                        returnResults.add(rs.getString("email"));
+                        returnResults.add(rs.getString("ppoc"));
+                    }
+                }
+           }
+           else {
+               try (ResultSet rs = stmt.executeQuery()){
+                   while(rs.next()){
+                        returnResults.add(rs.getString("id"));
+                        returnResults.add(rs.getString("name"));
+                        returnResults.add(rs.getString("phone"));
+                        returnResults.add(rs.getString("extension"));
+                        returnResults.add(rs.getString("address"));
+                        returnResults.add(rs.getString("website"));
+                        returnResults.add(rs.getString("email"));
+                        returnResults.add(rs.getString("ppoc"));
+                        returnResults.add(rs.getString("royalty"));
+                   } //end while
+               } //end try
+           }
            stmt.close();
            conn.close();
        }catch(SQLException se){ //errors in the SQL processing
@@ -65,6 +91,61 @@ public class DatabaseController {
                 se.printStackTrace();
             } //end try
        } //end try
+        return returnResults;
+   }
+   
+   public ArrayList search(String term, int type){
+       ArrayList returnResults = new ArrayList<>();
+        PreparedStatement stmt = null;
+
+        String sql;
+        term = term.replaceAll("'", "_");
+        String tableName = "";
+        if(type==IMSController.TYPE_INVENTORY){
+            tableName = "Inventory";
+        }else if(type==IMSController.TYPE_ROYALTIES){
+            tableName = "Royalties";
+        }
+        sql = "SELECT * FROM "+tableName+" WHERE Lower(Name) LIKE '%"+term.toLowerCase()+"%'";
+        String[] stringsArray = {};
+       returnResults = getResultSet(stmt, sql, type, stringsArray);
+       System.out.println("Finished.");
+       return returnResults;
+   }
+   
+   public ArrayList vendorSearch(String term, int vendorID){
+        ArrayList returnResults = new ArrayList<>();
+        PreparedStatement stmt = null;
+
+        String sql;
+        term = term.replaceAll("'", "_");
+        String tableName = "";
+       sql = "SELECT * FROM Inventory WHERE vendor_id = "+vendorID+" AND Lower(Name) LIKE '%"+term.toLowerCase()+"%'";
+       String[] stringsArray = {};
+       returnResults = getResultSet(stmt, sql, IMSController.TYPE_INVENTORY, stringsArray);
+       System.out.println("Finished.");
+       return returnResults;
+   }
+   
+   /*
+    * This method will get all inventory items by the specified category name.
+    */
+   public ArrayList getInventoryByColumn(String column, String value, int dataType){
+        ArrayList returnResults = new ArrayList<>();
+        PreparedStatement stmt = null;
+
+        String sql;
+        ArrayList<String> strings = new ArrayList();
+        if(dataType==IMSController.CODE_NUMBER){
+             sql = "SELECT * FROM Inventory WHERE "+column+"="+Integer.parseInt(value);
+        }else{
+            strings.add(value);
+             sql = "SELECT * FROM Inventory WHERE "+column+"= ?";
+        }
+        String[] stringsArray;
+        stringsArray = new String[strings.size()];
+        stringsArray = strings.toArray(stringsArray);
+       returnResults = getResultSet(stmt, sql, IMSController.TYPE_INVENTORY, stringsArray);
        System.out.println("Finished.");
        return returnResults;
    } //end getCategory()
@@ -148,26 +229,19 @@ public class DatabaseController {
    public ArrayList getVendorsByName(String name){
         ArrayList returnResults = new ArrayList<>();
         PreparedStatement stmt = null;
-        Connection conn;
-        try{
+      //  Connection conn;
+      /*  try{
            Class.forName(JDBC_DRIVER);
            System.out.println("Connecting to database...");
            conn = DriverManager.getConnection(DB_URL,USER,PASS);
-           System.out.println("Creating statement...");
+           System.out.println("Creating statement...");*/
            String sql;
            sql = "SELECT * FROM vendors WHERE name = ?";
-           stmt = conn.prepareStatement(sql);
-           stmt.setString(1, name);
-           try (ResultSet rs = stmt.executeQuery()){
+           //stmt = conn.prepareStatement(sql);
+           //stmt.setString(1, name);
+           /*try (ResultSet rs = stmt.executeQuery()){
                 while(rs.next()){
-                    returnResults.add(rs.getString("id"));
-                    returnResults.add(rs.getString("name"));
-                    returnResults.add(rs.getString("phone"));
-                    returnResults.add(rs.getString("extension"));
-                    returnResults.add(rs.getString("address"));
-                    returnResults.add(rs.getString("website"));
-                    returnResults.add(rs.getString("email"));
-                    returnResults.add(rs.getString("ppoc"));
+                    returnResults.add(rs.getString(category));
                 } //end while
            } //end try
            stmt.close();
@@ -182,7 +256,9 @@ public class DatabaseController {
             }catch(SQLException se){
                 se.printStackTrace();
             } //end try
-       } //end try
+       } //end try*/
+           String[] vars = {name};
+       returnResults = getResultSet(stmt, sql, IMSController.TYPE_VENDOR, vars);
        System.out.println("Finished.");
        return returnResults;
    } //end getVendorsByName()
@@ -192,27 +268,19 @@ public class DatabaseController {
     */
    public ArrayList getRoyalties(){
         ArrayList returnResults = new ArrayList<>();
-        Statement stmt = null;
-        Connection conn;
+        PreparedStatement stmt = null;
+      /*  Connection conn;
         try{
            Class.forName(JDBC_DRIVER);
            System.out.println("Connecting to database...");
            conn = DriverManager.getConnection(DB_URL,USER,PASS);
            System.out.println("Creating statement...");
-           stmt = conn.createStatement();
+           stmt = conn.createStatement(); */
            String sql;
            sql = "SELECT * FROM Royalties";
-           try (ResultSet rs = stmt.executeQuery(sql)){
+        /*   try (ResultSet rs = stmt.executeQuery(sql)){
                 while(rs.next()){
-                    returnResults.add(rs.getString("id"));
-                    returnResults.add(rs.getString("name"));
-                    returnResults.add(rs.getString("phone"));
-                    returnResults.add(rs.getString("extension"));
-                    returnResults.add(rs.getString("address"));
-                    returnResults.add(rs.getString("website"));
-                    returnResults.add(rs.getString("email"));
-                    returnResults.add(rs.getString("ppoc"));
-                    returnResults.add(rs.getString("royalty"));
+                    returnResults.add(rs.getString(category));
                 } //end while
            } //end try
            stmt.close();
@@ -227,7 +295,9 @@ public class DatabaseController {
             }catch(SQLException se){
                 se.printStackTrace();
             } //end try
-       } //end try
+       } //end try*/
+           String[] strings = {};
+       returnResults = getResultSet(stmt, sql, IMSController.TYPE_ROYALTIES, strings);
        System.out.println("Finished.");
        return returnResults;
    } //end getCategory()

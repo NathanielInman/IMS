@@ -22,6 +22,7 @@ public class IMSGUI extends javax.swing.JFrame {
     public IMSGUI() {
         initComponents();
         updateCategoriesFromDB();
+        setController(new InventoryController(controllerDisplay));
     }
     public void updateCategoriesFromDB(){
         inventoryList.setListData(IMSController.db.getCategoryList("category", "Inventory").toArray());
@@ -336,13 +337,22 @@ public class IMSGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
+        search();
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        search();        
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void search(){
+        try {
+        controller.search(jTextField1.getText());
+        }
+        catch(NullPointerException npe){
+            
+        }
+    }
+    
     private void logOKButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logOKButtonActionPerformed
         if (passwordField.getText().equals(IMSController.db.checkCredentials(userField.getText()))) {
             logIn(userField.getText());
@@ -388,6 +398,14 @@ public class IMSGUI extends javax.swing.JFrame {
             vendorList.clearSelection();
             this.setController(new RoyaltiesController(controllerDisplay));
             controller.filterByCategory("name");
+        }else if(categoryPane.getSelectedComponent()==inventoryPane){
+            salesList.clearSelection();
+            vendorList.clearSelection();
+            this.setController(new InventoryController(controllerDisplay));
+        }else if(categoryPane.getSelectedComponent()==vendorPane){
+            salesList.clearSelection();
+            inventoryList.clearSelection();
+            this.setController(new VendorController(controllerDisplay));
         }
     }//GEN-LAST:event_categoryPaneStateChanged
 

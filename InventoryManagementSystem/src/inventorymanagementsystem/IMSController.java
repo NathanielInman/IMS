@@ -25,6 +25,10 @@ import javax.swing.text.Style;
  * 
  */
 public class IMSController extends JPanel implements MouseListener{
+    // These are to tell the database controller which list to search for the search function
+    public static int TYPE_INVENTORY = 0;
+    public static int TYPE_VENDOR = 1;
+    public static int TYPE_ROYALTIES = 2;
     // The height of each row, in pixels
     private static int MAXIMUM_ROW_HEIGHT = 50;
     // These are internal codes for all of the controllers so that they know
@@ -77,9 +81,18 @@ public class IMSController extends JPanel implements MouseListener{
         rowScroll.getVerticalScrollBar().setUnitIncrement(16);
         this.displayPanel = displayPanel;
     }
-    public void filterByCategory(String category){
+    
+    public void search(String term){
+        setRows(db.search(term, getType()));
+        showInventory();
+    }
+    
+    public int getType(){
+        return -1;
+    }
+    
+    protected void setRows(ArrayList categoryList) {
         rows.clear();
-        ArrayList categoryList = getByValue(category);
         Iterator itr = categoryList.iterator();
         ArrayList currentRow;
         while(itr.hasNext()){
@@ -97,6 +110,9 @@ public class IMSController extends JPanel implements MouseListener{
             }
             rows.add(currentRow);
         }
+    }
+    public void filterByCategory(String category){
+        setRows(getByValue(category));
         this.showInventory();
     }
     protected ArrayList getByValue(String value){

@@ -51,6 +51,11 @@ public class VendorController extends IMSController{
         setActiveVendor(value);
         return db.getInventoryByColumn("vendor_id",activeVendor.get(0),IMSController.CODE_NUMBER);
     }
+    @Override
+    public void search(String term){
+        setRows(db.vendorSearch(term, Integer.parseInt(activeVendor.get(0))));
+        showInventory();
+    }
     /**
      * This method resets the display panes.
      */
@@ -95,5 +100,9 @@ public class VendorController extends IMSController{
                 c.gridx = 0;
             }
         }
+    }
+    @Override
+    public int getType() {
+        return IMSController.TYPE_VENDOR;
     }
 }

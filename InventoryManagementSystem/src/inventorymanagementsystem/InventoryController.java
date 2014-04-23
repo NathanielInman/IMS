@@ -34,4 +34,9 @@ public class InventoryController extends IMSController{
     protected ArrayList getByValue(String value){
         return db.getInventoryByColumn("category", value,IMSController.CODE_STRING);
     }
+    
+    @Override
+    public int getType() {
+        return IMSController.TYPE_INVENTORY;
+    }
 }

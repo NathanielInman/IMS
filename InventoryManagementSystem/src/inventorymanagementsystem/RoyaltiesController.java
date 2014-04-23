@@ -34,4 +34,8 @@ public class RoyaltiesController extends IMSController{
     protected ArrayList getByValue(String value){
         return db.getRoyalties();
     }
+    @Override
+    public int getType() {
+        return IMSController.TYPE_ROYALTIES;
+    }
 }
