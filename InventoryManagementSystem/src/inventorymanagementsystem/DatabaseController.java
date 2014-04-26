@@ -44,7 +44,7 @@ public class DatabaseController {
                         returnResults.add(rs.getString("vendor_id"));
                         returnResults.add(rs.getString("royalty_id"));
                         returnResults.add(rs.getString("description"));
-                        returnResults.add(rs.getBlob("picture"));
+                        returnResults.add(rs.getClob("picture"));
                         returnResults.add(rs.getString("preferred_stock"));
                     }
                 }
