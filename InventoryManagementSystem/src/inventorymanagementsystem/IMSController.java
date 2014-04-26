@@ -10,15 +10,18 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.font.FontRenderContext;
 import java.awt.font.LineBreakMeasurer;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.sql.Blob;
+import java.sql.SQLException;
 import java.text.AttributedCharacterIterator;
 import java.text.AttributedString;
 import java.util.ArrayList;
 import java.util.Iterator;
+import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.SpringLayout.Constraints;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
-import javax.swing.text.Style;
 
 /**
  *
@@ -60,12 +63,14 @@ public class IMSController extends JPanel implements MouseListener{
         super();
         sortItem.setText("Sort by this column");
         sortItem.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 sortItemActionPerformed(e);
             }
         });
         editItem.setText("Edit value");
         editItem.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 editItemActionPerformed(e);
             }
@@ -162,7 +167,12 @@ public class IMSController extends JPanel implements MouseListener{
         int j;
         for(int i=0; i<rows.size(); i++){
             for(j=0; j<rows.get(i).size(); j++){
-                addTextField(rows.get(i).get(j), rowConstraint(i, j));
+                if(getColumnName(j)=="Picture"){
+                   // addImageIcon(rows.get(i).get(j), rowConstraint(i,j));
+                    addTextField("Picture",rowConstraint(i,j));
+                }else{
+                    addTextField(rows.get(i).get(j), rowConstraint(i, j));
+                }
             }
         }
         this.setColumnLabels();
@@ -325,7 +335,6 @@ public class IMSController extends JPanel implements MouseListener{
         textArea.setWrapStyleWord(true);
         textArea.addMouseListener(this);
         textField.setAlignmentX(LEFT_ALIGNMENT);
-        //int textWidth = (int)(rowScroll.getWidth()*c.weightx/(sumArray(getColumnWeights())+1));
         int textWidth = (int)(displayPanel.getWidth()*c.weightx/(sumArray(getColumnWeights())+1));
         textArea.setPreferredSize(new Dimension(textWidth, Short.MAX_VALUE));
         FontMetrics fm = textArea.getFontMetrics(textArea.getFont());
@@ -333,6 +342,13 @@ public class IMSController extends JPanel implements MouseListener{
         textArea.setPreferredSize(new Dimension(textWidth, textHeight));
         textField.add(textArea);
         rowDisplay.add(textField, c);
+    }
+    protected void addImageIcon(Blob blob, GridBagConstraints c) throws SQLException, IOException{
+        JPanel imageIcon = newComponent();
+        imageIcon.createImage(50, 50);
+        Image imageBlob = ImageIO.read(new ByteArrayInputStream(blob.getBytes(1,(int)blob.length())));
+        imageIcon.imageUpdate(imageBlob, 0, 0, 50, 50, 50);
+        rowDisplay.add(imageIcon,c);
     }
     private static int countLines(JTextArea textArea, int textWidth) {
         if(textArea.getText().length()==0){
