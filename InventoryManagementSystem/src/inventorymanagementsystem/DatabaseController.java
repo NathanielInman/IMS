@@ -93,7 +93,38 @@ public class DatabaseController {
        } //end try
         return returnResults;
    }
-   
+   public byte[] getImageFromID(int id){
+       Connection conn;
+       String sql = "SELECT picture FROM Inventory WHERE ID="+id;
+       PreparedStatement stmt = null;
+       byte[] bytes = null;
+       try{
+           Class.forName(JDBC_DRIVER);
+           System.out.println("Connecting to database...");
+           conn = DriverManager.getConnection(DB_URL,USER,PASS);
+           System.out.println("Creating statement...");
+           stmt = conn.prepareStatement(sql);
+            try (ResultSet rs = stmt.executeQuery()){
+                while(rs.next()){
+                    Blob blob = rs.getBlob("picture");
+                    bytes = blob.getBytes(1, (int)blob.length());
+                }
+            }
+           stmt.close();
+           conn.close();
+       }catch(SQLException se){ //errors in the SQL processing
+           se.printStackTrace();
+       }catch(Exception e){ //errors relating to Class.forName
+           e.printStackTrace();
+       }finally{ //clean up regardless of success
+            try{
+                if(stmt!=null)stmt.close();
+            }catch(SQLException se){
+                se.printStackTrace();
+            } //end try
+       } //end try
+       return bytes;
+   }
    public ArrayList search(String term, int type){
        ArrayList returnResults = new ArrayList<>();
         PreparedStatement stmt = null;

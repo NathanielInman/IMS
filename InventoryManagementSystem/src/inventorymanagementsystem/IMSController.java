@@ -10,6 +10,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.font.FontRenderContext;
 import java.awt.font.LineBreakMeasurer;
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.sql.Blob;
@@ -22,6 +23,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
+import javax.xml.bind.DatatypeConverter;
 
 /**
  *
@@ -144,18 +146,21 @@ public class IMSController extends JPanel implements MouseListener{
         activeUser = null;
     }
     public void editItemActionPerformed(java.awt.event.ActionEvent e){
-        String oldValue = rows.get(activeRow).get(activeColumn);
+        /*String oldValue = rows.get(activeRow).get(activeColumn);
         String s = (String)JOptionPane.showInputDialog(this.getRootPane(),"New value:","Edit",JOptionPane.PLAIN_MESSAGE,null,null,oldValue);
         if ((s != null) && (s.length() > 0)) {
             // This does not actually change the database yet..!!
             // It also does not validate data types.
             rows.get(activeRow).set(activeColumn,s);
             showInventory();
-        }
+        }*/
     }
     public void sortItemActionPerformed(java.awt.event.ActionEvent e){
         this.sortRowsBy(activeColumn);
         this.showInventory();
+    }
+    private byte[] getImageAt(int rowIndex){
+        return db.getImageFromID(Integer.parseInt(rows.get(rowIndex).get(0)));
     }
     /**
      * This function displays the rows of data.
@@ -167,9 +172,13 @@ public class IMSController extends JPanel implements MouseListener{
         int j;
         for(int i=0; i<rows.size(); i++){
             for(j=0; j<rows.get(i).size(); j++){
-                if(getColumnName(j)=="Picture"){
-                   // addImageIcon(rows.get(i).get(j), rowConstraint(i,j));
-                    addTextField("Picture",rowConstraint(i,j));
+                if(getRowCode(j)==IMSController.CODE_PICTURE){
+                    try{
+                        addImageIcon(getImageAt(i), rowConstraint(i,j));
+                    }catch(Exception e){
+                        e.printStackTrace();
+                        addTextField("Picture",rowConstraint(i,j));
+                    }
                 }else{
                     addTextField(rows.get(i).get(j), rowConstraint(i, j));
                 }
@@ -343,12 +352,27 @@ public class IMSController extends JPanel implements MouseListener{
         textField.add(textArea);
         rowDisplay.add(textField, c);
     }
-    protected void addImageIcon(Blob blob, GridBagConstraints c) throws SQLException, IOException{
-        JPanel imageIcon = newComponent();
-        imageIcon.createImage(50, 50);
-        Image imageBlob = ImageIO.read(new ByteArrayInputStream(blob.getBytes(1,(int)blob.length())));
-        imageIcon.imageUpdate(imageBlob, 0, 0, 50, 50, 50);
+    protected void addImageIcon(byte[] blob, GridBagConstraints c) throws IOException{
+        //JPanel imageIcon = newComponent();
+        BufferedImage imageBlob = ImageIO.read(new ByteArrayInputStream(blob));
+        JPanel imageIcon = new DrawCanvas(imageBlob);
+        //imageIcon.add(new DrawCanvas(imageBlob));
+        //imageIcon.createImage(50, 50);
+        imageIcon.prepareImage(imageBlob,this);
+        //imageIcon.imageUpdate(imageBlob, 0, 0, Image., 50, 50);
         rowDisplay.add(imageIcon,c);
+        //imageIcon.getGraphics().drawImage(imageBlob,0,0,50,50,this);
+    }
+    private class DrawCanvas extends JPanel {
+        private BufferedImage img;
+        public DrawCanvas(BufferedImage img){
+            this.img = img;
+        }
+        @Override
+        public void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            g.drawImage(img,0,0,50,50,null);
+        }
     }
     private static int countLines(JTextArea textArea, int textWidth) {
         if(textArea.getText().length()==0){
@@ -440,7 +464,7 @@ public class IMSController extends JPanel implements MouseListener{
                         comparison = 0;
                     }
                 }else if(getRowCode(field)==IMSController.CODE_STRING){
-                    comparison = rows.get(j).get(field).compareToIgnoreCase(rows.get(j+1).get(field));
+                    comparison = (rows.get(j).get(field)).compareToIgnoreCase(rows.get(j+1).get(field));
                 }else if(getRowCode(field)==IMSController.CODE_PICTURE){
                     comparison = 0;
                 }else{
