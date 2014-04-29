@@ -385,4 +385,16 @@ public class DatabaseController {
        return returnResults;
     
    }
+   public ArrayList getUser(String user){
+ ArrayList returnResults = new ArrayList<>();
+        PreparedStatement stmt = null;
+     
+           String sql;
+           sql = "SELECT * FROM Users WHERE name=?";
+        
+           String[] strings = {user};
+       returnResults = getResultSet(stmt, sql, IMSController.TYPE_USER, strings);
+       System.out.println("Finished.");
+       return returnResults;
+   }
 } //end class

@@ -59,7 +59,8 @@ public class IMSController extends JPanel implements MouseListener{
     private int activeRow = -1;
     public static DatabaseController db = new DatabaseController();
     public static boolean loggedIn = false;
-    public static String activeUser = null;
+   
+    public static ArrayList activeUser = null;
     private JPanel displayPanel;
     public IMSController(JPanel displayPanel){
         super();
@@ -167,7 +168,7 @@ public class IMSController extends JPanel implements MouseListener{
     }
     public static void logIn(String user){
         loggedIn = true;
-        activeUser = user;
+        activeUser = db.getUser(user);
     }
     public static void logOut(){
         loggedIn = false;

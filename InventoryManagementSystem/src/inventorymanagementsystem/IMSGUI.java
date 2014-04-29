@@ -351,9 +351,9 @@ public class IMSGUI extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(userDisplay)
-                                .addComponent(gearIcon))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(gearIcon)
+                                .addComponent(userDisplay))
                             .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
                         .addComponent(controllerDisplay, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
@@ -474,7 +474,7 @@ public class IMSGUI extends javax.swing.JFrame {
     private void logIn(String user){
         IMSController.logIn(user);
         logInButton.setText("Log out");
-        userDisplay.setText("Hello, "+IMSController.activeUser+"!");
+        userDisplay.setText("Hello, "+IMSController.activeUser.get(1)+"!");
     }
     
     private void logOut(){

@@ -12,6 +12,7 @@ import javax.swing.JPanel;
  *
  * @author Mike and Nate
  */
+
 public class UserController extends IMSController{
     public UserController(JPanel displayPanel){
         super(displayPanel);
