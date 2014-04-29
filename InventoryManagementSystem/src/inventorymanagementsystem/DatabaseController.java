@@ -63,7 +63,7 @@ public class DatabaseController {
                     }
                 }
            }
-           else {
+           else if(controllerType == IMSController.TYPE_ROYALTIES){
                try (ResultSet rs = stmt.executeQuery()){
                    while(rs.next()){
                         returnResults.add(rs.getString("id"));
@@ -75,6 +75,18 @@ public class DatabaseController {
                         returnResults.add(rs.getString("email"));
                         returnResults.add(rs.getString("ppoc"));
                         returnResults.add(rs.getString("royalty"));
+                   } //end while
+               } //end try
+           }
+           else if(controllerType == IMSController.TYPE_USER){
+               try (ResultSet rs = stmt.executeQuery()){
+                   while(rs.next()){
+                        returnResults.add(rs.getInt("id"));
+                        returnResults.add(rs.getString("name"));
+                        returnResults.add(rs.getString("password"));
+                        //returnResults.add(rs.getInt("Level"));
+                        returnResults.add(1);
+                        
                    } //end while
                } //end try
            }
@@ -300,36 +312,26 @@ public class DatabaseController {
    public ArrayList getRoyalties(){
         ArrayList returnResults = new ArrayList<>();
         PreparedStatement stmt = null;
-      /*  Connection conn;
-        try{
-           Class.forName(JDBC_DRIVER);
-           System.out.println("Connecting to database...");
-           conn = DriverManager.getConnection(DB_URL,USER,PASS);
-           System.out.println("Creating statement...");
-           stmt = conn.createStatement(); */
+     
            String sql;
            sql = "SELECT * FROM Royalties";
-        /*   try (ResultSet rs = stmt.executeQuery(sql)){
-                while(rs.next()){
-                    returnResults.add(rs.getString(category));
-                } //end while
-           } //end try
-           stmt.close();
-           conn.close();
-       }catch(SQLException se){ //errors in the SQL processing
-           se.printStackTrace();
-       }catch(Exception e){ //errors relating to Class.forName
-           e.printStackTrace();
-       }finally{ //clean up regardless of success
-            try{
-                if(stmt!=null)stmt.close();
-            }catch(SQLException se){
-                se.printStackTrace();
-            } //end try
-       } //end try*/
+        
            String[] strings = {};
        returnResults = getResultSet(stmt, sql, IMSController.TYPE_ROYALTIES, strings);
        System.out.println("Finished.");
        return returnResults;
    } //end getCategory()
+   public ArrayList getUsers(){
+        ArrayList returnResults = new ArrayList<>();
+        PreparedStatement stmt = null;
+     
+           String sql;
+           sql = "SELECT * FROM Users";
+        
+           String[] strings = {};
+       returnResults = getResultSet(stmt, sql, IMSController.TYPE_USER, strings);
+       System.out.println("Finished.");
+       return returnResults;
+    
+   }
 } //end class

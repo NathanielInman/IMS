@@ -13,8 +13,6 @@ import java.awt.font.LineBreakMeasurer;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.sql.Blob;
-import java.sql.SQLException;
 import java.text.AttributedCharacterIterator;
 import java.text.AttributedString;
 import java.util.ArrayList;
@@ -23,7 +21,6 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
-import javax.xml.bind.DatatypeConverter;
 
 /**
  *
@@ -34,6 +31,7 @@ public class IMSController extends JPanel implements MouseListener{
     public static int TYPE_INVENTORY = 0;
     public static int TYPE_VENDOR = 1;
     public static int TYPE_ROYALTIES = 2;
+    public static int TYPE_USER = 3;
     // The height of each row, in pixels
     private static int MAXIMUM_ROW_HEIGHT = 50;
     // These are internal codes for all of the controllers so that they know
