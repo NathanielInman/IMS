@@ -50,6 +50,8 @@ public class IMSController extends JPanel implements MouseListener{
     protected JPopupMenu itemMenu = new JPopupMenu();
     protected JMenuItem sortItem = new JMenuItem();
     protected JMenuItem editItem = new JMenuItem();
+    protected JMenuItem deleteItem = new JMenuItem();
+    protected JMenuItem addItem = new JMenuItem();
     protected JPanel rowDisplay = new JPanel();
     protected JScrollPane rowScroll;
     protected JPanel columnLabels = new JPanel();
@@ -75,8 +77,24 @@ public class IMSController extends JPanel implements MouseListener{
                 editItemActionPerformed(e);
             }
         });
+        addItem.setText("Add new item");
+        addItem.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                addItemActionPerformed(e);
+            }
+        });
+        deleteItem.setText("Delete item");
+        deleteItem.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                deleteItemActionPerformed(e);
+            }
+        });
         itemMenu.add(sortItem);
         itemMenu.add(editItem);
+        itemMenu.add(deleteItem);
+        itemMenu.add(addItem);
         this.setLayout(displayLayout);
         rowDisplay.setLayout(rowLayout);
         rowDisplay.addMouseListener(this);
@@ -103,17 +121,25 @@ public class IMSController extends JPanel implements MouseListener{
         while(itr.hasNext()){
             currentRow = new ArrayList<>();
             for(int i=0; i<getRowCodes().length; i++){
-                try{
-                    currentRow.add(itr.next().toString());
-                }catch(NullPointerException npe){
-                    if(getRowCodes()[i]==IMSController.CODE_NUMBER || getRowCodes()[i]==IMSController.CODE_PRICE){
-                        currentRow.add("0");
-                    }else{
-                        currentRow.add("-");
-                    }
+                currentRow.add(itr.next());
+            }
+            rows.add(new ArrayList());
+            setRow(rows.size()-1,currentRow);
+        }
+    }
+    protected void setRow(int row, ArrayList content){
+        rows.get(row).clear();
+        Iterator itr = content.iterator();
+        for(int i=0; i<getRowCodes().length; i++){
+            try{
+                rows.get(row).add(itr.next().toString());
+            }catch(NullPointerException npe){
+                if(getRowCodes()[i]==IMSController.CODE_NUMBER || getRowCodes()[i]==IMSController.CODE_PRICE){
+                    rows.get(row).add("0");
+                }else{
+                    rows.get(row).add("-");
                 }
             }
-            rows.add(currentRow);
         }
     }
     public void filterByCategory(String category){
@@ -135,6 +161,10 @@ public class IMSController extends JPanel implements MouseListener{
         Double[] columnWeights = {};
         return columnWeights;
     }
+    protected String[] getColumnDatabaseNames(){
+        String[] columnNames = {};
+        return columnNames;
+    }
     public static void logIn(String user){
         loggedIn = true;
         activeUser = user;
@@ -143,15 +173,27 @@ public class IMSController extends JPanel implements MouseListener{
         loggedIn = false;
         activeUser = null;
     }
+    private String getColumnDatabaseName(int column){
+        return this.getColumnDatabaseNames()[column];
+    }
     public void editItemActionPerformed(java.awt.event.ActionEvent e){
-        /*String oldValue = rows.get(activeRow).get(activeColumn);
+        if(this.getRowCode(activeColumn)==IMSController.CODE_PICTURE){
+            // Not sure how to do this just yet.
+            return;
+        }
+        String oldValue = rows.get(activeRow).get(activeColumn);
         String s = (String)JOptionPane.showInputDialog(this.getRootPane(),"New value:","Edit",JOptionPane.PLAIN_MESSAGE,null,null,oldValue);
         if ((s != null) && (s.length() > 0)) {
-            // This does not actually change the database yet..!!
-            // It also does not validate data types.
-            rows.get(activeRow).set(activeColumn,s);
+            db.changeData(this.getType(),Integer.parseInt(rows.get(activeRow).get(0)),getColumnDatabaseName(activeColumn),s);
+            setRow(activeRow, db.getRowByID(Integer.parseInt(rows.get(activeRow).get(0)), this.getType()));
             showInventory();
-        }*/
+        }
+    }
+    public void addItemActionPerformed(java.awt.event.ActionEvent e){
+        
+    }
+    public void deleteItemActionPerformed(java.awt.event.ActionEvent e){
+        
     }
     public void sortItemActionPerformed(java.awt.event.ActionEvent e){
         this.sortRowsBy(activeColumn);

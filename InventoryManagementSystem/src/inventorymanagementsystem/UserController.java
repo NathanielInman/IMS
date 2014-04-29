@@ -28,6 +28,11 @@ public class UserController extends IMSController{
         return columnNames;
     }
     @Override
+    protected String[] getColumnDatabaseNames(){
+        String[] columnNames = {"ID","Name","password","level"};
+        return columnNames;
+    }
+    @Override
     protected Double[] getColumnWeights(){
         Double[] columnWeights = {0.05,0.8,0.8,0.05};
         return columnWeights;

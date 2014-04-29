@@ -25,6 +25,11 @@ public class RoyaltiesController extends IMSController{
         String[] columnNames = {"ID","Name","Phone","Extension","Address","Website","E-mail","PPOC","Royalty"};
         return columnNames;
     }
+        @Override
+    protected String[] getColumnDatabaseNames(){
+        String[] columnNames = {"ID","Name","phone","extension","address","website","email","ppoc","royalty"};
+        return columnNames;
+    }
     @Override
     protected Double[] getColumnWeights(){
         Double[] columnWeights = {0.1,0.3,0.3,0.2,0.4,0.4,0.3,0.4,0.2};

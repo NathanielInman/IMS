@@ -41,6 +41,11 @@ public class VendorController extends IMSController{
         return columnNames;
     }
     @Override
+    protected String[] getColumnDatabaseNames(){
+        String[] columnNames = {"ID","Name","Price","Wholesale","Category","vendor_ID","Royalty_ID","Description","Picture","Preferred_Stock"};
+        return columnNames;
+    }
+    @Override
     protected Double[] getColumnWeights(){
         //Double[] columnWeights = {0.1,0.4,0.3,0.2,0.4,0.4,0.3,0.3};
         Double[] columnWeights = {0.1,0.4,0.2,0.2,0.3,0.1,0.1,0.8,0.3,0.2};

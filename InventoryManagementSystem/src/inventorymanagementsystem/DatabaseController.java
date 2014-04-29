@@ -105,6 +105,17 @@ public class DatabaseController {
        } //end try
         return returnResults;
    }
+   public ArrayList getRowByID(int id, int type){
+       ArrayList returnResults = new ArrayList<>();
+        PreparedStatement stmt = null;
+        String sql;
+        String tableName = this.tableIntToString(type);
+        sql = "SELECT * FROM "+tableName+" WHERE id="+id;
+        String[] stringsArray = {};
+       returnResults = getResultSet(stmt, sql, type, stringsArray);
+       System.out.println("Finished.");
+       return returnResults;
+   }
    public byte[] getImageFromID(int id){
        Connection conn;
        String sql = "SELECT picture FROM Inventory WHERE ID="+id;
@@ -136,6 +147,46 @@ public class DatabaseController {
             } //end try
        } //end try
        return bytes;
+   }
+   public void changeData(int table, int id, String column, String newData){
+       Connection conn;
+       Statement stmt = null;
+       String sql;
+       try{
+           Class.forName(JDBC_DRIVER);
+           System.out.println("Connecting to database...");
+           conn = DriverManager.getConnection(DB_URL,USER,PASS);
+           System.out.println("Creating statement...");
+           sql = "UPDATE "+tableIntToString(table)+" SET "+column+"='"+newData+"' WHERE id="+id;
+           stmt = conn.createStatement();
+           stmt.executeUpdate(sql);
+           stmt.close();
+           conn.close();
+       }catch(SQLException se){ //errors in the SQL processing
+           se.printStackTrace();
+       }catch(Exception e){ //errors relating to Class.forName
+           e.printStackTrace();
+       }finally{ //clean up regardless of success
+            try{
+                if(stmt!=null)stmt.close();
+            }catch(SQLException se){
+                se.printStackTrace();
+            } //end try
+       } //end try
+       System.out.println("Finished.");
+   }
+   private String tableIntToString(int table){
+       if(table==IMSController.TYPE_INVENTORY){
+           return "Inventory";
+       }else if(table==IMSController.TYPE_VENDOR){
+           return "Vendors";
+       }else if(table==IMSController.TYPE_ROYALTIES){
+           return "Royalties";
+       }else if(table==IMSController.TYPE_USER){
+           return "Users";
+       }
+       // Error!
+       return "";
    }
    public ArrayList search(String term, int type){
        ArrayList returnResults = new ArrayList<>();
