@@ -404,4 +404,77 @@ public class DatabaseController {
         System.out.println(returnResults+"\n[getUser] Finished");
         return returnResults;
    } //end getUser()
+   
+   public boolean addToDatabase(int table, String[] data) {
+       System.out.println("[addToDatabase] Started");
+       for(int i = 0; i<data.length; i++){
+           if(data[i].length()==0){
+               data[i] = null;
+           }
+       }
+       Connection conn;
+       PreparedStatement stmt = null;
+       String sql;
+       try{
+           Class.forName(JDBC_DRIVER);
+           conn = DriverManager.getConnection(DB_URL,USER,PASS);
+           sql = "INSERT INTO "+tableIntToString(table)+" VALUES (";
+           for(int i = 0; i<data.length; i++){
+               if(i>0){
+                   sql += ",";
+               }
+               sql += "?";
+           }
+           sql += ")";
+           stmt = conn.prepareStatement(sql);
+            stmt.setInt(1,intOrZero(data[0]));
+            stmt.setString(2,data[1]);
+            stmt.setDouble(3,doubleOrZero(data[2]));
+            stmt.setDouble(4,doubleOrZero(data[3]));
+            stmt.setString(5,data[4]);
+            stmt.setString(6,data[5]);
+            stmt.setString(7,data[6]);
+            stmt.setString(8,data[7]);
+            stmt.setString(9,data[8]);
+            stmt.setBlob(10,(Blob)null);
+           stmt.executeUpdate();
+           stmt.close();
+           conn.close();
+           System.out.println("[addToDatabase] Finished");
+           return true;
+       }catch(SQLException se){ //errors in the SQL processing
+           se.printStackTrace();
+       }catch(Exception e){ //errors relating to Class.forName
+           e.printStackTrace();
+       }finally{ //clean up regardless of success
+            try{
+                if(stmt!=null)stmt.close();
+            }catch(SQLException se){
+                se.printStackTrace();
+            } //end try
+       } //end try
+       System.out.println("[addToDatabase] Finished");
+       return false;
+   }
+   
+   private int intOrZero(String string){
+       if(string.length() == 0){
+           return 0;
+       }
+       else {
+           return Integer.parseInt(string);
+       }
+   }
+   
+      private Double doubleOrZero(String string){
+          if(string == null){
+              return 0.0;
+          }
+       if(string.length() == 0){
+           return 0.0;
+       }
+       else {
+           return Double.parseDouble(string);
+       }
+   }
 } //end class

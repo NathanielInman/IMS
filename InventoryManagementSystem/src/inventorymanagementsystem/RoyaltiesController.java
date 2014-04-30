@@ -16,6 +16,8 @@ import javax.swing.JPanel;
  * @author Mike & Nate
  */
 public class RoyaltiesController extends IMSController{
+    public static String[] RCColumnNames = {"ID","Name","Phone","Ext","Address","Website","E-mail","PPOC", "Royalty"};
+    public static String[] RCColumnDatabaseNames = {"ID","Name","Phone","Extension","Address","Website","Email","PPOC", "Royalty"};
     private JPanel royaltyInfo = new JPanel();
     private ArrayList<String> activeRoyalty = new ArrayList<String>();
     public RoyaltiesController(JPanel displayPanel){
@@ -27,35 +29,19 @@ public class RoyaltiesController extends IMSController{
     }
     @Override
     protected int[] getRowCodes(){
-        /*int[] rowCodes = {IMSController.CODE_NUMBER,
-                          IMSController.CODE_STRING,
-                          IMSController.CODE_NUMBER,
-                          IMSController.CODE_NUMBER,
-                          IMSController.CODE_STRING,
-                          IMSController.CODE_STRING,
-                          IMSController.CODE_STRING,
-                          IMSController.CODE_STRING,
-                          IMSController.CODE_PRICE};*/
-        int[] rowCodes = {IMSController.CODE_NUMBER, IMSController.CODE_STRING, IMSController.CODE_PRICE, IMSController.CODE_PRICE, IMSController.CODE_STRING, IMSController.CODE_NUMBER, IMSController.CODE_NUMBER, IMSController.CODE_STRING, IMSController.CODE_PICTURE, IMSController.CODE_NUMBER};
-        return rowCodes;
+        return InventoryController.ICRowCodes;
     }
     @Override
     protected String[] getColumnNames(){
-        //String[] columnNames = {"ID","Name","Phone","Extension","Address","Website","E-mail","PPOC","Royalty"};
-        String[] columnNames = {"ID","Name","Price","Wholesale","Category","V. ID","R. ID","Description","Picture","Preferred Stock"};
-        return columnNames;
+        return InventoryController.ICColumnNames;
     }
         @Override
     protected String[] getColumnDatabaseNames(){
-        //String[] columnNames = {"ID","Name","phone","extension","address","website","email","ppoc","royalty"};
-        String[] columnNames = {"ID","Name","Price","Wholesale","Category","vendor_ID","Royalty_ID","Description","Picture","Preferred_Stock"};
-        return columnNames;
+        return InventoryController.ICColumnDatabaseNames;
     }
     @Override
     protected Double[] getColumnWeights(){
-        //Double[] columnWeights = {0.1,0.3,0.3,0.2,0.4,0.4,0.3,0.4,0.2,0.3};
-        Double[] columnWeights = {0.1,0.4,0.2,0.2,0.3,0.1,0.1,0.8,0.3,0.2};
-        return columnWeights;
+        return InventoryController.ICColumnWeights;
     }
     @Override
     protected ArrayList getByValue(String value){
@@ -92,7 +78,6 @@ public class RoyaltiesController extends IMSController{
         if(activeRoyalty.isEmpty()){
             return;
         }
-        String[] columnNames = {"ID","Name","Phone","Ext","Address","Website","E-mail","PPOC", "Royalty"};
         royaltyInfo.removeAll();
         royaltyInfo.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
@@ -102,8 +87,8 @@ public class RoyaltiesController extends IMSController{
         c.weighty=0.5;
         c.gridx=0;
         c.gridy=0;
-        for(int i=0;i<columnNames.length;i++){
-            royaltyInfo.add(new JLabel(columnNames[i]+": "+activeRoyalty.get(i)),c);
+        for(int i=0;i<RCColumnNames.length;i++){
+            royaltyInfo.add(new JLabel(RCColumnNames[i]+": "+activeRoyalty.get(i)),c);
             c.gridx++;
             if(c.gridx>2){
                 c.gridy++;

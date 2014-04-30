@@ -51,7 +51,6 @@ public class IMSController extends JPanel implements MouseListener{
     protected JMenuItem sortItem = new JMenuItem();
     protected JMenuItem editItem = new JMenuItem();
     protected JMenuItem deleteItem = new JMenuItem();
-    protected JMenuItem addItem = new JMenuItem();
     protected JPanel rowDisplay = new JPanel();
     protected JScrollPane rowScroll;
     protected JPanel columnLabels = new JPanel();
@@ -78,13 +77,7 @@ public class IMSController extends JPanel implements MouseListener{
                 editItemActionPerformed(e);
             }
         });
-        addItem.setText("Add new item");
-        addItem.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                addItemActionPerformed(e);
-            }
-        });
+        
         deleteItem.setText("Delete item");
         deleteItem.addActionListener(new java.awt.event.ActionListener() {
             @Override
@@ -95,7 +88,6 @@ public class IMSController extends JPanel implements MouseListener{
         itemMenu.add(sortItem);
         itemMenu.add(editItem);
         itemMenu.add(deleteItem);
-        itemMenu.add(addItem);
         this.setLayout(displayLayout);
         rowDisplay.setLayout(rowLayout);
         rowDisplay.addMouseListener(this);
@@ -189,9 +181,6 @@ public class IMSController extends JPanel implements MouseListener{
             setRow(activeRow, db.getRowByID(Integer.parseInt(rows.get(activeRow).get(0)), this.getType()));
             showInventory();
         }
-    }
-    public void addItemActionPerformed(java.awt.event.ActionEvent e){
-        
     }
     public void deleteItemActionPerformed(java.awt.event.ActionEvent e){
         

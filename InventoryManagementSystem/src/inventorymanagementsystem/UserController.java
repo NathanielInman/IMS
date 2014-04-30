@@ -14,6 +14,8 @@ import javax.swing.JPanel;
  */
 
 public class UserController extends IMSController{
+    public static String[] UCColumnNames = {"ID","User Name","Password","Level"};
+    public static String[] UCColumnDatabaseNames = {"ID","Name","Password","Level"};
     public UserController(JPanel displayPanel){
         super(displayPanel);
         
@@ -25,13 +27,11 @@ public class UserController extends IMSController{
     }
     @Override
     protected String[] getColumnNames(){
-        String[] columnNames = {"ID","User Name","Password","Level"};
-        return columnNames;
+        return UCColumnNames;
     }
     @Override
     protected String[] getColumnDatabaseNames(){
-        String[] columnNames = {"ID","Name","password","level"};
-        return columnNames;
+        return UCColumnDatabaseNames;
     }
     @Override
     protected Double[] getColumnWeights(){

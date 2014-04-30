@@ -1,7 +1,9 @@
 package inventorymanagementsystem;
 
+import static inventorymanagementsystem.IMSController.db;
 import java.awt.Point;
 import javax.swing.BoxLayout;
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
 
@@ -54,16 +56,42 @@ public class IMSGUI extends javax.swing.JFrame {
     private void initComponents() {
 
         logMenu = new javax.swing.JDialog();
-        userField = new java.awt.TextField();
-        passwordField = new java.awt.TextField();
         logOKButton = new javax.swing.JButton();
         logCancelButton = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        passwordField = new javax.swing.JPasswordField();
+        userField = new javax.swing.JTextField();
         logInButton2 = new javax.swing.JButton();
         gearMenu = new javax.swing.JPopupMenu();
         logInButton = new javax.swing.JMenuItem();
         viewUserButton = new javax.swing.JMenuItem();
+        addInventoryButton = new javax.swing.JMenuItem();
+        newItemForm = new javax.swing.JDialog();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        inventoryInputID = new javax.swing.JTextField();
+        inventoryInputName = new javax.swing.JTextField();
+        inventoryInputPrice = new javax.swing.JTextField();
+        inventoryInputWholesale = new javax.swing.JTextField();
+        inventoryInputCategory = new javax.swing.JTextField();
+        inventoryInputVendorID = new javax.swing.JTextField();
+        inventoryInputRoyaltyID = new javax.swing.JTextField();
+        inventoryInputDescription = new javax.swing.JTextField();
+        inventoryInputPreferredStock = new javax.swing.JTextField();
+        inventoryInputPicture = new javax.swing.JTextField();
+        jTextField11 = new javax.swing.JTextField();
+        jButton4 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
@@ -83,12 +111,6 @@ public class IMSGUI extends javax.swing.JFrame {
 
         logMenu.setAlwaysOnTop(true);
 
-        userField.setForeground(java.awt.Color.BLACK);
-        userField.setName("usernameField"); // NOI18N
-
-        passwordField.setForeground(java.awt.Color.BLACK);
-        passwordField.setName("passwordField"); // NOI18N
-
         logOKButton.setText("OK");
         logOKButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -107,6 +129,8 @@ public class IMSGUI extends javax.swing.JFrame {
 
         jLabel4.setText("Password:");
 
+        passwordField.setText("jPasswordField1");
+
         javax.swing.GroupLayout logMenuLayout = new javax.swing.GroupLayout(logMenu.getContentPane());
         logMenu.getContentPane().setLayout(logMenuLayout);
         logMenuLayout.setHorizontalGroup(
@@ -120,24 +144,24 @@ public class IMSGUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(logMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, logMenuLayout.createSequentialGroup()
-                        .addGap(0, 72, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(logCancelButton))
-                    .addComponent(passwordField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(userField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(passwordField, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
+                    .addComponent(userField))
                 .addContainerGap())
         );
         logMenuLayout.setVerticalGroup(
             logMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(logMenuLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(logMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(logMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(userField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(logMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                .addGap(13, 13, 13)
+                .addGroup(logMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                 .addGroup(logMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(logOKButton)
                     .addComponent(logCancelButton))
@@ -166,6 +190,155 @@ public class IMSGUI extends javax.swing.JFrame {
             }
         });
         gearMenu.add(viewUserButton);
+
+        addInventoryButton.setText("Add Inventory");
+        addInventoryButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addInventoryButtonActionPerformed(evt);
+            }
+        });
+        gearMenu.add(addInventoryButton);
+
+        newItemForm.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        newItemForm.setAlwaysOnTop(true);
+        newItemForm.setModal(true);
+
+        jButton2.setText("Create");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setText("Cancel");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("ID:");
+
+        jLabel5.setText("Name:");
+
+        jLabel6.setText("Price:");
+
+        jLabel7.setText("Wholesale");
+
+        jLabel8.setText("Category");
+
+        jLabel9.setText("Vendor ID:");
+
+        jLabel10.setText("Royalty ID:");
+
+        jLabel11.setText("Description");
+
+        jLabel12.setText("Preferred Stock:");
+
+        jLabel13.setText("Picture:");
+
+        jTextField11.setEditable(false);
+        jTextField11.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jTextField11.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField11.setText("New Inventory Item Pane");
+
+        jButton4.setText("Browse");
+
+        javax.swing.GroupLayout newItemFormLayout = new javax.swing.GroupLayout(newItemForm.getContentPane());
+        newItemForm.getContentPane().setLayout(newItemFormLayout);
+        newItemFormLayout.setHorizontalGroup(
+            newItemFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(newItemFormLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(newItemFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTextField11, javax.swing.GroupLayout.DEFAULT_SIZE, 453, Short.MAX_VALUE)
+                    .addGroup(newItemFormLayout.createSequentialGroup()
+                        .addGroup(newItemFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(newItemFormLayout.createSequentialGroup()
+                                .addComponent(jButton2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton3))
+                            .addGroup(newItemFormLayout.createSequentialGroup()
+                                .addGroup(newItemFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel11)
+                                    .addComponent(jLabel10)
+                                    .addComponent(jLabel9)
+                                    .addComponent(jLabel8)
+                                    .addComponent(jLabel7)
+                                    .addComponent(jLabel6)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel2))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(newItemFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(newItemFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(inventoryInputID, javax.swing.GroupLayout.DEFAULT_SIZE, 297, Short.MAX_VALUE)
+                                        .addComponent(inventoryInputName, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 297, Short.MAX_VALUE)
+                                        .addComponent(inventoryInputPrice, javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(inventoryInputWholesale, javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(inventoryInputCategory, javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(inventoryInputVendorID, javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(inventoryInputRoyaltyID, javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(inventoryInputDescription, javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(inventoryInputPreferredStock, javax.swing.GroupLayout.Alignment.LEADING))
+                                    .addComponent(inventoryInputPicture))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton4)))
+                .addContainerGap())
+        );
+        newItemFormLayout.setVerticalGroup(
+            newItemFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(newItemFormLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                .addGroup(newItemFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(inventoryInputID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(newItemFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(inventoryInputName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(newItemFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(inventoryInputPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(newItemFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(inventoryInputWholesale, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(newItemFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(inventoryInputCategory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(newItemFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(inventoryInputVendorID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(newItemFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(inventoryInputRoyaltyID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(newItemFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(inventoryInputDescription, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(newItemFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel12)
+                    .addComponent(inventoryInputPreferredStock, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(newItemFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(inventoryInputPicture, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel13)
+                    .addComponent(jButton4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(newItemFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton2)
+                    .addComponent(jButton3))
+                .addContainerGap())
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -485,6 +658,44 @@ public class IMSGUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_royaltyListValueChanged
 
+    private void addInventoryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addInventoryButtonActionPerformed
+        // TODO add your handling code here:
+        newItemForm.pack();
+        newItemForm.setVisible(true);
+    }//GEN-LAST:event_addInventoryButtonActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        newItemForm.setVisible(false);
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        String[] inputs = { inventoryInputID.getText(),
+                            inventoryInputName.getText(),
+                            inventoryInputPrice.getText(),
+                            inventoryInputWholesale.getText(),
+                            inventoryInputCategory.getText(),
+                            inventoryInputVendorID.getText(),
+                            inventoryInputRoyaltyID.getText(),
+                            inventoryInputDescription.getText(),
+                            inventoryInputPreferredStock.getText(),
+                            inventoryInputPicture.getText()};
+        if(db.addToDatabase(IMSController.TYPE_INVENTORY,inputs)){
+            inventoryInputID.setText("");
+            inventoryInputName.setText("");
+            inventoryInputPrice.setText("");
+            inventoryInputWholesale.setText("");
+            inventoryInputCategory.setText("");
+            inventoryInputVendorID.setText("");
+            inventoryInputRoyaltyID.setText("");
+            inventoryInputDescription.setText("");
+            inventoryInputPreferredStock.setText("");
+            inventoryInputPicture.setText("");
+            newItemForm.setVisible(false);
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     private void logIn(String user){
         IMSController.logIn(user);
         logInButton.setText("Log out");
@@ -498,30 +709,56 @@ public class IMSGUI extends javax.swing.JFrame {
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem addInventoryButton;
     private javax.swing.JTabbedPane categoryPane;
     private javax.swing.JPanel controllerDisplay;
     private javax.swing.JLabel gearIcon;
     private javax.swing.JPopupMenu gearMenu;
+    private javax.swing.JTextField inventoryInputCategory;
+    private javax.swing.JTextField inventoryInputDescription;
+    private javax.swing.JTextField inventoryInputID;
+    private javax.swing.JTextField inventoryInputName;
+    private javax.swing.JTextField inventoryInputPicture;
+    private javax.swing.JTextField inventoryInputPreferredStock;
+    private javax.swing.JTextField inventoryInputPrice;
+    private javax.swing.JTextField inventoryInputRoyaltyID;
+    private javax.swing.JTextField inventoryInputVendorID;
+    private javax.swing.JTextField inventoryInputWholesale;
     private javax.swing.JList inventoryList;
     private javax.swing.JPanel inventoryPane;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField11;
     private javax.swing.JButton logCancelButton;
     private javax.swing.JMenuItem logInButton;
     private javax.swing.JButton logInButton2;
     private javax.swing.JDialog logMenu;
     private javax.swing.JButton logOKButton;
-    private java.awt.TextField passwordField;
+    private javax.swing.JDialog newItemForm;
+    private javax.swing.JPasswordField passwordField;
     private javax.swing.JPanel royaltiesPane;
     private javax.swing.JList royaltyList;
     private javax.swing.JLabel userDisplay;
-    private java.awt.TextField userField;
+    private javax.swing.JTextField userField;
     private javax.swing.JList vendorList;
     private javax.swing.JPanel vendorPane;
     private javax.swing.JMenuItem viewUserButton;
