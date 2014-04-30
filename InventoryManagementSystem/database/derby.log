@@ -1,17 +1,11 @@
-Wed Apr 30 13:00:40 CDT 2014 : Apache Derby Network Server - 10.8.1.2 - (1095077) started and ready to accept connections on port 1527
+Wed Apr 30 14:49:36 CDT 2014 : Apache Derby Network Server - 10.8.2.2 - (1181258) started and ready to accept connections on port 1527
 ----------------------------------------------------------------
-Wed Apr 30 13:00:42 CDT 2014:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.8.1.2 - (1095077): instance a816c00e-0145-b3cb-ab50-ffffba54585e 
-on database directory C:\Users\Mike\Documents\GitHub\IMS\InventoryManagementSystem\database\KCC  with class loader sun.misc.Launcher$AppClassLoader@4d17140b 
-Loaded from file:/C:/Program%20Files/Java/jdk1.7.0_02/db/lib/derby.jar
+Wed Apr 30 14:49:36 CDT 2014:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.8.2.2 - (1181258): instance a816c00e-0145-b42f-6582-00002eff8dcc 
+on database directory C:\Users\Nate\Documents\GitHub\IMS\InventoryManagementSystem\database\KCC  with class loader sun.misc.Launcher$AppClassLoader@1b1f1f12 
+Loaded from file:/C:/Program%20Files/Java/jdk1.7.0_17/db/lib/derby.jar
 java.vendor=Oracle Corporation
-java.runtime.version=1.7.0_02-b13
-user.dir=C:\Program Files\Java\jdk1.7.0_02\db
-derby.system.home=C:\Users\Mike\Documents\GitHub\IMS\InventoryManagementSystem\database
+java.runtime.version=1.7.0_17-b02
+user.dir=C:\Program Files\Java\jdk1.7.0_17\db
+derby.system.home=C:\Users\Nate\Documents\GitHub\IMS\InventoryManagementSystem\database
 Database Class Loader started - derby.database.classpath=''
-----------------------------------------------------------------
-Wed Apr 30 13:10:33 CDT 2014: Shutting down Derby engine
-----------------------------------------------------------------
-Wed Apr 30 13:10:33 CDT 2014:
-Shutting down instance a816c00e-0145-b3cb-ab50-ffffba54585e on database directory C:\Users\Mike\Documents\GitHub\IMS\InventoryManagementSystem\database\KCC with class loader sun.misc.Launcher$AppClassLoader@4d17140b 
-----------------------------------------------------------------
