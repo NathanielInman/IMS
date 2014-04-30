@@ -418,6 +418,9 @@
                       </StringArray>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="valueChanged" listener="javax.swing.event.ListSelectionListener" parameters="javax.swing.event.ListSelectionEvent" handler="royaltyListValueChanged"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>

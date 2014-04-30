@@ -8,7 +8,6 @@ import java.sql.*;
 import java.util.ArrayList;
 
 /**
- *
  * @author Nate
  */
 public class DatabaseController {
@@ -20,7 +19,6 @@ public class DatabaseController {
    DatabaseController(){}
    
    private ArrayList getResultSet(PreparedStatement stmt, String sql, int controllerType, String[] strings){
-      
        ArrayList returnResults = new ArrayList<>();
        Connection conn;
        try{
@@ -30,9 +28,8 @@ public class DatabaseController {
            System.out.println("Creating statement...");
            stmt = conn.prepareStatement(sql);
            for(int i=0; i<strings.length; i++){
-               
                stmt.setString(i+1, strings[i]);
-           }
+           } //end for
            if(controllerType == IMSController.TYPE_INVENTORY){
                 try (ResultSet rs = stmt.executeQuery()){
                     while(rs.next()){
@@ -48,8 +45,7 @@ public class DatabaseController {
                         returnResults.add(rs.getString("preferred_stock"));
                     }
                 }
-           } 
-           else if(controllerType == IMSController.TYPE_VENDOR) {
+           }else if(controllerType == IMSController.TYPE_VENDOR) {
                try (ResultSet rs = stmt.executeQuery()){
                     while(rs.next()){
                         returnResults.add(rs.getString("id"));
@@ -62,8 +58,7 @@ public class DatabaseController {
                         returnResults.add(rs.getString("ppoc"));
                     }
                 }
-           }
-           else if(controllerType == IMSController.TYPE_ROYALTIES){
+           }else if(controllerType == IMSController.TYPE_ROYALTIES){
                try (ResultSet rs = stmt.executeQuery()){
                    while(rs.next()){
                         returnResults.add(rs.getString("id"));
@@ -77,8 +72,7 @@ public class DatabaseController {
                         returnResults.add(rs.getString("royalty"));
                    } //end while
                } //end try
-           }
-           else if(controllerType == IMSController.TYPE_USER){
+           }else if(controllerType == IMSController.TYPE_USER){
                try (ResultSet rs = stmt.executeQuery()){
                    while(rs.next()){
                         returnResults.add(rs.getInt("id"));
@@ -89,7 +83,7 @@ public class DatabaseController {
                         
                    } //end while
                } //end try
-           }
+           } //end if
            stmt.close();
            conn.close();
        }catch(SQLException se){ //errors in the SQL processing
@@ -104,7 +98,8 @@ public class DatabaseController {
             } //end try
        } //end try
         return returnResults;
-   }
+   } //end getResultSet()
+   
    public ArrayList getRowByID(int id, int type){
        ArrayList returnResults = new ArrayList<>();
         PreparedStatement stmt = null;
@@ -115,7 +110,8 @@ public class DatabaseController {
        returnResults = getResultSet(stmt, sql, type, stringsArray);
        System.out.println("Finished.");
        return returnResults;
-   }
+   } //end getRowByID()
+   
    public byte[] getImageFromID(int id){
        Connection conn;
        String sql = "SELECT picture FROM Inventory WHERE ID="+id;
@@ -147,7 +143,8 @@ public class DatabaseController {
             } //end try
        } //end try
        return bytes;
-   }
+   } //end getImageFromID()
+   
    public void changeData(int table, int id, String column, String newData){
        Connection conn;
        Statement stmt = null;
@@ -174,7 +171,8 @@ public class DatabaseController {
             } //end try
        } //end try
        System.out.println("Finished.");
-   }
+   } //end changeData()
+   
    private String tableIntToString(int table){
        if(table==IMSController.TYPE_INVENTORY){
            return "Inventory";
@@ -187,11 +185,11 @@ public class DatabaseController {
        }
        // Error!
        return "";
-   }
+   } //end tableIntToString()
+   
    public ArrayList search(String term, int type){
-       ArrayList returnResults = new ArrayList<>();
+        ArrayList returnResults = new ArrayList<>();
         PreparedStatement stmt = null;
-
         String sql;
         term = term.replaceAll("'", "_");
         String tableName = "";
@@ -199,13 +197,13 @@ public class DatabaseController {
             tableName = "Inventory";
         }else if(type==IMSController.TYPE_ROYALTIES){
             tableName = "Royalties";
-        }
+        } //end if
         sql = "SELECT * FROM "+tableName+" WHERE Lower(Name) LIKE '%"+term.toLowerCase()+"%'";
         String[] stringsArray = {};
-       returnResults = getResultSet(stmt, sql, type, stringsArray);
-       System.out.println("Finished.");
-       return returnResults;
-   }
+        returnResults = getResultSet(stmt, sql, type, stringsArray);
+        System.out.println("Finished.");
+        return returnResults;
+   } //end search()
    
    /*
     * This method will search a key term from the inventory list of a given
@@ -238,6 +236,7 @@ public class DatabaseController {
         System.out.println("Finished.");
         return returnResults;
    }
+   
    /*
     * This method will get all inventory items by the specified category name.
     */
@@ -260,6 +259,7 @@ public class DatabaseController {
        System.out.println("Finished.");
        return returnResults;
    } //end getCategory()
+   
    /*
     * This method will get a list of all the categories
     */
@@ -296,6 +296,7 @@ public class DatabaseController {
        System.out.println("Finished.");
        return returnResults;
    } //end getCategory()
+   
    /*
     * This method will send a request name, where the result will be that request names password if it exists
     * and 'Invalid' if that request name doesn't exist. The handling logic will indicate that the username does
@@ -339,6 +340,7 @@ public class DatabaseController {
     * This method will get a list of all the vendors
     */
    public ArrayList getVendorsByName(String name){
+       System.out.println("Attempting get to get vendors...");
        ArrayList returnResults = new ArrayList<>();
        PreparedStatement stmt = null;
        String sql = "SELECT * FROM vendors WHERE name = ?";
@@ -352,6 +354,7 @@ public class DatabaseController {
     * This method will get a list of all the royalties
     */
    public ArrayList getRoyaltiesByName(String name){
+       System.out.println("Attempting to get royalties...");
        ArrayList returnResults = new ArrayList<>();
        PreparedStatement stmt = null;
        String sql = "SELECT * FROM royalties WHERE name = ?";
@@ -367,38 +370,33 @@ public class DatabaseController {
    public ArrayList getRoyalties(){
         ArrayList returnResults = new ArrayList<>();
         PreparedStatement stmt = null;
-     
-           String sql;
-           sql = "SELECT * FROM Royalties";
-        
-           String[] strings = {};
-       returnResults = getResultSet(stmt, sql, IMSController.TYPE_ROYALTIES, strings);
-       System.out.println("Finished.");
-       return returnResults;
+        String sql;
+        sql = "SELECT * FROM Royalties";
+        String[] strings = {};
+        returnResults = getResultSet(stmt, sql, IMSController.TYPE_ROYALTIES, strings);
+        System.out.println("Finished.");
+        return returnResults;
    } //end getCategory()
+   
    public ArrayList getUsers(){
         ArrayList returnResults = new ArrayList<>();
         PreparedStatement stmt = null;
-     
-           String sql;
-           sql = "SELECT * FROM Users";
-        
-           String[] strings = {};
-       returnResults = getResultSet(stmt, sql, IMSController.TYPE_USER, strings);
-       System.out.println("Finished.");
-       return returnResults;
-    
-   }
+        String sql;
+        sql = "SELECT * FROM Users"; 
+        String[] strings = {};
+        returnResults = getResultSet(stmt, sql, IMSController.TYPE_USER, strings);
+        System.out.println("Finished.");
+        return returnResults;
+   } //end getUsers()
+   
    public ArrayList getUser(String user){
- ArrayList returnResults = new ArrayList<>();
+        ArrayList returnResults = new ArrayList<>();
         PreparedStatement stmt = null;
-     
-           String sql;
-           sql = "SELECT * FROM Users WHERE name=?";
-        
-           String[] strings = {user};
-       returnResults = getResultSet(stmt, sql, IMSController.TYPE_USER, strings);
-       System.out.println("Finished.");
-       return returnResults;
-   }
+        String sql;
+        sql = "SELECT * FROM Users WHERE name=?";
+        String[] strings = {user};
+        returnResults = getResultSet(stmt, sql, IMSController.TYPE_USER, strings);
+        System.out.println("Finished.");
+        return returnResults;
+   } //end getUser()
 } //end class

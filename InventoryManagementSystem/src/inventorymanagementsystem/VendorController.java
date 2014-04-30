@@ -27,7 +27,6 @@ public class VendorController extends IMSController{
     }
     @Override
     protected int[] getRowCodes(){
-        //int[] rowCodes = {IMSController.CODE_NUMBER, IMSController.CODE_STRING, IMSController.CODE_STRING, IMSController.CODE_STRING, IMSController.CODE_STRING, IMSController.CODE_STRING, IMSController.CODE_STRING, IMSController.CODE_STRING};
         int[] rowCodes = {IMSController.CODE_NUMBER,
                           IMSController.CODE_STRING,
                           IMSController.CODE_PRICE,
@@ -103,9 +102,9 @@ public class VendorController extends IMSController{
         c.gridy = 0;
         for(int i=0; i<columnNames.length; i++){
             vendorInfo.add(new JLabel(columnNames[i]+": "+activeVendor.get(i)),c);
-            c.gridx+=1;
+            c.gridx++;
             if(c.gridx > 2){
-                c.gridy+=1;
+                c.gridy++;
                 c.gridx = 0;
             }
         }

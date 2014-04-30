@@ -27,7 +27,7 @@ public class IMSGUI extends javax.swing.JFrame {
     public void updateCategoriesFromDB(){
         inventoryList.setListData(IMSController.db.getCategoryList("category", "Inventory").toArray());
         vendorList.setListData(IMSController.db.getCategoryList("name","Vendors").toArray());
-        royaltyList.setListData(new Object[0]);
+        royaltyList.setListData(IMSController.db.getCategoryList("name","Royalties").toArray());
     }
     /**
      * This method allows us to choose the controller to display.
@@ -272,6 +272,11 @@ public class IMSGUI extends javax.swing.JFrame {
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
+        royaltyList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                royaltyListValueChanged(evt);
+            }
+        });
         jScrollPane4.setViewportView(royaltyList);
 
         javax.swing.GroupLayout royaltiesPaneLayout = new javax.swing.GroupLayout(royaltiesPane);
@@ -468,6 +473,17 @@ public class IMSGUI extends javax.swing.JFrame {
             this.setController(new UserController(controllerDisplay));
             controller.filterByCategory("name");
     }//GEN-LAST:event_viewUserButtonActionPerformed
+
+    private void royaltyListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_royaltyListValueChanged
+        try{
+            this.setController(new RoyaltiesController(controllerDisplay));
+            controller.filterByCategory(royaltyList.getSelectedValue().toString());
+            inventoryList.clearSelection();
+        }catch(NullPointerException npe){
+            // It was set to null by a different function.
+            // Nothing has been selected, so we won't show anything.
+        }
+    }//GEN-LAST:event_royaltyListValueChanged
 
     private void logIn(String user){
         IMSController.logIn(user);
