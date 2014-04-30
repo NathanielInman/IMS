@@ -27,7 +27,7 @@ public class RoyaltiesController extends IMSController{
     }
     @Override
     protected int[] getRowCodes(){
-        int[] rowCodes = {IMSController.CODE_NUMBER,
+        /*int[] rowCodes = {IMSController.CODE_NUMBER,
                           IMSController.CODE_STRING,
                           IMSController.CODE_NUMBER,
                           IMSController.CODE_NUMBER,
@@ -35,22 +35,26 @@ public class RoyaltiesController extends IMSController{
                           IMSController.CODE_STRING,
                           IMSController.CODE_STRING,
                           IMSController.CODE_STRING,
-                          IMSController.CODE_PRICE};
+                          IMSController.CODE_PRICE};*/
+        int[] rowCodes = {IMSController.CODE_NUMBER, IMSController.CODE_STRING, IMSController.CODE_PRICE, IMSController.CODE_PRICE, IMSController.CODE_STRING, IMSController.CODE_NUMBER, IMSController.CODE_NUMBER, IMSController.CODE_STRING, IMSController.CODE_PICTURE, IMSController.CODE_NUMBER};
         return rowCodes;
     }
     @Override
     protected String[] getColumnNames(){
-        String[] columnNames = {"ID","Name","Phone","Extension","Address","Website","E-mail","PPOC","Royalty"};
+        //String[] columnNames = {"ID","Name","Phone","Extension","Address","Website","E-mail","PPOC","Royalty"};
+        String[] columnNames = {"ID","Name","Price","Wholesale","Category","V. ID","R. ID","Description","Picture","Preferred Stock"};
         return columnNames;
     }
         @Override
     protected String[] getColumnDatabaseNames(){
-        String[] columnNames = {"ID","Name","phone","extension","address","website","email","ppoc","royalty"};
+        //String[] columnNames = {"ID","Name","phone","extension","address","website","email","ppoc","royalty"};
+        String[] columnNames = {"ID","Name","Price","Wholesale","Category","vendor_ID","Royalty_ID","Description","Picture","Preferred_Stock"};
         return columnNames;
     }
     @Override
     protected Double[] getColumnWeights(){
-        Double[] columnWeights = {0.1,0.3,0.3,0.2,0.4,0.4,0.3,0.4,0.2,0.3};
+        //Double[] columnWeights = {0.1,0.3,0.3,0.2,0.4,0.4,0.3,0.4,0.2,0.3};
+        Double[] columnWeights = {0.1,0.4,0.2,0.2,0.3,0.1,0.1,0.8,0.3,0.2};
         return columnWeights;
     }
     @Override
