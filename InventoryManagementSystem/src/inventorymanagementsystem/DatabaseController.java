@@ -19,6 +19,7 @@ public class DatabaseController {
    DatabaseController(){}
    
    private ArrayList getResultSet(PreparedStatement stmt, String sql, int controllerType, String[] strings){
+       System.out.println("[getResultSet] Started");
        ArrayList returnResults = new ArrayList<>();
        Connection conn;
        try{
@@ -97,31 +98,32 @@ public class DatabaseController {
                 se.printStackTrace();
             } //end try
        } //end try
-        return returnResults;
+       System.out.println(returnResults+"\n[getResultSet] Finished");
+       return returnResults;
    } //end getResultSet()
    
-   public ArrayList getRowByID(int id, int type){
+   public ArrayList getRowByID(int id, int type){ 
+       System.out.println("[getRowByID] Started");
        ArrayList returnResults = new ArrayList<>();
-        PreparedStatement stmt = null;
-        String sql;
-        String tableName = this.tableIntToString(type);
-        sql = "SELECT * FROM "+tableName+" WHERE id="+id;
-        String[] stringsArray = {};
+       PreparedStatement stmt = null;
+       String sql;
+       String tableName = this.tableIntToString(type);
+       sql = "SELECT * FROM "+tableName+" WHERE id="+id;
+       String[] stringsArray = {};
        returnResults = getResultSet(stmt, sql, type, stringsArray);
-       System.out.println("Finished.");
+       System.out.println(returnResults+"\n[getRowByID] Finished");
        return returnResults;
    } //end getRowByID()
    
    public byte[] getImageFromID(int id){
+       System.out.println("[getImageFromID] Started");
        Connection conn;
        String sql = "SELECT picture FROM Inventory WHERE ID="+id;
        PreparedStatement stmt = null;
        byte[] bytes = null;
        try{
            Class.forName(JDBC_DRIVER);
-           System.out.println("Connecting to database...");
            conn = DriverManager.getConnection(DB_URL,USER,PASS);
-           System.out.println("Creating statement...");
            stmt = conn.prepareStatement(sql);
             try (ResultSet rs = stmt.executeQuery()){
                 while(rs.next()){
@@ -142,18 +144,18 @@ public class DatabaseController {
                 se.printStackTrace();
             } //end try
        } //end try
+       System.out.println("[getImageFromID] Finished");
        return bytes;
    } //end getImageFromID()
    
    public void changeData(int table, int id, String column, String newData){
+       System.out.println("[changeData] Started/n"+">>UPDATE "+tableIntToString(table)+" SET "+column+"='"+newData+"' WHERE id="+id);
        Connection conn;
        Statement stmt = null;
        String sql;
        try{
            Class.forName(JDBC_DRIVER);
-           System.out.println("Connecting to database...");
            conn = DriverManager.getConnection(DB_URL,USER,PASS);
-           System.out.println("Creating statement...");
            sql = "UPDATE "+tableIntToString(table)+" SET "+column+"='"+newData+"' WHERE id="+id;
            stmt = conn.createStatement();
            stmt.executeUpdate(sql);
@@ -170,7 +172,7 @@ public class DatabaseController {
                 se.printStackTrace();
             } //end try
        } //end try
-       System.out.println("Finished.");
+       System.out.println("[changeData] Finished");
    } //end changeData()
    
    private String tableIntToString(int table){
@@ -183,11 +185,11 @@ public class DatabaseController {
        }else if(table==IMSController.TYPE_USER){
            return "Users";
        }
-       // Error!
-       return "";
+       return ""; // Error!
    } //end tableIntToString()
    
    public ArrayList search(String term, int type){
+        System.out.println("[search] Started");
         ArrayList returnResults = new ArrayList<>();
         PreparedStatement stmt = null;
         String sql;
@@ -201,7 +203,7 @@ public class DatabaseController {
         sql = "SELECT * FROM "+tableName+" WHERE Lower(Name) LIKE '%"+term.toLowerCase()+"%'";
         String[] stringsArray = {};
         returnResults = getResultSet(stmt, sql, type, stringsArray);
-        System.out.println("Finished.");
+        System.out.println(returnResults+"[search] Finished");
         return returnResults;
    } //end search()
    
@@ -210,6 +212,7 @@ public class DatabaseController {
     * vendor specification id
     */
    public ArrayList vendorSearch(String term, int vendorID){
+        System.out.println("[vendorSearch] Started");
         ArrayList returnResults;
         PreparedStatement stmt = null;
         String sql;
@@ -217,15 +220,16 @@ public class DatabaseController {
         sql = "SELECT * FROM Inventory WHERE vendor_id = "+vendorID+" AND Lower(Name) LIKE '%"+term.toLowerCase()+"%'";
         String[] stringsArray = {};
         returnResults = getResultSet(stmt, sql, IMSController.TYPE_INVENTORY, stringsArray);
-        System.out.println("Finished.");
+        System.out.println(returnResults+"[vendorSearch] Finished");
         return returnResults;
-   }
+   } //end vendorSearch()
    
    /*
     * This method will search a key term from the inventory list of a given royalty
     * specification id
     */
    public ArrayList royaltySearch(String term, int royaltyID){
+        System.out.println("[royaltySearch] Started");
         ArrayList returnResults;
         PreparedStatement stmt = null;
         String sql;
@@ -233,45 +237,44 @@ public class DatabaseController {
         sql = "SELECT * FROM Inventory WHERE royalty_id = "+royaltyID+" AND Lower(Name) LIKE '%"+term.toLowerCase()+"%'";
         String[] stringsArray = {};
         returnResults = getResultSet(stmt, sql, IMSController.TYPE_INVENTORY, stringsArray);
-        System.out.println("Finished.");
+        System.out.println(returnResults+"\n[royaltySearch] Finished");
         return returnResults;
-   }
+   } //end royaltySearch()
    
    /*
     * This method will get all inventory items by the specified category name.
     */
    public ArrayList getInventoryByColumn(String column, String value, int dataType){
+        System.out.println("[getInventoryByColumn] Started");
         ArrayList returnResults = new ArrayList<>();
         PreparedStatement stmt = null;
-
         String sql;
         ArrayList<String> strings = new ArrayList();
         if(dataType==IMSController.CODE_NUMBER){
-             sql = "SELECT * FROM Inventory WHERE "+column+"="+Integer.parseInt(value);
+            sql = "SELECT * FROM Inventory WHERE "+column+"="+Integer.parseInt(value);
         }else{
             strings.add(value);
-             sql = "SELECT * FROM Inventory WHERE "+column+"= ?";
-        }
+            sql = "SELECT * FROM Inventory WHERE "+column+"= ?";
+        } //end if
         String[] stringsArray;
         stringsArray = new String[strings.size()];
         stringsArray = strings.toArray(stringsArray);
-       returnResults = getResultSet(stmt, sql, IMSController.TYPE_INVENTORY, stringsArray);
-       System.out.println("Finished.");
-       return returnResults;
+        returnResults = getResultSet(stmt, sql, IMSController.TYPE_INVENTORY, stringsArray);
+        System.out.println(returnResults+"\n[getInventoryByColumn] Finished");
+        return returnResults;
    } //end getCategory()
    
    /*
     * This method will get a list of all the categories
     */
    public ArrayList getCategoryList(String category, String controller){
-        ArrayList returnResults = new ArrayList<>();
+       System.out.println("[getCategoryList] Started");
+       ArrayList returnResults = new ArrayList<>();
         Statement stmt = null;
         Connection conn;
         try{
            Class.forName(JDBC_DRIVER);
-           System.out.println("Connecting to database...");
            conn = DriverManager.getConnection(DB_URL,USER,PASS);
-           System.out.println("Creating statement...");
            stmt = conn.createStatement();
            String sql;
            sql = "SELECT DISTINCT "+category+" FROM "+controller;
@@ -293,9 +296,9 @@ public class DatabaseController {
                 se.printStackTrace();
             } //end try
        } //end try
-       System.out.println("Finished.");
+       System.out.println(returnResults+"[getCategoryList] Finished.");
        return returnResults;
-   } //end getCategory()
+   } //end getCategoryList()
    
    /*
     * This method will send a request name, where the result will be that request names password if it exists
@@ -303,14 +306,13 @@ public class DatabaseController {
     * not exist or credentials are invalid. 
     */
    public String checkCredentials(String name){
-        String returnResult = "Invalid";
+       System.out.println("[checkCredentials] Started");
+       String returnResult = "Invalid";
         Statement stmt = null;
         Connection conn;
         try{
            Class.forName(JDBC_DRIVER);
-           System.out.println("Connecting to database...");
            conn = DriverManager.getConnection(DB_URL,USER,PASS);
-           System.out.println("Creating statement...");
            stmt = conn.createStatement();
            String sql;
            sql = "SELECT password FROM users where name='"+name+"'";
@@ -332,7 +334,7 @@ public class DatabaseController {
                 se.printStackTrace();
             } //end try
        } //end try
-       System.out.println("Finished.");
+       System.out.println(returnResult+"\n[checkCredentials] Finished");
        return returnResult; //return the password if successful, or 'Invalid' if not
    } //end checkCredentials()
    
@@ -340,13 +342,13 @@ public class DatabaseController {
     * This method will get a list of all the vendors
     */
    public ArrayList getVendorsByName(String name){
-       System.out.println("Attempting get to get vendors...");
+       System.out.println("[getVendorsByName] Started");
        ArrayList returnResults = new ArrayList<>();
        PreparedStatement stmt = null;
        String sql = "SELECT * FROM vendors WHERE name = ?";
        String[] vars = {name};
        returnResults = getResultSet(stmt, sql, IMSController.TYPE_VENDOR, vars);
-       System.out.println("Finished.");
+       System.out.println(returnResults+"\n[getVendorsByName] Finished");
        return returnResults;
    } //end getVendorsByName()
    
@@ -354,13 +356,13 @@ public class DatabaseController {
     * This method will get a list of all the royalties
     */
    public ArrayList getRoyaltiesByName(String name){
-       System.out.println("Attempting to get royalties...");
+       System.out.println("[getRoyaltiesByName] Started");
        ArrayList returnResults = new ArrayList<>();
        PreparedStatement stmt = null;
        String sql = "SELECT * FROM royalties WHERE name = ?";
        String[] vars = {name};
        returnResults = getResultSet(stmt, sql, IMSController.TYPE_ROYALTIES,vars);
-       System.out.println("Finished");
+       System.out.println(returnResults+"\n[getRoyaltiesByName] Finished");
        return returnResults;
    } ///end getRoyaltiesByName()
    
@@ -368,35 +370,38 @@ public class DatabaseController {
     * This method will get a list of all the royalties
     */
    public ArrayList getRoyalties(){
+        System.out.println("[getRoyalties] Started");
         ArrayList returnResults = new ArrayList<>();
         PreparedStatement stmt = null;
         String sql;
         sql = "SELECT * FROM Royalties";
         String[] strings = {};
         returnResults = getResultSet(stmt, sql, IMSController.TYPE_ROYALTIES, strings);
-        System.out.println("Finished.");
+        System.out.println(returnResults+"\n[getRoyalties] Finished");
         return returnResults;
    } //end getCategory()
    
    public ArrayList getUsers(){
+        System.out.println("[getUsers] Started");
         ArrayList returnResults = new ArrayList<>();
         PreparedStatement stmt = null;
         String sql;
         sql = "SELECT * FROM Users"; 
         String[] strings = {};
         returnResults = getResultSet(stmt, sql, IMSController.TYPE_USER, strings);
-        System.out.println("Finished.");
+        System.out.println(returnResults+"\n[getUsers] Finished.");
         return returnResults;
    } //end getUsers()
    
    public ArrayList getUser(String user){
+        System.out.println("[getUser] Started");
         ArrayList returnResults = new ArrayList<>();
         PreparedStatement stmt = null;
         String sql;
         sql = "SELECT * FROM Users WHERE name=?";
         String[] strings = {user};
         returnResults = getResultSet(stmt, sql, IMSController.TYPE_USER, strings);
-        System.out.println("Finished.");
+        System.out.println(returnResults+"\n[getUser] Finished");
         return returnResults;
    } //end getUser()
 } //end class
