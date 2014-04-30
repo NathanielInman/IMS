@@ -4,15 +4,12 @@
  */
 package inventorymanagementsystem;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.util.ArrayList;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
-import javax.swing.JTextPane;
 
 /**
  *
@@ -23,7 +20,7 @@ public class VendorController extends IMSController{
     private ArrayList<String> activeVendor = new ArrayList<String>();
     public VendorController(JPanel displayPanel){
         super(displayPanel);
-        showInventory();
+        showInventory(); //show the inventory specific to the selected vendor
     }
     public void setActiveVendor(String vendorName){
         activeVendor = db.getVendorsByName(vendorName);
@@ -31,12 +28,20 @@ public class VendorController extends IMSController{
     @Override
     protected int[] getRowCodes(){
         //int[] rowCodes = {IMSController.CODE_NUMBER, IMSController.CODE_STRING, IMSController.CODE_STRING, IMSController.CODE_STRING, IMSController.CODE_STRING, IMSController.CODE_STRING, IMSController.CODE_STRING, IMSController.CODE_STRING};
-        int[] rowCodes = {IMSController.CODE_NUMBER, IMSController.CODE_STRING, IMSController.CODE_PRICE, IMSController.CODE_PRICE, IMSController.CODE_STRING, IMSController.CODE_NUMBER, IMSController.CODE_NUMBER, IMSController.CODE_STRING, IMSController.CODE_PICTURE, IMSController.CODE_NUMBER};
+        int[] rowCodes = {IMSController.CODE_NUMBER,
+                          IMSController.CODE_STRING,
+                          IMSController.CODE_PRICE,
+                          IMSController.CODE_PRICE,
+                          IMSController.CODE_STRING,
+                          IMSController.CODE_NUMBER,
+                          IMSController.CODE_NUMBER,
+                          IMSController.CODE_STRING,
+                          IMSController.CODE_PICTURE,
+                          IMSController.CODE_NUMBER};
         return rowCodes;
     }
     @Override
     protected String[] getColumnNames(){
-        //String[] columnNames = {"ID","Name","Phone","Ext","Address","Website","E-mail","PPOC"};
         String[] columnNames = {"ID","Name","Price","Wholesale","Category","V. ID","R. ID","Description","Picture","Preferred Stock"};
         return columnNames;
     }
@@ -47,7 +52,6 @@ public class VendorController extends IMSController{
     }
     @Override
     protected Double[] getColumnWeights(){
-        //Double[] columnWeights = {0.1,0.4,0.3,0.2,0.4,0.4,0.3,0.3};
         Double[] columnWeights = {0.1,0.4,0.2,0.2,0.3,0.1,0.1,0.8,0.3,0.2};
         return columnWeights;
     }
@@ -76,13 +80,13 @@ public class VendorController extends IMSController{
         this.add(vendorInfo, c);
         updateVendorInfo();
         vendorInfo.setMinimumSize(new Dimension(0,vendorInfo.getPreferredSize().height));
-        //this.add(columnLabels, c);
         rowScroll.setColumnHeaderView(columnLabels);
         c.fill = GridBagConstraints.BOTH;
         c.gridy = 1;
         c.weighty = 1;
         this.add(rowScroll,c);
     }
+    
     private void updateVendorInfo(){
         if(activeVendor.isEmpty()){
             return;
@@ -99,13 +103,14 @@ public class VendorController extends IMSController{
         c.gridy = 0;
         for(int i=0; i<columnNames.length; i++){
             vendorInfo.add(new JLabel(columnNames[i]+": "+activeVendor.get(i)),c);
-            c.gridx += 1;
+            c.gridx+=1;
             if(c.gridx > 2){
-                c.gridy += 1;
+                c.gridy+=1;
                 c.gridx = 0;
             }
         }
     }
+    
     @Override
     public int getType() {
         return IMSController.TYPE_VENDOR;

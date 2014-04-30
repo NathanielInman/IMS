@@ -393,16 +393,15 @@ public class IMSController extends JPanel implements MouseListener{
         textField.add(textArea);
         rowDisplay.add(textField, c);
     }
+    /*
+     * This method will take a blob byte array and convert it into an image and pass it along
+     * with it's given constrains to display.
+     */
     protected void addImageIcon(byte[] blob, GridBagConstraints c) throws IOException{
-        //JPanel imageIcon = newComponent();
         BufferedImage imageBlob = ImageIO.read(new ByteArrayInputStream(blob));
         JPanel imageIcon = new DrawCanvas(imageBlob);
-        //imageIcon.add(new DrawCanvas(imageBlob));
-        //imageIcon.createImage(50, 50);
         imageIcon.prepareImage(imageBlob,this);
-        //imageIcon.imageUpdate(imageBlob, 0, 0, Image., 50, 50);
         rowDisplay.add(imageIcon,c);
-        //imageIcon.getGraphics().drawImage(imageBlob,0,0,50,50,this);
     }
     private class DrawCanvas extends JPanel {
         private BufferedImage img;

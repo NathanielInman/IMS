@@ -27,7 +27,7 @@ public class IMSGUI extends javax.swing.JFrame {
     public void updateCategoriesFromDB(){
         inventoryList.setListData(IMSController.db.getCategoryList("category", "Inventory").toArray());
         vendorList.setListData(IMSController.db.getCategoryList("name","Vendors").toArray());
-        salesList.setListData(new Object[0]);
+        royaltyList.setListData(new Object[0]);
     }
     /**
      * This method allows us to choose the controller to display.
@@ -75,9 +75,9 @@ public class IMSGUI extends javax.swing.JFrame {
         vendorPane = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         vendorList = new javax.swing.JList();
-        salesPane = new javax.swing.JPanel();
+        royaltiesPane = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
-        salesList = new javax.swing.JList();
+        royaltyList = new javax.swing.JList();
         controllerDisplay = new javax.swing.JPanel();
         gearIcon = new javax.swing.JLabel();
 
@@ -86,7 +86,6 @@ public class IMSGUI extends javax.swing.JFrame {
         userField.setForeground(java.awt.Color.BLACK);
         userField.setName("usernameField"); // NOI18N
 
-        passwordField.setEchoChar('\u2022');
         passwordField.setForeground(java.awt.Color.BLACK);
         passwordField.setName("passwordField"); // NOI18N
 
@@ -268,35 +267,35 @@ public class IMSGUI extends javax.swing.JFrame {
 
         categoryPane.addTab("Vendors", vendorPane);
 
-        salesList.setModel(new javax.swing.AbstractListModel() {
+        royaltyList.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Error loading database..." };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane4.setViewportView(salesList);
+        jScrollPane4.setViewportView(royaltyList);
 
-        javax.swing.GroupLayout salesPaneLayout = new javax.swing.GroupLayout(salesPane);
-        salesPane.setLayout(salesPaneLayout);
-        salesPaneLayout.setHorizontalGroup(
-            salesPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout royaltiesPaneLayout = new javax.swing.GroupLayout(royaltiesPane);
+        royaltiesPane.setLayout(royaltiesPaneLayout);
+        royaltiesPaneLayout.setHorizontalGroup(
+            royaltiesPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 168, Short.MAX_VALUE)
-            .addGroup(salesPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(salesPaneLayout.createSequentialGroup()
+            .addGroup(royaltiesPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(royaltiesPaneLayout.createSequentialGroup()
                     .addContainerGap()
                     .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
                     .addContainerGap()))
         );
-        salesPaneLayout.setVerticalGroup(
-            salesPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        royaltiesPaneLayout.setVerticalGroup(
+            royaltiesPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 297, Short.MAX_VALUE)
-            .addGroup(salesPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(salesPaneLayout.createSequentialGroup()
+            .addGroup(royaltiesPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(royaltiesPaneLayout.createSequentialGroup()
                     .addContainerGap()
                     .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 275, Short.MAX_VALUE)
                     .addContainerGap()))
         );
 
-        categoryPane.addTab("Royalties", salesPane);
+        categoryPane.addTab("Royalties", royaltiesPane);
 
         javax.swing.GroupLayout controllerDisplayLayout = new javax.swing.GroupLayout(controllerDisplay);
         controllerDisplay.setLayout(controllerDisplayLayout);
@@ -422,18 +421,17 @@ public class IMSGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_vendorListValueChanged
 
     private void categoryPaneStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_categoryPaneStateChanged
-        if(categoryPane.getSelectedComponent()==salesPane){
+        if(categoryPane.getSelectedComponent()==royaltiesPane){
             inventoryList.clearSelection();
             vendorList.clearSelection();
             this.setController(new RoyaltiesController(controllerDisplay));
-            controller.filterByCategory("name");
         }else if(categoryPane.getSelectedComponent()==inventoryPane){
-            salesList.clearSelection();
+            royaltyList.clearSelection();
             vendorList.clearSelection();
             this.setController(new InventoryController(controllerDisplay));
         }else if(categoryPane.getSelectedComponent()==vendorPane){
-            salesList.clearSelection();
             inventoryList.clearSelection();
+            royaltyList.clearSelection();
             this.setController(new VendorController(controllerDisplay));
         }
     }//GEN-LAST:event_categoryPaneStateChanged
@@ -464,7 +462,7 @@ public class IMSGUI extends javax.swing.JFrame {
 
     private void viewUserButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewUserButtonActionPerformed
         // TODO add your handling code here:
-        salesList.clearSelection();
+        royaltyList.clearSelection();
             inventoryList.clearSelection();
             vendorList.clearSelection();
             this.setController(new UserController(controllerDisplay));
@@ -504,8 +502,8 @@ public class IMSGUI extends javax.swing.JFrame {
     private javax.swing.JDialog logMenu;
     private javax.swing.JButton logOKButton;
     private java.awt.TextField passwordField;
-    private javax.swing.JList salesList;
-    private javax.swing.JPanel salesPane;
+    private javax.swing.JPanel royaltiesPane;
+    private javax.swing.JList royaltyList;
     private javax.swing.JLabel userDisplay;
     private java.awt.TextField userField;
     private javax.swing.JList vendorList;

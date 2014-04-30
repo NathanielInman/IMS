@@ -207,20 +207,37 @@ public class DatabaseController {
        return returnResults;
    }
    
+   /*
+    * This method will search a key term from the inventory list of a given
+    * vendor specification id
+    */
    public ArrayList vendorSearch(String term, int vendorID){
-        ArrayList returnResults = new ArrayList<>();
+        ArrayList returnResults;
         PreparedStatement stmt = null;
-
         String sql;
         term = term.replaceAll("'", "_");
-        String tableName = "";
-       sql = "SELECT * FROM Inventory WHERE vendor_id = "+vendorID+" AND Lower(Name) LIKE '%"+term.toLowerCase()+"%'";
-       String[] stringsArray = {};
-       returnResults = getResultSet(stmt, sql, IMSController.TYPE_INVENTORY, stringsArray);
-       System.out.println("Finished.");
-       return returnResults;
+        sql = "SELECT * FROM Inventory WHERE vendor_id = "+vendorID+" AND Lower(Name) LIKE '%"+term.toLowerCase()+"%'";
+        String[] stringsArray = {};
+        returnResults = getResultSet(stmt, sql, IMSController.TYPE_INVENTORY, stringsArray);
+        System.out.println("Finished.");
+        return returnResults;
    }
    
+   /*
+    * This method will search a key term from the inventory list of a given royalty
+    * specification id
+    */
+   public ArrayList royaltySearch(String term, int royaltyID){
+        ArrayList returnResults;
+        PreparedStatement stmt = null;
+        String sql;
+        term = term.replaceAll("'", "_");
+        sql = "SELECT * FROM Inventory WHERE royalty_id = "+royaltyID+" AND Lower(Name) LIKE '%"+term.toLowerCase()+"%'";
+        String[] stringsArray = {};
+        returnResults = getResultSet(stmt, sql, IMSController.TYPE_INVENTORY, stringsArray);
+        System.out.println("Finished.");
+        return returnResults;
+   }
    /*
     * This method will get all inventory items by the specified category name.
     */
@@ -317,45 +334,32 @@ public class DatabaseController {
        System.out.println("Finished.");
        return returnResult; //return the password if successful, or 'Invalid' if not
    } //end checkCredentials()
+   
    /*
     * This method will get a list of all the vendors
     */
    public ArrayList getVendorsByName(String name){
-        ArrayList returnResults = new ArrayList<>();
-        PreparedStatement stmt = null;
-      //  Connection conn;
-      /*  try{
-           Class.forName(JDBC_DRIVER);
-           System.out.println("Connecting to database...");
-           conn = DriverManager.getConnection(DB_URL,USER,PASS);
-           System.out.println("Creating statement...");*/
-           String sql;
-           sql = "SELECT * FROM vendors WHERE name = ?";
-           //stmt = conn.prepareStatement(sql);
-           //stmt.setString(1, name);
-           /*try (ResultSet rs = stmt.executeQuery()){
-                while(rs.next()){
-                    returnResults.add(rs.getString(category));
-                } //end while
-           } //end try
-           stmt.close();
-           conn.close();
-       }catch(SQLException se){ //errors in the SQL processing
-           se.printStackTrace();
-       }catch(Exception e){ //errors relating to Class.forName
-           e.printStackTrace();
-       }finally{ //clean up regardless of success
-            try{
-                if(stmt!=null)stmt.close();
-            }catch(SQLException se){
-                se.printStackTrace();
-            } //end try
-       } //end try*/
-           String[] vars = {name};
+       ArrayList returnResults = new ArrayList<>();
+       PreparedStatement stmt = null;
+       String sql = "SELECT * FROM vendors WHERE name = ?";
+       String[] vars = {name};
        returnResults = getResultSet(stmt, sql, IMSController.TYPE_VENDOR, vars);
        System.out.println("Finished.");
        return returnResults;
    } //end getVendorsByName()
+   
+   /*
+    * This method will get a list of all the royalties
+    */
+   public ArrayList getRoyaltiesByName(String name){
+       ArrayList returnResults = new ArrayList<>();
+       PreparedStatement stmt = null;
+       String sql = "SELECT * FROM royalties WHERE name = ?";
+       String[] vars = {name};
+       returnResults = getResultSet(stmt, sql, IMSController.TYPE_ROYALTIES,vars);
+       System.out.println("Finished");
+       return returnResults;
+   } ///end getRoyaltiesByName()
    
    /*
     * This method will get a list of all the royalties
