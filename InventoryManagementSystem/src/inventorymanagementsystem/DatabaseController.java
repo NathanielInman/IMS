@@ -155,6 +155,35 @@ public class DatabaseController {
        System.out.println("[getImageFromID] Finished");
        return bytes;
    } //end getImageFromID()
+   public void changeBlob(int table, int id, String column, File pic){
+       System.out.println("[changeBlob] Started");
+       Connection conn;
+       PreparedStatement stmt = null;
+       String sql;
+       try{
+           Class.forName(JDBC_DRIVER);
+           conn = DriverManager.getConnection(DB_URL,USER,PASS);
+           sql = "UPDATE "+tableIntToString(table)+" SET "+column+"=? WHERE id="+id;
+           stmt = conn.prepareStatement(sql);
+           Blob blob = conn.createBlob();
+           blob.setBytes(1, Files.readAllBytes(pic.toPath()));
+           stmt.setBlob(1,blob);
+           stmt.executeUpdate();
+           stmt.close();
+           conn.close();
+       }catch(SQLException se){ //errors in the SQL processing
+           se.printStackTrace();
+       }catch(Exception e){ //errors relating to Class.forName
+           e.printStackTrace();
+       }finally{ //clean up regardless of success
+            try{
+                if(stmt!=null)stmt.close();
+            }catch(SQLException se){
+                se.printStackTrace();
+            } //end try
+       } //end try
+       System.out.println("[changeBlob] Finished");
+   } //end changeBlob()
    
    public void changeData(int table, int id, String column, String newData){
        System.out.println("[changeData] Started/n"+">>UPDATE "+tableIntToString(table)+" SET "+column+"='"+newData+"' WHERE id="+id);
@@ -487,6 +516,10 @@ public class DatabaseController {
                     blob.setBytes(1, bytes);
                 }
                 stmt.setBlob(10,blob);
+           }else if(table==IMSController.TYPE_VENDOR || table==IMSController.TYPE_ROYALTIES){
+               for(int i=0; i<data.length; i++){
+                   stmt.setString(i+1, data[i]);
+               }
            }
            stmt.executeUpdate();
            stmt.close();

@@ -12,6 +12,7 @@ import java.awt.font.FontRenderContext;
 import java.awt.font.LineBreakMeasurer;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.text.AttributedCharacterIterator;
 import java.text.AttributedString;
@@ -173,7 +174,11 @@ public class IMSController extends JPanel implements MouseListener{
     }
     public void editItemActionPerformed(java.awt.event.ActionEvent e){
         if(this.getRowCode(activeColumn)==IMSController.CODE_PICTURE){
-            // Not sure how to do this just yet.
+            File picture = gui.browseForPicture();
+            if(picture != null){
+                db.changeBlob(this.getType(), Integer.parseInt(rows.get(activeRow).get(0)), getColumnDatabaseName(activeColumn), picture);
+            }
+            showInventory();
             return;
         }
         String oldValue = rows.get(activeRow).get(activeColumn);

@@ -76,9 +76,11 @@ public class IMSGUI extends javax.swing.JFrame {
         logInButton = new javax.swing.JMenuItem();
         viewUserButton = new javax.swing.JMenuItem();
         addInventoryButton = new javax.swing.JMenuItem();
+        addVendorButton = new javax.swing.JMenuItem();
+        addRoyaltyButton = new javax.swing.JMenuItem();
         newItemForm = new javax.swing.JDialog();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        itemCreateButton = new javax.swing.JButton();
+        itemCancelButton = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -100,8 +102,50 @@ public class IMSGUI extends javax.swing.JFrame {
         inventoryInputPreferredStock = new javax.swing.JTextField();
         inventoryInputPicture = new javax.swing.JTextField();
         jTextField11 = new javax.swing.JTextField();
-        jButton4 = new javax.swing.JButton();
+        itemBrowseButton = new javax.swing.JButton();
         pictureBrowser = new javax.swing.JFileChooser();
+        newVendorForm = new javax.swing.JDialog();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
+        vendorCreateButton = new javax.swing.JButton();
+        vendorCancelButton = new javax.swing.JButton();
+        vendorInputID = new javax.swing.JTextField();
+        vendorInputName = new javax.swing.JTextField();
+        vendorInputPhone = new javax.swing.JTextField();
+        vendorInputExt = new javax.swing.JTextField();
+        vendorInputAddress = new javax.swing.JTextField();
+        vendorInputWebsite = new javax.swing.JTextField();
+        vendorInputEmail = new javax.swing.JTextField();
+        vendorInputPPOC = new javax.swing.JTextField();
+        newRoyaltiesForm = new javax.swing.JDialog();
+        jLabel23 = new javax.swing.JLabel();
+        jLabel24 = new javax.swing.JLabel();
+        jLabel25 = new javax.swing.JLabel();
+        jLabel26 = new javax.swing.JLabel();
+        jLabel27 = new javax.swing.JLabel();
+        jLabel28 = new javax.swing.JLabel();
+        jLabel29 = new javax.swing.JLabel();
+        jLabel30 = new javax.swing.JLabel();
+        jLabel31 = new javax.swing.JLabel();
+        royaltiesInputID = new javax.swing.JTextField();
+        royaltiesInputName = new javax.swing.JTextField();
+        royaltiesInputPhone = new javax.swing.JTextField();
+        royaltiesInputExt = new javax.swing.JTextField();
+        royaltiesInputAddress = new javax.swing.JTextField();
+        royaltiesInputWebsite = new javax.swing.JTextField();
+        royaltiesInputEmail = new javax.swing.JTextField();
+        royaltiesInputPPOC = new javax.swing.JTextField();
+        royaltiesInputRoyalty = new javax.swing.JTextField();
+        jTextField10 = new javax.swing.JTextField();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
@@ -209,21 +253,37 @@ public class IMSGUI extends javax.swing.JFrame {
         });
         gearMenu.add(addInventoryButton);
 
+        addVendorButton.setText("Add Vendor");
+        addVendorButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addVendorButtonActionPerformed(evt);
+            }
+        });
+        gearMenu.add(addVendorButton);
+
+        addRoyaltyButton.setText("Add Royalty");
+        addRoyaltyButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addRoyaltyButtonActionPerformed(evt);
+            }
+        });
+        gearMenu.add(addRoyaltyButton);
+
         newItemForm.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         newItemForm.setAlwaysOnTop(true);
         newItemForm.setModal(true);
 
-        jButton2.setText("Create");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        itemCreateButton.setText("Create");
+        itemCreateButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                itemCreateButtonActionPerformed(evt);
             }
         });
 
-        jButton3.setText("Cancel");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        itemCancelButton.setText("Cancel");
+        itemCancelButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                itemCancelButtonActionPerformed(evt);
             }
         });
 
@@ -254,10 +314,10 @@ public class IMSGUI extends javax.swing.JFrame {
         jTextField11.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextField11.setText("New Inventory Item Pane");
 
-        jButton4.setText("Browse");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        itemBrowseButton.setText("Browse");
+        itemBrowseButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                itemBrowseButtonActionPerformed(evt);
             }
         });
 
@@ -272,9 +332,9 @@ public class IMSGUI extends javax.swing.JFrame {
                     .addGroup(newItemFormLayout.createSequentialGroup()
                         .addGroup(newItemFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(newItemFormLayout.createSequentialGroup()
-                                .addComponent(jButton2)
+                                .addComponent(itemCreateButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton3))
+                                .addComponent(itemCancelButton))
                             .addGroup(newItemFormLayout.createSequentialGroup()
                                 .addGroup(newItemFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -301,7 +361,7 @@ public class IMSGUI extends javax.swing.JFrame {
                                         .addComponent(inventoryInputPreferredStock, javax.swing.GroupLayout.Alignment.LEADING))
                                     .addComponent(inventoryInputPicture))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton4)))
+                        .addComponent(itemBrowseButton)))
                 .addContainerGap())
         );
         newItemFormLayout.setVerticalGroup(
@@ -349,12 +409,270 @@ public class IMSGUI extends javax.swing.JFrame {
                 .addGroup(newItemFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(inventoryInputPicture, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel13)
-                    .addComponent(jButton4))
+                    .addComponent(itemBrowseButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(newItemFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(itemCreateButton)
+                    .addComponent(itemCancelButton))
+                .addContainerGap())
+        );
+
+        newVendorForm.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        jLabel14.setText("ID:");
+
+        jLabel15.setText("Name:");
+
+        jLabel16.setText("Phone:");
+
+        jLabel17.setText("Extension:");
+
+        jLabel18.setText("Address:");
+
+        jLabel19.setText("Website:");
+
+        jLabel20.setText("Email:");
+
+        jLabel21.setText("PPOC:");
+
+        jLabel22.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel22.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel22.setText("New Vendor Form");
+
+        vendorCreateButton.setText("Create");
+        vendorCreateButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                vendorCreateButtonActionPerformed(evt);
+            }
+        });
+
+        vendorCancelButton.setText("Cancel");
+        vendorCancelButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                vendorCancelButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout newVendorFormLayout = new javax.swing.GroupLayout(newVendorForm.getContentPane());
+        newVendorForm.getContentPane().setLayout(newVendorFormLayout);
+        newVendorFormLayout.setHorizontalGroup(
+            newVendorFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, newVendorFormLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(vendorCreateButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(vendorCancelButton)
+                .addGap(17, 17, 17))
+            .addGroup(newVendorFormLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(newVendorFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel22, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
+                    .addGroup(newVendorFormLayout.createSequentialGroup()
+                        .addGroup(newVendorFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel14)
+                            .addComponent(jLabel15)
+                            .addComponent(jLabel16)
+                            .addComponent(jLabel17)
+                            .addComponent(jLabel18)
+                            .addComponent(jLabel19)
+                            .addComponent(jLabel20)
+                            .addComponent(jLabel21))
+                        .addGap(44, 44, 44)
+                        .addGroup(newVendorFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(vendorInputID)
+                            .addComponent(vendorInputName)
+                            .addComponent(vendorInputPhone)
+                            .addComponent(vendorInputExt)
+                            .addComponent(vendorInputAddress)
+                            .addComponent(vendorInputWebsite)
+                            .addComponent(vendorInputEmail)
+                            .addComponent(vendorInputPPOC))))
+                .addContainerGap())
+        );
+        newVendorFormLayout.setVerticalGroup(
+            newVendorFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(newVendorFormLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel22)
+                .addGap(20, 20, 20)
+                .addGroup(newVendorFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel14)
+                    .addComponent(vendorInputID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(newVendorFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel15)
+                    .addComponent(vendorInputName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(newVendorFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel16)
+                    .addComponent(vendorInputPhone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(newVendorFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel17)
+                    .addComponent(vendorInputExt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(newVendorFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel18)
+                    .addComponent(vendorInputAddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(newVendorFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel19)
+                    .addComponent(vendorInputWebsite, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(newVendorFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel20)
+                    .addComponent(vendorInputEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(newVendorFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel21)
+                    .addComponent(vendorInputPPOC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addGroup(newVendorFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(vendorCreateButton)
+                    .addComponent(vendorCancelButton))
+                .addContainerGap())
+        );
+
+        newRoyaltiesForm.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        jLabel23.setText("ID");
+
+        jLabel24.setText("Name");
+
+        jLabel25.setText("Phone");
+
+        jLabel26.setText("Extension");
+
+        jLabel27.setText("Address");
+
+        jLabel28.setText("Website");
+
+        jLabel29.setText("Email");
+
+        jLabel30.setText("PPOC");
+
+        jLabel31.setText("Royalty");
+
+        royaltiesInputName.setPreferredSize(new java.awt.Dimension(100, 20));
+
+        royaltiesInputPhone.setPreferredSize(new java.awt.Dimension(100, 20));
+
+        royaltiesInputExt.setPreferredSize(new java.awt.Dimension(100, 20));
+
+        royaltiesInputAddress.setPreferredSize(new java.awt.Dimension(100, 20));
+
+        royaltiesInputWebsite.setPreferredSize(new java.awt.Dimension(100, 20));
+
+        royaltiesInputEmail.setPreferredSize(new java.awt.Dimension(100, 20));
+
+        royaltiesInputPPOC.setPreferredSize(new java.awt.Dimension(100, 20));
+
+        royaltiesInputRoyalty.setPreferredSize(new java.awt.Dimension(100, 20));
+
+        jTextField10.setEditable(false);
+        jTextField10.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jTextField10.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField10.setText("New Royalties Form");
+
+        jButton2.setText("Create");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setText("Cancel");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout newRoyaltiesFormLayout = new javax.swing.GroupLayout(newRoyaltiesForm.getContentPane());
+        newRoyaltiesForm.getContentPane().setLayout(newRoyaltiesFormLayout);
+        newRoyaltiesFormLayout.setHorizontalGroup(
+            newRoyaltiesFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(newRoyaltiesFormLayout.createSequentialGroup()
+                .addGroup(newRoyaltiesFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, newRoyaltiesFormLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton3))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, newRoyaltiesFormLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(newRoyaltiesFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jTextField10)
+                            .addGroup(newRoyaltiesFormLayout.createSequentialGroup()
+                                .addGroup(newRoyaltiesFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel23)
+                                    .addComponent(jLabel24)
+                                    .addComponent(jLabel25)
+                                    .addComponent(jLabel26)
+                                    .addComponent(jLabel27)
+                                    .addComponent(jLabel28)
+                                    .addComponent(jLabel29)
+                                    .addComponent(jLabel30)
+                                    .addComponent(jLabel31))
+                                .addGap(38, 38, 38)
+                                .addGroup(newRoyaltiesFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(royaltiesInputRoyalty, javax.swing.GroupLayout.DEFAULT_SIZE, 263, Short.MAX_VALUE)
+                                    .addComponent(royaltiesInputPPOC, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(royaltiesInputEmail, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(royaltiesInputWebsite, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(royaltiesInputAddress, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(royaltiesInputExt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(royaltiesInputPhone, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(royaltiesInputName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(royaltiesInputID))))))
+                .addContainerGap())
+        );
+        newRoyaltiesFormLayout.setVerticalGroup(
+            newRoyaltiesFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(newRoyaltiesFormLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(23, 23, 23)
+                .addGroup(newRoyaltiesFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel23)
+                    .addComponent(royaltiesInputID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(newRoyaltiesFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel24)
+                    .addComponent(royaltiesInputName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(newRoyaltiesFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel25)
+                    .addComponent(royaltiesInputPhone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(newRoyaltiesFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel26)
+                    .addComponent(royaltiesInputExt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(newRoyaltiesFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel27)
+                    .addComponent(royaltiesInputAddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(newRoyaltiesFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel28)
+                    .addComponent(royaltiesInputWebsite, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(newRoyaltiesFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel29)
+                    .addComponent(royaltiesInputEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(newRoyaltiesFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel30)
+                    .addComponent(royaltiesInputPPOC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(newRoyaltiesFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel31)
+                    .addComponent(royaltiesInputRoyalty, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(newRoyaltiesFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
                     .addComponent(jButton3))
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -678,15 +996,16 @@ public class IMSGUI extends javax.swing.JFrame {
     private void addInventoryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addInventoryButtonActionPerformed
         // TODO add your handling code here:
         newItemForm.pack();
+        centerDialog(newItemForm);
         newItemForm.setVisible(true);
     }//GEN-LAST:event_addInventoryButtonActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void itemCancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemCancelButtonActionPerformed
         // TODO add your handling code here:
         newItemForm.setVisible(false);
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_itemCancelButtonActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void itemCreateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemCreateButtonActionPerformed
         // TODO add your handling code here:
         String[] inputs = { inventoryInputID.getText(),
                             inventoryInputName.getText(),
@@ -712,17 +1031,103 @@ public class IMSGUI extends javax.swing.JFrame {
             newItemForm.setVisible(false);
             updateCategoriesFromDB();
         }
+    }//GEN-LAST:event_itemCreateButtonActionPerformed
+
+    private void itemBrowseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemBrowseButtonActionPerformed
+        picture = browseForPicture();
+        inventoryInputPicture.setText(picture.getAbsolutePath());
+    }//GEN-LAST:event_itemBrowseButtonActionPerformed
+
+    private void vendorCreateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vendorCreateButtonActionPerformed
+        if(vendorInputName.getText().length()==0){
+            return;
+        }
+        String[] inputs = { vendorInputID.getText(),
+                            vendorInputName.getText(),
+                            vendorInputPhone.getText(),
+                            vendorInputExt.getText(),
+                            vendorInputAddress.getText(),
+                            vendorInputWebsite.getText(),
+                            vendorInputEmail.getText(),
+                            vendorInputPPOC.getText()};
+        if(db.addToDatabase(IMSController.TYPE_VENDOR,inputs,null)){
+            vendorInputID.setText("");
+            vendorInputName.setText("");
+            vendorInputPhone.setText("");
+            vendorInputExt.setText("");
+            vendorInputAddress.setText("");
+            vendorInputWebsite.setText("");
+            vendorInputEmail.setText("");
+            vendorInputPPOC.setText("");
+            newVendorForm.setVisible(false);
+            updateCategoriesFromDB();
+        }
+    }//GEN-LAST:event_vendorCreateButtonActionPerformed
+
+    private void vendorCancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vendorCancelButtonActionPerformed
+        newVendorForm.setVisible(false);
+    }//GEN-LAST:event_vendorCancelButtonActionPerformed
+
+    private void addVendorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addVendorButtonActionPerformed
+        newVendorForm.pack();
+        centerDialog(newVendorForm);
+        newVendorForm.setVisible(true);
+    }//GEN-LAST:event_addVendorButtonActionPerformed
+
+    private void addRoyaltyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addRoyaltyButtonActionPerformed
+        newRoyaltiesForm.pack();
+        centerDialog(newRoyaltiesForm);
+        newRoyaltiesForm.setVisible(true);
+    }//GEN-LAST:event_addRoyaltyButtonActionPerformed
+
+    private void centerDialog(JDialog dialog){
+        dialog.setLocation(this.getWidth()/2-dialog.getWidth()/2+this.getX(), this.getHeight()/2-dialog.getHeight()/2+this.getY());
+    }
+    
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        newRoyaltiesForm.setVisible(false);
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        if(royaltiesInputName.getText().length()==0){
+            return;
+        }
+        String[] inputs = { royaltiesInputID.getText(),
+                            royaltiesInputName.getText(),
+                            royaltiesInputPhone.getText(),
+                            royaltiesInputExt.getText(),
+                            royaltiesInputAddress.getText(),
+                            royaltiesInputWebsite.getText(),
+                            royaltiesInputEmail.getText(),
+                            royaltiesInputPPOC.getText(),
+                            royaltiesInputRoyalty.getText()};
+        if(db.addToDatabase(IMSController.TYPE_ROYALTIES,inputs,null)){
+            royaltiesInputID.setText("");
+            royaltiesInputName.setText("");
+            royaltiesInputPhone.setText("");
+            royaltiesInputExt.setText("");
+            royaltiesInputAddress.setText("");
+            royaltiesInputWebsite.setText("");
+            royaltiesInputEmail.setText("");
+            royaltiesInputPPOC.setText("");
+            royaltiesInputRoyalty.setText("");
+            newRoyaltiesForm.setVisible(false);
+            updateCategoriesFromDB();
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    public File browseForPicture(){
+        File pic = null;
         pictureBrowser.setFileFilter(new PictureFileFilter());
         int response = pictureBrowser.showOpenDialog(this);
         try {
             if (response == JFileChooser.APPROVE_OPTION) {
-                picture = pictureBrowser.getSelectedFile();
-                inventoryInputPicture.setText(picture.getAbsolutePath());
-            } // Oops!
-            else {
+                pic = pictureBrowser.getSelectedFile();
+                return pic;
+            }
+            else if(response == JFileChooser.CANCEL_OPTION){
+                return null;
+            }else{
                 JOptionPane.showMessageDialog(null,
                         "Error",
                         "Please select just one image.",
@@ -731,8 +1136,9 @@ public class IMSGUI extends javax.swing.JFrame {
         } catch (Exception iOException) {
             
         }
-    }//GEN-LAST:event_jButton4ActionPerformed
-
+        return pic;
+    }
+    
     private void logIn(String user){
         IMSController.logIn(user);
         logInButton.setText("Log out");
@@ -747,6 +1153,8 @@ public class IMSGUI extends javax.swing.JFrame {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem addInventoryButton;
+    private javax.swing.JMenuItem addRoyaltyButton;
+    private javax.swing.JMenuItem addVendorButton;
     private javax.swing.JTabbedPane categoryPane;
     private javax.swing.JPanel controllerDisplay;
     private javax.swing.JLabel gearIcon;
@@ -763,17 +1171,37 @@ public class IMSGUI extends javax.swing.JFrame {
     private javax.swing.JTextField inventoryInputWholesale;
     private javax.swing.JList inventoryList;
     private javax.swing.JPanel inventoryPane;
+    private javax.swing.JButton itemBrowseButton;
+    private javax.swing.JButton itemCancelButton;
+    private javax.swing.JButton itemCreateButton;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -784,6 +1212,7 @@ public class IMSGUI extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField10;
     private javax.swing.JTextField jTextField11;
     private javax.swing.JButton logCancelButton;
     private javax.swing.JMenuItem logInButton;
@@ -791,12 +1220,33 @@ public class IMSGUI extends javax.swing.JFrame {
     private javax.swing.JDialog logMenu;
     private javax.swing.JButton logOKButton;
     private javax.swing.JDialog newItemForm;
+    private javax.swing.JDialog newRoyaltiesForm;
+    private javax.swing.JDialog newVendorForm;
     private javax.swing.JPasswordField passwordField;
     private javax.swing.JFileChooser pictureBrowser;
+    private javax.swing.JTextField royaltiesInputAddress;
+    private javax.swing.JTextField royaltiesInputEmail;
+    private javax.swing.JTextField royaltiesInputExt;
+    private javax.swing.JTextField royaltiesInputID;
+    private javax.swing.JTextField royaltiesInputName;
+    private javax.swing.JTextField royaltiesInputPPOC;
+    private javax.swing.JTextField royaltiesInputPhone;
+    private javax.swing.JTextField royaltiesInputRoyalty;
+    private javax.swing.JTextField royaltiesInputWebsite;
     private javax.swing.JPanel royaltiesPane;
     private javax.swing.JList royaltyList;
     private javax.swing.JLabel userDisplay;
     private javax.swing.JTextField userField;
+    private javax.swing.JButton vendorCancelButton;
+    private javax.swing.JButton vendorCreateButton;
+    private javax.swing.JTextField vendorInputAddress;
+    private javax.swing.JTextField vendorInputEmail;
+    private javax.swing.JTextField vendorInputExt;
+    private javax.swing.JTextField vendorInputID;
+    private javax.swing.JTextField vendorInputName;
+    private javax.swing.JTextField vendorInputPPOC;
+    private javax.swing.JTextField vendorInputPhone;
+    private javax.swing.JTextField vendorInputWebsite;
     private javax.swing.JList vendorList;
     private javax.swing.JPanel vendorPane;
     private javax.swing.JMenuItem viewUserButton;
