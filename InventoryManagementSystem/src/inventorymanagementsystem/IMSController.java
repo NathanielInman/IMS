@@ -240,8 +240,10 @@ public class IMSController extends JPanel implements MouseListener{
         if(SwingUtilities.isRightMouseButton(e)){
             if(hasPermissionToEdit()){
                 editItem.setEnabled(true);
+                deleteItem.setEnabled(true);
             }else{
                 editItem.setEnabled(false);
+                deleteItem.setEnabled(false);
             }
             resetActivePosition();
             // I decided to do it this way instead of putting a listener on every
@@ -291,7 +293,12 @@ public class IMSController extends JPanel implements MouseListener{
      * @return boolean  True if you can edit, false if not.
      */
     private boolean hasPermissionToEdit(){
-        return loggedIn;
+        if(activeUser==null){
+            return false;
+        }else if((int)activeUser.get(3)==1||(int)activeUser.get(3)==2){
+            return true;
+        }
+        return false;
     }
     /**
      * This method resets the display panes.

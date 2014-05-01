@@ -47,4 +47,5 @@ public class UserController extends IMSController{
     public int getType() {
         return IMSController.TYPE_USER;
     }
+   
 }

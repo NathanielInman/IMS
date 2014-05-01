@@ -84,8 +84,8 @@ public class DatabaseController {
                         returnResults.add(rs.getInt("id"));
                         returnResults.add(rs.getString("name"));
                         returnResults.add(rs.getString("password"));
-                        //returnResults.add(rs.getInt("Level"));
-                        returnResults.add(1);
+                        returnResults.add(rs.getInt("Level"));
+                        
                         
                    } //end while
                } //end try
@@ -520,6 +520,11 @@ public class DatabaseController {
                for(int i=0; i<data.length; i++){
                    stmt.setString(i+1, data[i]);
                }
+           }else if(table==IMSController.TYPE_USER){
+               stmt.setInt(1,intOrZero(data[0]));
+               stmt.setString(2,data[1]);
+               stmt.setString(3,data[2]);
+                stmt.setInt(4,intOrZero(data[3]));
            }
            stmt.executeUpdate();
            stmt.close();

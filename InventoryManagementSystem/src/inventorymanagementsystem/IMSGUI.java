@@ -78,6 +78,7 @@ public class IMSGUI extends javax.swing.JFrame {
         addInventoryButton = new javax.swing.JMenuItem();
         addVendorButton = new javax.swing.JMenuItem();
         addRoyaltyButton = new javax.swing.JMenuItem();
+        addUserButton = new javax.swing.JMenuItem();
         newItemForm = new javax.swing.JDialog();
         itemCreateButton = new javax.swing.JButton();
         itemCancelButton = new javax.swing.JButton();
@@ -146,6 +147,18 @@ public class IMSGUI extends javax.swing.JFrame {
         jTextField10 = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        newUserForm = new javax.swing.JDialog();
+        jLabel32 = new javax.swing.JLabel();
+        jLabel33 = new javax.swing.JLabel();
+        jLabel34 = new javax.swing.JLabel();
+        jLabel35 = new javax.swing.JLabel();
+        userInputID = new javax.swing.JTextField();
+        userInputName = new javax.swing.JTextField();
+        userInputPassword = new javax.swing.JTextField();
+        userInputLevel = new javax.swing.JTextField();
+        jTextField5 = new javax.swing.JTextField();
+        jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
@@ -268,6 +281,14 @@ public class IMSGUI extends javax.swing.JFrame {
             }
         });
         gearMenu.add(addRoyaltyButton);
+
+        addUserButton.setText("Add User");
+        addUserButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addUserButtonActionPerformed(evt);
+            }
+        });
+        gearMenu.add(addUserButton);
 
         newItemForm.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         newItemForm.setAlwaysOnTop(true);
@@ -675,6 +696,94 @@ public class IMSGUI extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        newUserForm.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        jLabel32.setText("ID");
+
+        jLabel33.setText("Name");
+
+        jLabel34.setText("Password");
+
+        jLabel35.setText("Level");
+
+        jTextField5.setEditable(false);
+        jTextField5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jTextField5.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField5.setText("New User Form");
+
+        jButton4.setText("Create");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        jButton5.setText("Cancel");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout newUserFormLayout = new javax.swing.GroupLayout(newUserForm.getContentPane());
+        newUserForm.getContentPane().setLayout(newUserFormLayout);
+        newUserFormLayout.setHorizontalGroup(
+            newUserFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(newUserFormLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(newUserFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, newUserFormLayout.createSequentialGroup()
+                        .addGap(0, 125, Short.MAX_VALUE)
+                        .addComponent(jButton4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton5))
+                    .addComponent(jTextField5)
+                    .addGroup(newUserFormLayout.createSequentialGroup()
+                        .addGroup(newUserFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel34)
+                            .addComponent(jLabel35))
+                        .addGap(18, 18, 18)
+                        .addGroup(newUserFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(userInputLevel)
+                            .addComponent(userInputPassword)))
+                    .addGroup(newUserFormLayout.createSequentialGroup()
+                        .addGroup(newUserFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel33)
+                            .addComponent(jLabel32))
+                        .addGap(37, 37, 37)
+                        .addGroup(newUserFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(userInputID)
+                            .addComponent(userInputName))))
+                .addContainerGap())
+        );
+        newUserFormLayout.setVerticalGroup(
+            newUserFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(newUserFormLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20)
+                .addGroup(newUserFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel32)
+                    .addComponent(userInputID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(newUserFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel33)
+                    .addComponent(userInputName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(newUserFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel34)
+                    .addComponent(userInputPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(newUserFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel35)
+                    .addComponent(userInputLevel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(newUserFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton5)
+                    .addComponent(jButton4))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -955,10 +1064,34 @@ public class IMSGUI extends javax.swing.JFrame {
 
     private void gearIconMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_gearIconMousePressed
         // TODO add your handling code here:
+        if(getUserLevel()==2){
+           viewUserButton.setEnabled(true); 
+            addUserButton.setEnabled(true);
+            
+        }else{
+            viewUserButton.setEnabled(false);
+            addUserButton.setEnabled(false);
+        }
+        if(getUserLevel()==1||getUserLevel()==2){
+            addInventoryButton.setEnabled(true);
+            addRoyaltyButton.setEnabled(true);
+            addVendorButton.setEnabled(true);
+        }else{
+             addInventoryButton.setEnabled(false);
+            addRoyaltyButton.setEnabled(false);
+            addVendorButton.setEnabled(false);   
+        }
+        
         gearMenu.setVisible(true);
         gearMenu.show(gearIcon, evt.getX(),evt.getY() );
     }//GEN-LAST:event_gearIconMousePressed
-
+    private int getUserLevel(){
+        if(IMSController.activeUser==null){
+            return 0;
+        }else{
+            return (int)(IMSController.activeUser.get(3));
+        }
+    }
     private void logInButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logInButtonActionPerformed
          // TODO add your handling code here:
          if(IMSController.loggedIn){
@@ -975,11 +1108,7 @@ public class IMSGUI extends javax.swing.JFrame {
 
     private void viewUserButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewUserButtonActionPerformed
         // TODO add your handling code here:
-        royaltyList.clearSelection();
-            inventoryList.clearSelection();
-            vendorList.clearSelection();
-            this.setController(new UserController(controllerDisplay, this));
-            controller.filterByCategory("name");
+        switchToType(IMSController.TYPE_USER);
     }//GEN-LAST:event_viewUserButtonActionPerformed
 
     private void royaltyListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_royaltyListValueChanged
@@ -1116,6 +1245,43 @@ public class IMSGUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void addUserButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addUserButtonActionPerformed
+        // TODO add your handling code here:
+        newUserForm.pack();
+        centerDialog(newUserForm);
+        newUserForm.setVisible(true);
+    }//GEN-LAST:event_addUserButtonActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        newUserForm.setVisible(false);
+    }//GEN-LAST:event_jButton5ActionPerformed
+    private void switchToType(int type){
+        if(type==IMSController.TYPE_USER){
+               royaltyList.clearSelection();
+            inventoryList.clearSelection();
+            vendorList.clearSelection();
+            this.setController(new UserController(controllerDisplay, this));
+            controller.filterByCategory("name");
+        }
+}
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+       
+        String[] inputs = { userInputID.getText(),
+                            userInputName.getText(),
+                            userInputPassword.getText(),
+                            userInputLevel.getText()};
+        if(db.addToDatabase(IMSController.TYPE_USER,inputs,null)){
+            userInputID.setText("");
+           userInputName.setText("");
+            userInputPassword.setText("");
+           userInputLevel.setText("");
+           newUserForm.setVisible(false);
+            this.switchToType(IMSController.TYPE_USER);
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
+
     public File browseForPicture(){
         File pic = null;
         pictureBrowser.setFileFilter(new PictureFileFilter());
@@ -1149,11 +1315,15 @@ public class IMSGUI extends javax.swing.JFrame {
         IMSController.logOut();
         logInButton.setText("Log in");
         userDisplay.setText("Please Log in!");
+        if(controller.getType()==IMSController.TYPE_USER){
+            controller.clearInventory();
+        }
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem addInventoryButton;
     private javax.swing.JMenuItem addRoyaltyButton;
+    private javax.swing.JMenuItem addUserButton;
     private javax.swing.JMenuItem addVendorButton;
     private javax.swing.JTabbedPane categoryPane;
     private javax.swing.JPanel controllerDisplay;
@@ -1177,6 +1347,8 @@ public class IMSGUI extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1202,6 +1374,10 @@ public class IMSGUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel33;
+    private javax.swing.JLabel jLabel34;
+    private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -1214,6 +1390,7 @@ public class IMSGUI extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField10;
     private javax.swing.JTextField jTextField11;
+    private javax.swing.JTextField jTextField5;
     private javax.swing.JButton logCancelButton;
     private javax.swing.JMenuItem logInButton;
     private javax.swing.JButton logInButton2;
@@ -1221,6 +1398,7 @@ public class IMSGUI extends javax.swing.JFrame {
     private javax.swing.JButton logOKButton;
     private javax.swing.JDialog newItemForm;
     private javax.swing.JDialog newRoyaltiesForm;
+    private javax.swing.JDialog newUserForm;
     private javax.swing.JDialog newVendorForm;
     private javax.swing.JPasswordField passwordField;
     private javax.swing.JFileChooser pictureBrowser;
@@ -1237,6 +1415,10 @@ public class IMSGUI extends javax.swing.JFrame {
     private javax.swing.JList royaltyList;
     private javax.swing.JLabel userDisplay;
     private javax.swing.JTextField userField;
+    private javax.swing.JTextField userInputID;
+    private javax.swing.JTextField userInputLevel;
+    private javax.swing.JTextField userInputName;
+    private javax.swing.JTextField userInputPassword;
     private javax.swing.JButton vendorCancelButton;
     private javax.swing.JButton vendorCreateButton;
     private javax.swing.JTextField vendorInputAddress;
