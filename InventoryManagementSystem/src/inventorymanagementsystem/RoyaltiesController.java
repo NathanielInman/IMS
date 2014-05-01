@@ -20,8 +20,8 @@ public class RoyaltiesController extends IMSController{
     public static String[] RCColumnDatabaseNames = {"ID","Name","Phone","Extension","Address","Website","Email","PPOC", "Royalty"};
     private JPanel royaltyInfo = new JPanel();
     private ArrayList<String> activeRoyalty = new ArrayList<String>();
-    public RoyaltiesController(JPanel displayPanel){
-        super(displayPanel);
+    public RoyaltiesController(JPanel displayPanel, IMSGUI gui){
+        super(displayPanel, gui);
         showInventory(); //show the inventory specific to the selected royalty
     }
     public void setActiveRoyalty(String royaltyName){

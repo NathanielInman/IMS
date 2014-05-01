@@ -4,8 +4,13 @@
  */
 package inventorymanagementsystem;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author Nate
@@ -128,6 +133,9 @@ public class DatabaseController {
             try (ResultSet rs = stmt.executeQuery()){
                 while(rs.next()){
                     Blob blob = rs.getBlob("picture");
+                    if(blob==null){
+                        return new byte[0];
+                    }
                     bytes = blob.getBytes(1, (int)blob.length());
                 }
             }
@@ -404,8 +412,39 @@ public class DatabaseController {
         System.out.println(returnResults+"\n[getUser] Finished");
         return returnResults;
    } //end getUser()
-   
-   public boolean addToDatabase(int table, String[] data) {
+   public void deleteRow(int table, int id){
+       System.out.println("[deleteRow] Started");
+       Connection conn;
+       Statement stmt = null;
+       String sql;
+       try{
+           Class.forName(JDBC_DRIVER);
+           conn = DriverManager.getConnection(DB_URL,USER,PASS);
+           sql = "DELETE FROM "+tableIntToString(table)+" WHERE id="+id;
+           stmt = conn.createStatement();
+           stmt.executeUpdate(sql);
+           stmt.close();
+           conn.close();
+       }catch(SQLException se){ //errors in the SQL processing
+           se.printStackTrace();
+       }catch(Exception e){ //errors relating to Class.forName
+           e.printStackTrace();
+       }finally{ //clean up regardless of success
+            try{
+                if(stmt!=null)stmt.close();
+            }catch(SQLException se){
+                se.printStackTrace();
+            } //end try
+       } //end try
+       System.out.println("[deleteRow] Finished");
+   }
+   public boolean addToDatabase(int table, String[] data, File picture) {
+       byte[] bytes;
+        try {
+            bytes = Files.readAllBytes(picture.toPath());
+        } catch (Exception ex) {
+            bytes = null;
+        }
        System.out.println("[addToDatabase] Started");
        for(int i = 0; i<data.length; i++){
            if(data[i].length()==0){
@@ -427,16 +466,28 @@ public class DatabaseController {
            }
            sql += ")";
            stmt = conn.prepareStatement(sql);
-            stmt.setInt(1,intOrZero(data[0]));
-            stmt.setString(2,data[1]);
-            stmt.setDouble(3,doubleOrZero(data[2]));
-            stmt.setDouble(4,doubleOrZero(data[3]));
-            stmt.setString(5,data[4]);
-            stmt.setString(6,data[5]);
-            stmt.setString(7,data[6]);
-            stmt.setString(8,data[7]);
-            stmt.setString(9,data[8]);
-            stmt.setBlob(10,(Blob)null);
+           if(table==IMSController.TYPE_INVENTORY){
+                stmt.setInt(1,intOrZero(data[0]));
+                stmt.setString(2,data[1]);
+                stmt.setDouble(3,doubleOrZero(data[2]));
+                stmt.setDouble(4,doubleOrZero(data[3]));
+                if(data[4]==null){
+                    data[4] = "Uncategorized";
+                }
+                stmt.setString(5,data[4]);
+                stmt.setString(6,data[5]);
+                stmt.setString(7,data[6]);
+                stmt.setString(8,data[7]);
+                stmt.setString(9,data[8]);
+                Blob blob;
+                if(bytes==null){
+                    blob = null;
+                }else{
+                    blob = conn.createBlob();
+                    blob.setBytes(1, bytes);
+                }
+                stmt.setBlob(10,blob);
+           }
            stmt.executeUpdate();
            stmt.close();
            conn.close();
@@ -456,8 +507,10 @@ public class DatabaseController {
        System.out.println("[addToDatabase] Finished");
        return false;
    }
-   
    private int intOrZero(String string){
+       if(string == null){
+        return 0;
+       }
        if(string.length() == 0){
            return 0;
        }

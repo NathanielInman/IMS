@@ -54,6 +54,7 @@ public class IMSController extends JPanel implements MouseListener{
     protected JPanel rowDisplay = new JPanel();
     protected JScrollPane rowScroll;
     protected JPanel columnLabels = new JPanel();
+    private IMSGUI gui;
     private int activeColumn = -1;
     private int activeRow = -1;
     public static DatabaseController db = new DatabaseController();
@@ -61,7 +62,7 @@ public class IMSController extends JPanel implements MouseListener{
    
     public static ArrayList activeUser = null;
     private JPanel displayPanel;
-    public IMSController(JPanel displayPanel){
+    public IMSController(JPanel displayPanel, IMSGUI gui){
         super();
         sortItem.setText("Sort by this column");
         sortItem.addActionListener(new java.awt.event.ActionListener() {
@@ -96,6 +97,7 @@ public class IMSController extends JPanel implements MouseListener{
         // Setting the scroll bar's unit increment makes for faster mouse wheel scrolling
         rowScroll.getVerticalScrollBar().setUnitIncrement(16);
         this.displayPanel = displayPanel;
+        this.gui = gui;
     }
     
     public void search(String term){
@@ -183,7 +185,13 @@ public class IMSController extends JPanel implements MouseListener{
         }
     }
     public void deleteItemActionPerformed(java.awt.event.ActionEvent e){
-        
+        db.deleteRow(this.getType(),Integer.parseInt(rows.get(activeRow).get(0)));
+        rows.remove(activeRow);
+        activeRow = -1;
+        this.showInventory();
+        if(rows.isEmpty()){
+            gui.updateCategoriesFromDB();
+        }
     }
     public void sortItemActionPerformed(java.awt.event.ActionEvent e){
         this.sortRowsBy(activeColumn);
@@ -387,6 +395,10 @@ public class IMSController extends JPanel implements MouseListener{
      * with it's given constrains to display.
      */
     protected void addImageIcon(byte[] blob, GridBagConstraints c) throws IOException{
+        if(blob.length==0){
+            this.addTextField("-", c);
+            return;
+        }
         BufferedImage imageBlob = ImageIO.read(new ByteArrayInputStream(blob));
         JPanel imageIcon = new DrawCanvas(imageBlob);
         imageIcon.prepareImage(imageBlob,this);

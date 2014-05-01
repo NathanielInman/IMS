@@ -2,8 +2,16 @@ package inventorymanagementsystem;
 
 import static inventorymanagementsystem.IMSController.db;
 import java.awt.Point;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
 import javax.swing.JDialog;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 
@@ -21,10 +29,11 @@ public class IMSGUI extends javax.swing.JFrame {
      * Creates new form IMSGUI
      */
     private IMSController controller;
+    private File picture;
     public IMSGUI() {
         initComponents();
         updateCategoriesFromDB();
-        setController(new InventoryController(controllerDisplay));
+        setController(new InventoryController(controllerDisplay, this));
     }
     public void updateCategoriesFromDB(){
         inventoryList.setListData(IMSController.db.getCategoryList("category", "Inventory").toArray());
@@ -92,6 +101,7 @@ public class IMSGUI extends javax.swing.JFrame {
         inventoryInputPicture = new javax.swing.JTextField();
         jTextField11 = new javax.swing.JTextField();
         jButton4 = new javax.swing.JButton();
+        pictureBrowser = new javax.swing.JFileChooser();
         jLabel1 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
@@ -237,12 +247,19 @@ public class IMSGUI extends javax.swing.JFrame {
 
         jLabel13.setText("Picture:");
 
+        inventoryInputPicture.setEditable(false);
+
         jTextField11.setEditable(false);
         jTextField11.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jTextField11.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextField11.setText("New Inventory Item Pane");
 
         jButton4.setText("Browse");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout newItemFormLayout = new javax.swing.GroupLayout(newItemForm.getContentPane());
         newItemForm.getContentPane().setLayout(newItemFormLayout);
@@ -386,11 +403,11 @@ public class IMSGUI extends javax.swing.JFrame {
         inventoryPane.setLayout(inventoryPaneLayout);
         inventoryPaneLayout.setHorizontalGroup(
             inventoryPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 168, Short.MAX_VALUE)
+            .addGap(0, 197, Short.MAX_VALUE)
             .addGroup(inventoryPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(inventoryPaneLayout.createSequentialGroup()
                     .addContainerGap()
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
                     .addContainerGap()))
         );
         inventoryPaneLayout.setVerticalGroup(
@@ -421,11 +438,11 @@ public class IMSGUI extends javax.swing.JFrame {
         vendorPane.setLayout(vendorPaneLayout);
         vendorPaneLayout.setHorizontalGroup(
             vendorPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 168, Short.MAX_VALUE)
+            .addGap(0, 197, Short.MAX_VALUE)
             .addGroup(vendorPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(vendorPaneLayout.createSequentialGroup()
                     .addContainerGap()
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
                     .addContainerGap()))
         );
         vendorPaneLayout.setVerticalGroup(
@@ -456,11 +473,11 @@ public class IMSGUI extends javax.swing.JFrame {
         royaltiesPane.setLayout(royaltiesPaneLayout);
         royaltiesPaneLayout.setHorizontalGroup(
             royaltiesPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 168, Short.MAX_VALUE)
+            .addGap(0, 197, Short.MAX_VALUE)
             .addGroup(royaltiesPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(royaltiesPaneLayout.createSequentialGroup()
                     .addContainerGap()
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
                     .addContainerGap()))
         );
         royaltiesPaneLayout.setVerticalGroup(
@@ -577,7 +594,7 @@ public class IMSGUI extends javax.swing.JFrame {
     private void inventoryListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_inventoryListValueChanged
         try{
             //this.setController(InventoryManagementSystem.getInventoryController());
-            this.setController(new InventoryController(controllerDisplay));
+            this.setController(new InventoryController(controllerDisplay, this));
             controller.filterByCategory(inventoryList.getSelectedValue().toString());
             vendorList.clearSelection();
         }catch(NullPointerException npe){
@@ -589,7 +606,7 @@ public class IMSGUI extends javax.swing.JFrame {
     private void vendorListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_vendorListValueChanged
         try{
             //this.setController(InventoryManagementSystem.getVendorController());
-            this.setController(new VendorController(controllerDisplay));
+            this.setController(new VendorController(controllerDisplay, this));
             controller.filterByCategory(vendorList.getSelectedValue().toString());
             inventoryList.clearSelection();
         }catch(NullPointerException npe){
@@ -602,15 +619,15 @@ public class IMSGUI extends javax.swing.JFrame {
         if(categoryPane.getSelectedComponent()==royaltiesPane){
             inventoryList.clearSelection();
             vendorList.clearSelection();
-            this.setController(new RoyaltiesController(controllerDisplay));
+            this.setController(new RoyaltiesController(controllerDisplay, this));
         }else if(categoryPane.getSelectedComponent()==inventoryPane){
             royaltyList.clearSelection();
             vendorList.clearSelection();
-            this.setController(new InventoryController(controllerDisplay));
+            this.setController(new InventoryController(controllerDisplay, this));
         }else if(categoryPane.getSelectedComponent()==vendorPane){
             inventoryList.clearSelection();
             royaltyList.clearSelection();
-            this.setController(new VendorController(controllerDisplay));
+            this.setController(new VendorController(controllerDisplay, this));
         }
     }//GEN-LAST:event_categoryPaneStateChanged
 
@@ -643,13 +660,13 @@ public class IMSGUI extends javax.swing.JFrame {
         royaltyList.clearSelection();
             inventoryList.clearSelection();
             vendorList.clearSelection();
-            this.setController(new UserController(controllerDisplay));
+            this.setController(new UserController(controllerDisplay, this));
             controller.filterByCategory("name");
     }//GEN-LAST:event_viewUserButtonActionPerformed
 
     private void royaltyListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_royaltyListValueChanged
         try{
-            this.setController(new RoyaltiesController(controllerDisplay));
+            this.setController(new RoyaltiesController(controllerDisplay, this));
             controller.filterByCategory(royaltyList.getSelectedValue().toString());
             inventoryList.clearSelection();
         }catch(NullPointerException npe){
@@ -681,7 +698,7 @@ public class IMSGUI extends javax.swing.JFrame {
                             inventoryInputDescription.getText(),
                             inventoryInputPreferredStock.getText(),
                             inventoryInputPicture.getText()};
-        if(db.addToDatabase(IMSController.TYPE_INVENTORY,inputs)){
+        if(db.addToDatabase(IMSController.TYPE_INVENTORY,inputs,picture)){
             inventoryInputID.setText("");
             inventoryInputName.setText("");
             inventoryInputPrice.setText("");
@@ -693,8 +710,28 @@ public class IMSGUI extends javax.swing.JFrame {
             inventoryInputPreferredStock.setText("");
             inventoryInputPicture.setText("");
             newItemForm.setVisible(false);
+            updateCategoriesFromDB();
         }
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        pictureBrowser.setFileFilter(new PictureFileFilter());
+        int response = pictureBrowser.showOpenDialog(this);
+        try {
+            if (response == JFileChooser.APPROVE_OPTION) {
+                picture = pictureBrowser.getSelectedFile();
+                inventoryInputPicture.setText(picture.getAbsolutePath());
+            } // Oops!
+            else {
+                JOptionPane.showMessageDialog(null,
+                        "Error",
+                        "Please select just one image.",
+                        JOptionPane.WARNING_MESSAGE);
+            }
+        } catch (Exception iOException) {
+            
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     private void logIn(String user){
         IMSController.logIn(user);
@@ -755,6 +792,7 @@ public class IMSGUI extends javax.swing.JFrame {
     private javax.swing.JButton logOKButton;
     private javax.swing.JDialog newItemForm;
     private javax.swing.JPasswordField passwordField;
+    private javax.swing.JFileChooser pictureBrowser;
     private javax.swing.JPanel royaltiesPane;
     private javax.swing.JList royaltyList;
     private javax.swing.JLabel userDisplay;

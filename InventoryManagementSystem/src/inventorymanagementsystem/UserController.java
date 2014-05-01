@@ -16,8 +16,8 @@ import javax.swing.JPanel;
 public class UserController extends IMSController{
     public static String[] UCColumnNames = {"ID","User Name","Password","Level"};
     public static String[] UCColumnDatabaseNames = {"ID","Name","Password","Level"};
-    public UserController(JPanel displayPanel){
-        super(displayPanel);
+    public UserController(JPanel displayPanel, IMSGUI gui){
+        super(displayPanel, gui);
         
     }
     @Override

@@ -20,8 +20,8 @@ public class VendorController extends IMSController{
     public static String[] VCColumnDatabaseNames = {"ID","Name","Phone","Extension","Address","Website","Email","PPOC"};
     private JPanel vendorInfo = new JPanel();
     private ArrayList<String> activeVendor = new ArrayList<String>();
-    public VendorController(JPanel displayPanel){
-        super(displayPanel);
+    public VendorController(JPanel displayPanel, IMSGUI gui){
+        super(displayPanel, gui);
         showInventory(); //show the inventory specific to the selected vendor
     }
     public void setActiveVendor(String vendorName){

@@ -16,8 +16,8 @@ public class InventoryController extends IMSController{
     public static String[] ICColumnNames = {"ID","Name","Price","Wholesale","Category","V. ID","R. ID","Description","Picture","Preferred Stock"};
     public static Double[] ICColumnWeights = {0.1,0.4,0.2,0.2,0.3,0.1,0.1,0.8,0.3,0.2};
     public static String[] ICColumnDatabaseNames = {"ID","Name","Price","Wholesale","Category","vendor_ID","Royalty_ID","Description","Picture","Preferred_Stock"};
-    public InventoryController(JPanel displayPanel){
-        super(displayPanel);
+    public InventoryController(JPanel displayPanel, IMSGUI gui){
+        super(displayPanel, gui);
     }
     @Override
     protected int[] getRowCodes(){
