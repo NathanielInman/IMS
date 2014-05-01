@@ -22,10 +22,18 @@ public class RoyaltiesController extends IMSController{
     private ArrayList<String> activeRoyalty = new ArrayList<String>();
     public RoyaltiesController(JPanel displayPanel, IMSGUI gui){
         super(displayPanel, gui);
+        royaltyInfo.addMouseListener(this);
         showInventory(); //show the inventory specific to the selected royalty
     }
     public void setActiveRoyalty(String royaltyName){
         activeRoyalty = db.getRoyaltiesByName(royaltyName);
+    }
+    @Override
+    protected void deleteActiveCategory(){
+        db.deleteRow(this.getType(), Integer.parseInt(activeRoyalty.get(0)));
+        activeRoyalty.clear();
+        this.showInventory();
+        gui.updateCategoriesFromDB();
     }
     @Override
     protected int[] getRowCodes(){
@@ -75,10 +83,10 @@ public class RoyaltiesController extends IMSController{
     }
 
     private void updateRoyaltyInfo(){
+        royaltyInfo.removeAll();
         if(activeRoyalty.isEmpty()){
             return;
         }
-        royaltyInfo.removeAll();
         royaltyInfo.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.HORIZONTAL;

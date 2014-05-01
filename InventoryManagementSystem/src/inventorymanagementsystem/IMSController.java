@@ -49,14 +49,17 @@ public class IMSController extends JPanel implements MouseListener{
     protected GridBagLayout displayLayout = new GridBagLayout();
     protected GridBagLayout rowLayout = new GridBagLayout();
     protected JPopupMenu itemMenu = new JPopupMenu();
+    protected JPopupMenu editMenu = new JPopupMenu();
     protected JMenuItem sortItem = new JMenuItem();
     protected JMenuItem editItem = new JMenuItem();
+    protected JMenuItem modifyButton = new JMenuItem();
+    protected JMenuItem deleteButton = new JMenuItem();
     protected JMenuItem deleteItem = new JMenuItem();
     protected JPanel rowDisplay = new JPanel();
     protected JScrollPane rowScroll;
     protected JPanel columnLabels = new JPanel();
     protected JPanel topPane = new JPanel();
-    private IMSGUI gui;
+    protected IMSGUI gui;
     private int activeColumn = -1;
     private int activeRow = -1;
     public static DatabaseController db = new DatabaseController();
@@ -88,6 +91,27 @@ public class IMSController extends JPanel implements MouseListener{
                 deleteItemActionPerformed(e);
             }
         });
+        if(this.getType()==IMSController.TYPE_VENDOR){
+            modifyButton.setText("Modify Vendor");
+            deleteButton.setText("Delete Vendor");
+        }else if(this.getType()==IMSController.TYPE_ROYALTIES){
+            modifyButton.setText("Modify Royalty");
+            deleteButton.setText("Delete Royalty");
+        }
+        modifyButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                modifyButtonActionPerformed(e);
+            }
+        });
+        deleteButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                deleteButtonActionPerformed(e);
+            }
+        });
+        editMenu.add(modifyButton);
+        editMenu.add(deleteButton);
         itemMenu.add(sortItem);
         itemMenu.add(editItem);
         itemMenu.add(deleteItem);
@@ -199,6 +223,16 @@ public class IMSController extends JPanel implements MouseListener{
             gui.updateCategoriesFromDB();
         }
     }
+    public void modifyButtonActionPerformed(java.awt.event.ActionEvent e){
+        //This is for modifying vendors/royalties
+    }
+    public void deleteButtonActionPerformed(java.awt.event.ActionEvent e){
+        //This is for deleting vendors/royalties
+        deleteActiveCategory();
+    }
+    protected void deleteActiveCategory(){
+        // Do nothing, by default.
+    }
     public void sortItemActionPerformed(java.awt.event.ActionEvent e){
         this.sortRowsBy(activeColumn);
         this.showInventory();
@@ -269,22 +303,19 @@ public class IMSController extends JPanel implements MouseListener{
                 activeColumn = i;
                 sortItem.setText("Sort by "+getColumnName(i));
                 itemMenu.show(e.getComponent(),e.getXOnScreen()-e.getComponent().getLocationOnScreen().x, e.getYOnScreen()-e.getComponent().getLocationOnScreen().y);
+            }else if((getUserLevel()==1 || getUserLevel()==2) && (this.getType()==IMSController.TYPE_ROYALTIES || this.getType()==IMSController.TYPE_VENDOR) && e.getYOnScreen()<columnLabels.getLocationOnScreen().y){
+                editMenu.show(e.getComponent(),e.getXOnScreen()-e.getComponent().getLocationOnScreen().x, e.getYOnScreen()-e.getComponent().getLocationOnScreen().y);
             }
         }else if(SwingUtilities.isLeftMouseButton(e)){
             int difX = e.getXOnScreen()-columnLabels.getLocationOnScreen().x;
             int difY = e.getYOnScreen()-columnLabels.getLocationOnScreen().y;
-            if(difY<0 || difY>=columnLabels.getHeight() || difX<0 || difX>=columnLabels.getWidth()){
-                return;
-            }
-            for(int i=0; i<columnLabels.getComponentCount(); i++){
-                if(difX<columnLabels.getComponent(i).getX()+columnLabels.getComponent(i).getWidth()){
-                    this.sortRowsBy(i);
-                    this.showInventory();
-                    //activeColumn = i;
-                    //activeRow = -2;
-                    //sortItem.setText("Sort by "+getColumnName(i));
-                    //itemMenu.show(e.getComponent(),e.getXOnScreen()-e.getComponent().getLocationOnScreen().x, e.getYOnScreen()-e.getComponent().getLocationOnScreen().y);
-                    break;
+            if(difY>=0 && difY<columnLabels.getHeight() && difX>=0 && difX<columnLabels.getWidth()){
+                for(int i=0; i<columnLabels.getComponentCount(); i++){
+                    if(difX<columnLabels.getComponent(i).getX()+columnLabels.getComponent(i).getWidth()){
+                        this.sortRowsBy(i);
+                        this.showInventory();
+                        break;
+                    }
                 }
             }
         }

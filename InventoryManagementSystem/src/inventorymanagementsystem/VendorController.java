@@ -22,10 +22,18 @@ public class VendorController extends IMSController{
     private ArrayList<String> activeVendor = new ArrayList<String>();
     public VendorController(JPanel displayPanel, IMSGUI gui){
         super(displayPanel, gui);
+        vendorInfo.addMouseListener(this);
         showInventory(); //show the inventory specific to the selected vendor
     }
     public void setActiveVendor(String vendorName){
         activeVendor = db.getVendorsByName(vendorName);
+    }
+    @Override
+    protected void deleteActiveCategory(){
+        db.deleteRow(this.getType(), Integer.parseInt(activeVendor.get(0)));
+        activeVendor.clear();
+        this.showInventory();
+        gui.updateCategoriesFromDB();
     }
     @Override
     protected int[] getRowCodes(){
@@ -76,10 +84,10 @@ public class VendorController extends IMSController{
     }
     
     private void updateVendorInfo(){
+        vendorInfo.removeAll();
         if(activeVendor.isEmpty()){
             return;
         }
-        vendorInfo.removeAll();
         vendorInfo.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.HORIZONTAL;
