@@ -1,16 +1,11 @@
-Thu May 01 12:52:49 CDT 2014 : Apache Derby Network Server - 10.8.3.0 - (1405108) started and ready to accept connections on port 1527
+Thu May 01 14:01:54 CDT 2014 : Apache Derby Network Server - 10.8.1.2 - (1095077) started and ready to accept connections on port 1527
 ----------------------------------------------------------------
-Thu May 01 12:52:51 CDT 2014:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.8.3.0 - (1405108): instance a816c00e-0145-b8ea-ce8e-ffff954b54c2 
-on database directory C:\Users\Lucas\Documents\GitHub\IMS\InventoryManagementSystem\database\KCC  with class loader sun.misc.Launcher$AppClassLoader@47858e 
-Loaded from file:/C:/Program%20Files/Java/jdk1.7.0_51/db/lib/derby.jar
+Thu May 01 14:01:55 CDT 2014:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.8.1.2 - (1095077): instance a816c00e-0145-b92a-14aa-ffffba54585e 
+on database directory C:\Users\Mike\Documents\GitHub\IMS\InventoryManagementSystem\database\KCC  with class loader sun.misc.Launcher$AppClassLoader@4d17140b 
+Loaded from file:/C:/Program%20Files/Java/jdk1.7.0_02/db/lib/derby.jar
 java.vendor=Oracle Corporation
-java.runtime.version=1.7.0_51-b13
-user.dir=C:\Program Files\Java\jdk1.7.0_51\db
-os.name=Windows 7
-os.arch=x86
-os.version=6.1
-derby.system.home=C:\Users\Lucas\Documents\GitHub\IMS\InventoryManagementSystem\database
+java.runtime.version=1.7.0_02-b13
+user.dir=C:\Program Files\Java\jdk1.7.0_02\db
+derby.system.home=C:\Users\Mike\Documents\GitHub\IMS\InventoryManagementSystem\database
 Database Class Loader started - derby.database.classpath=''
-----------------------------------------------------------------
-Thu May 01 13:54:20 CDT 2014: Shutting down Derby engine

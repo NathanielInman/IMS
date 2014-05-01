@@ -55,6 +55,7 @@ public class IMSController extends JPanel implements MouseListener{
     protected JPanel rowDisplay = new JPanel();
     protected JScrollPane rowScroll;
     protected JPanel columnLabels = new JPanel();
+    protected JPanel topPane = new JPanel();
     private IMSGUI gui;
     private int activeColumn = -1;
     private int activeRow = -1;
@@ -269,6 +270,23 @@ public class IMSController extends JPanel implements MouseListener{
                 sortItem.setText("Sort by "+getColumnName(i));
                 itemMenu.show(e.getComponent(),e.getXOnScreen()-e.getComponent().getLocationOnScreen().x, e.getYOnScreen()-e.getComponent().getLocationOnScreen().y);
             }
+        }else if(SwingUtilities.isLeftMouseButton(e)){
+            int difX = e.getXOnScreen()-columnLabels.getLocationOnScreen().x;
+            int difY = e.getYOnScreen()-columnLabels.getLocationOnScreen().y;
+            if(difY<0 || difY>=columnLabels.getHeight() || difX<0 || difX>=columnLabels.getWidth()){
+                return;
+            }
+            for(int i=0; i<columnLabels.getComponentCount(); i++){
+                if(difX<columnLabels.getComponent(i).getX()+columnLabels.getComponent(i).getWidth()){
+                    this.sortRowsBy(i);
+                    this.showInventory();
+                    //activeColumn = i;
+                    //activeRow = -2;
+                    //sortItem.setText("Sort by "+getColumnName(i));
+                    //itemMenu.show(e.getComponent(),e.getXOnScreen()-e.getComponent().getLocationOnScreen().x, e.getYOnScreen()-e.getComponent().getLocationOnScreen().y);
+                    break;
+                }
+            }
         }
     }
     /** This function returns the name of a column.
@@ -293,12 +311,18 @@ public class IMSController extends JPanel implements MouseListener{
      * @return boolean  True if you can edit, false if not.
      */
     private boolean hasPermissionToEdit(){
-        if(activeUser==null){
-            return false;
-        }else if((int)activeUser.get(3)==1||(int)activeUser.get(3)==2){
+        if(getUserLevel()==1||getUserLevel()==2){
             return true;
+        }else{
+            return false;
         }
-        return false;
+    }
+    public static int getUserLevel(){
+        if(activeUser==null){
+            return 0;
+        }else {
+            return (int)activeUser.get(3);
+        }
     }
     /**
      * This method resets the display panes.
@@ -471,6 +495,7 @@ public class IMSController extends JPanel implements MouseListener{
                 textField.setBackground(Color.DARK_GRAY);
                 textField.setPreferredSize(new Dimension(rowDisplay.getComponent(i).getPreferredSize().width,textField.getPreferredSize().height));
                 textField.setLocation(rowDisplay.getComponent(i).getX(),0);
+                textLabel.addMouseListener(this);
                 c = rowLayout.getConstraints(rowDisplay.getComponent(i));
                 columnLabels.add(textField, c);
             }

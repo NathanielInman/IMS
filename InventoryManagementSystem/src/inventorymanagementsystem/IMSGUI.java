@@ -1064,7 +1064,7 @@ public class IMSGUI extends javax.swing.JFrame {
 
     private void gearIconMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_gearIconMousePressed
         // TODO add your handling code here:
-        if(getUserLevel()==2){
+        if(IMSController.getUserLevel()==2){
            viewUserButton.setEnabled(true); 
             addUserButton.setEnabled(true);
             
@@ -1072,7 +1072,7 @@ public class IMSGUI extends javax.swing.JFrame {
             viewUserButton.setEnabled(false);
             addUserButton.setEnabled(false);
         }
-        if(getUserLevel()==1||getUserLevel()==2){
+        if(IMSController.getUserLevel()==1||IMSController.getUserLevel()==2){
             addInventoryButton.setEnabled(true);
             addRoyaltyButton.setEnabled(true);
             addVendorButton.setEnabled(true);
@@ -1085,13 +1085,7 @@ public class IMSGUI extends javax.swing.JFrame {
         gearMenu.setVisible(true);
         gearMenu.show(gearIcon, evt.getX(),evt.getY() );
     }//GEN-LAST:event_gearIconMousePressed
-    private int getUserLevel(){
-        if(IMSController.activeUser==null){
-            return 0;
-        }else{
-            return (int)(IMSController.activeUser.get(3));
-        }
-    }
+
     private void logInButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logInButtonActionPerformed
          // TODO add your handling code here:
          if(IMSController.loggedIn){
