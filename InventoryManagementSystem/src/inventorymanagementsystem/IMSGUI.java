@@ -1121,6 +1121,8 @@ public class IMSGUI extends javax.swing.JFrame {
         // TODO add your handling code here:
         newItemForm.pack();
         centerDialog(newItemForm);
+        inventoryInputID.setText(""+db.getLowestFreeID(IMSController.TYPE_INVENTORY));
+        inventoryInputID.setEnabled(false);
         newItemForm.setVisible(true);
     }//GEN-LAST:event_addInventoryButtonActionPerformed
 
@@ -1174,7 +1176,14 @@ public class IMSGUI extends javax.swing.JFrame {
                             vendorInputWebsite.getText(),
                             vendorInputEmail.getText(),
                             vendorInputPPOC.getText()};
-        if(db.addToDatabase(IMSController.TYPE_VENDOR,inputs,null)){
+        boolean successful = false;
+        if(db.getLowestFreeID(IMSController.TYPE_VENDOR)==Integer.parseInt(vendorInputID.getText())){
+            successful = db.addToDatabase(IMSController.TYPE_VENDOR,inputs,null);
+        }else{
+            successful = true;
+            db.changeRow(IMSController.TYPE_VENDOR,inputs,null,VendorController.VCColumnDatabaseNames);
+        }
+        if(successful){
             vendorInputID.setText("");
             vendorInputName.setText("");
             vendorInputPhone.setText("");
@@ -1193,9 +1202,7 @@ public class IMSGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_vendorCancelButtonActionPerformed
 
     private void addVendorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addVendorButtonActionPerformed
-        newVendorForm.pack();
-        centerDialog(newVendorForm);
-        newVendorForm.setVisible(true);
+        showVendorForm(db.getLowestFreeID(IMSController.TYPE_VENDOR));
     }//GEN-LAST:event_addVendorButtonActionPerformed
 
     private void addRoyaltyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addRoyaltyButtonActionPerformed
@@ -1249,6 +1256,8 @@ public class IMSGUI extends javax.swing.JFrame {
         // TODO add your handling code here:
         newUserForm.pack();
         centerDialog(newUserForm);
+        userInputID.setText(""+db.getLowestFreeID(IMSController.TYPE_USER));
+        userInputID.setEnabled(false);
         newUserForm.setVisible(true);
     }//GEN-LAST:event_addUserButtonActionPerformed
 
@@ -1330,7 +1339,7 @@ public class IMSGUI extends javax.swing.JFrame {
         }
         royaltiesInputID.setText(""+id);
         ArrayList<String> activeRow = db.getRowByID(id, IMSController.TYPE_ROYALTIES);
-        if(activeRow != null){
+        if(activeRow != null && activeRow.isEmpty()==false){
             royaltiesInputID.setText(activeRow.get(0));
             royaltiesInputName.setText(activeRow.get(1));
             royaltiesInputPhone.setText(activeRow.get(2));
@@ -1342,6 +1351,29 @@ public class IMSGUI extends javax.swing.JFrame {
             royaltiesInputRoyalty.setText(activeRow.get(8));
         }
         newRoyaltiesForm.setVisible(true);
+    }
+    
+    public void showVendorForm(Integer id){
+        newVendorForm.pack();
+        centerDialog(newVendorForm);
+        if(id==null){
+            vendorInputID.setEnabled(true);
+        }else{
+            vendorInputID.setEnabled(false);
+        }
+        vendorInputID.setText(""+id);
+        ArrayList<String> activeRow = db.getRowByID(id, IMSController.TYPE_VENDOR);
+        if(activeRow != null && activeRow.isEmpty()==false){
+            vendorInputID.setText(activeRow.get(0));
+            vendorInputName.setText(activeRow.get(1));
+            vendorInputPhone.setText(activeRow.get(2));
+            vendorInputExt.setText(activeRow.get(3));
+            vendorInputAddress.setText(activeRow.get(4));
+            vendorInputWebsite.setText(activeRow.get(5));
+            vendorInputEmail.setText(activeRow.get(6));
+            vendorInputPPOC.setText(activeRow.get(7));
+        }
+        newVendorForm.setVisible(true);
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

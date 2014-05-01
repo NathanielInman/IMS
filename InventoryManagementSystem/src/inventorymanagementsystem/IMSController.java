@@ -245,7 +245,7 @@ public class IMSController extends JPanel implements MouseListener{
         if(this.getType()==IMSController.TYPE_ROYALTIES){
             gui.showRoyaltyForm(Integer.parseInt(getActiveCategory().get(0)));
         }else if(this.getType()==IMSController.TYPE_VENDOR){
-            //gui.showVendorForm(Integer.parseInt(getActiveCategory().get(0)));
+            gui.showVendorForm(Integer.parseInt(getActiveCategory().get(0)));
         }
     }
     protected ArrayList<String> getActiveCategory(){
