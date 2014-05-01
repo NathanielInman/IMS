@@ -29,11 +29,8 @@ public class RoyaltiesController extends IMSController{
         activeRoyalty = db.getRoyaltiesByName(royaltyName);
     }
     @Override
-    protected void deleteActiveCategory(){
-        db.deleteRow(this.getType(), Integer.parseInt(activeRoyalty.get(0)));
-        activeRoyalty.clear();
-        this.showInventory();
-        gui.updateCategoriesFromDB();
+    protected ArrayList<String> getActiveCategory(){
+        return activeRoyalty;
     }
     @Override
     protected int[] getRowCodes(){

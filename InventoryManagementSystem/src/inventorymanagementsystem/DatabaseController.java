@@ -107,6 +107,54 @@ public class DatabaseController {
        return returnResults;
    } //end getResultSet()
    
+   public Integer getLowestFreeID(int table){
+       System.out.println("[getLowestFreeID] Started");
+       ArrayList returnResults = new ArrayList<>();
+       PreparedStatement stmt = null;
+       Connection conn;
+       String sql;
+       String tableName = this.tableIntToString(table);
+       sql = "SELECT ID FROM "+tableName+" ORDER BY ID ASC";
+       Integer result = null;
+       Integer currentResult = null;
+       ResultSet resultSet = null;
+       try{
+           Class.forName(JDBC_DRIVER);
+           conn = DriverManager.getConnection(DB_URL,USER,PASS);
+           stmt = conn.prepareStatement(sql);
+           resultSet = stmt.executeQuery();
+           result = 1;
+           while(resultSet.next()){
+               currentResult = resultSet.getInt(1);
+               if(currentResult-result<=1){
+                   result = currentResult;
+               }else{
+                   result += 1;
+                   break;
+               }
+           }
+           if(result==currentResult){
+               result += 1;
+           }
+           stmt.close();
+           conn.close();
+       }catch(SQLException se){ //errors in the SQL processing
+           se.printStackTrace();
+       }catch(Exception e){ //errors relating to Class.forName
+           e.printStackTrace();
+       }finally{ //clean up regardless of success
+            try{
+                if(stmt!=null)stmt.close();
+            }catch(SQLException se){
+                se.printStackTrace();
+            } //end try
+       } //end try
+       //String[] stringsArray = {};
+       //returnResults = getResultSet(stmt, sql, table, stringsArray);
+       System.out.println(returnResults+"\n[getLowestFreeID] Finished");
+       return result;
+   }
+   
    public ArrayList getRowByID(int id, int type){ 
        System.out.println("[getRowByID] Started");
        ArrayList returnResults = new ArrayList<>();
@@ -188,14 +236,14 @@ public class DatabaseController {
    public void changeData(int table, int id, String column, String newData){
        System.out.println("[changeData] Started/n"+">>UPDATE "+tableIntToString(table)+" SET "+column+"='"+newData+"' WHERE id="+id);
        Connection conn;
-       Statement stmt = null;
+       PreparedStatement stmt = null;
        String sql;
        try{
            Class.forName(JDBC_DRIVER);
            conn = DriverManager.getConnection(DB_URL,USER,PASS);
            sql = "UPDATE "+tableIntToString(table)+" SET "+column+"='"+newData+"' WHERE id="+id;
-           stmt = conn.createStatement();
-           stmt.executeUpdate(sql);
+           stmt = conn.prepareStatement(sql);
+           stmt.executeUpdate();
            stmt.close();
            conn.close();
        }catch(SQLException se){ //errors in the SQL processing
@@ -466,6 +514,84 @@ public class DatabaseController {
             } //end try
        } //end try
        System.out.println("[deleteRow] Finished");
+   }
+   public boolean changeRow(int table, String[] data, File picture, String[] columnNames){
+       byte[] bytes;
+        try {
+            bytes = Files.readAllBytes(picture.toPath());
+        } catch (Exception ex) {
+            bytes = null;
+        }
+       System.out.println("[changeRow] Started");
+       for(int i = 0; i<data.length; i++){
+           if(data[i].length()==0){
+               data[i] = null;
+           }
+       }
+       Connection conn;
+       PreparedStatement stmt = null;
+       String sql;
+       try{
+           Class.forName(JDBC_DRIVER);
+           conn = DriverManager.getConnection(DB_URL,USER,PASS);
+           sql = "UPDATE "+tableIntToString(table)+" SET ";
+           for(int i = 0; i<data.length; i++){
+               if(i>0){
+                   sql += ",";
+               }
+               sql += columnNames[i]+"=?";
+           }
+           sql += " WHERE ID="+Integer.parseInt(data[0]);
+           stmt = conn.prepareStatement(sql);
+           if(table==IMSController.TYPE_INVENTORY){
+                stmt.setInt(1,intOrZero(data[0]));
+                stmt.setString(2,data[1]);
+                stmt.setDouble(3,doubleOrZero(data[2]));
+                stmt.setDouble(4,doubleOrZero(data[3]));
+                if(data[4]==null){
+                    data[4] = "Uncategorized";
+                }
+                stmt.setString(5,data[4]);
+                stmt.setString(6,data[5]);
+                stmt.setString(7,data[6]);
+                stmt.setString(8,data[7]);
+                stmt.setString(9,data[8]);
+                Blob blob;
+                if(bytes==null){
+                    blob = null;
+                }else{
+                    blob = conn.createBlob();
+                    blob.setBytes(1, bytes);
+                }
+                stmt.setBlob(10,blob);
+           }else if(table==IMSController.TYPE_VENDOR || table==IMSController.TYPE_ROYALTIES){
+               for(int i=0; i<data.length; i++){
+                   stmt.setString(i+1, data[i]);
+               }
+           }else if(table==IMSController.TYPE_USER){
+               stmt.setInt(1,intOrZero(data[0]));
+               stmt.setString(2,data[1]);
+               stmt.setString(3,data[2]);
+                stmt.setInt(4,intOrZero(data[3]));
+           }
+           stmt.executeUpdate();
+           stmt.close();
+           conn.close();
+           System.out.println("[changeRow] Finished");
+           return true;
+       }catch(SQLException se){ //errors in the SQL processing
+           se.printStackTrace();
+       }catch(Exception e){ //errors relating to Class.forName
+           e.printStackTrace();
+       }finally{ //clean up regardless of success
+            try{
+                if(stmt!=null)stmt.close();
+            }catch(SQLException se){
+                se.printStackTrace();
+            } //end try
+       } //end try
+       System.out.println("[changeRow] Finished");
+       return false;
    }
    public boolean addToDatabase(int table, String[] data, File picture) {
        byte[] bytes;

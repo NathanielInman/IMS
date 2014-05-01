@@ -6,6 +6,7 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -1198,9 +1199,7 @@ public class IMSGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_addVendorButtonActionPerformed
 
     private void addRoyaltyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addRoyaltyButtonActionPerformed
-        newRoyaltiesForm.pack();
-        centerDialog(newRoyaltiesForm);
-        newRoyaltiesForm.setVisible(true);
+        showRoyaltyForm(db.getLowestFreeID(IMSController.TYPE_ROYALTIES));
     }//GEN-LAST:event_addRoyaltyButtonActionPerformed
 
     private void centerDialog(JDialog dialog){
@@ -1224,7 +1223,14 @@ public class IMSGUI extends javax.swing.JFrame {
                             royaltiesInputEmail.getText(),
                             royaltiesInputPPOC.getText(),
                             royaltiesInputRoyalty.getText()};
-        if(db.addToDatabase(IMSController.TYPE_ROYALTIES,inputs,null)){
+        boolean successful = false;
+        if(db.getLowestFreeID(IMSController.TYPE_ROYALTIES)==Integer.parseInt(royaltiesInputID.getText())){
+            successful = db.addToDatabase(IMSController.TYPE_ROYALTIES,inputs,null);
+        }else{
+            successful = true;
+            db.changeRow(IMSController.TYPE_ROYALTIES,inputs,null,RoyaltiesController.RCColumnDatabaseNames);
+        }
+        if(successful){
             royaltiesInputID.setText("");
             royaltiesInputName.setText("");
             royaltiesInputPhone.setText("");
@@ -1312,6 +1318,30 @@ public class IMSGUI extends javax.swing.JFrame {
         if(controller.getType()==IMSController.TYPE_USER){
             controller.clearInventory();
         }
+    }
+    
+    public void showRoyaltyForm(Integer id){
+        newRoyaltiesForm.pack();
+        centerDialog(newRoyaltiesForm);
+        if(id==null){
+            royaltiesInputID.setEnabled(true);
+        }else{
+            royaltiesInputID.setEnabled(false);
+        }
+        royaltiesInputID.setText(""+id);
+        ArrayList<String> activeRow = db.getRowByID(id, IMSController.TYPE_ROYALTIES);
+        if(activeRow != null){
+            royaltiesInputID.setText(activeRow.get(0));
+            royaltiesInputName.setText(activeRow.get(1));
+            royaltiesInputPhone.setText(activeRow.get(2));
+            royaltiesInputExt.setText(activeRow.get(3));
+            royaltiesInputAddress.setText(activeRow.get(4));
+            royaltiesInputWebsite.setText(activeRow.get(5));
+            royaltiesInputEmail.setText(activeRow.get(6));
+            royaltiesInputPPOC.setText(activeRow.get(7));
+            royaltiesInputRoyalty.setText(activeRow.get(8));
+        }
+        newRoyaltiesForm.setVisible(true);
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

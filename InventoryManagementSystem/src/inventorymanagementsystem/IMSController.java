@@ -225,13 +225,31 @@ public class IMSController extends JPanel implements MouseListener{
     }
     public void modifyButtonActionPerformed(java.awt.event.ActionEvent e){
         //This is for modifying vendors/royalties
+        editActiveCategory();
     }
     public void deleteButtonActionPerformed(java.awt.event.ActionEvent e){
         //This is for deleting vendors/royalties
         deleteActiveCategory();
     }
     protected void deleteActiveCategory(){
-        // Do nothing, by default.
+        if(getActiveCategory()==null){
+            return;
+        }else{
+            db.deleteRow(this.getType(), Integer.parseInt(getActiveCategory().get(0)));
+            getActiveCategory().clear();
+            this.showInventory();
+            gui.updateCategoriesFromDB();
+        }
+    }
+    protected void editActiveCategory(){
+        if(this.getType()==IMSController.TYPE_ROYALTIES){
+            gui.showRoyaltyForm(Integer.parseInt(getActiveCategory().get(0)));
+        }else if(this.getType()==IMSController.TYPE_VENDOR){
+            //gui.showVendorForm(Integer.parseInt(getActiveCategory().get(0)));
+        }
+    }
+    protected ArrayList<String> getActiveCategory(){
+        return null;
     }
     public void sortItemActionPerformed(java.awt.event.ActionEvent e){
         this.sortRowsBy(activeColumn);

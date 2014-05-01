@@ -29,11 +29,8 @@ public class VendorController extends IMSController{
         activeVendor = db.getVendorsByName(vendorName);
     }
     @Override
-    protected void deleteActiveCategory(){
-        db.deleteRow(this.getType(), Integer.parseInt(activeVendor.get(0)));
-        activeVendor.clear();
-        this.showInventory();
-        gui.updateCategoriesFromDB();
+    protected ArrayList<String> getActiveCategory(){
+        return activeVendor;
     }
     @Override
     protected int[] getRowCodes(){
