@@ -16,8 +16,10 @@ import java.util.logging.Logger;
  * @author Nate
  */
 public class DatabaseController {
-   static final String JDBC_DRIVER = "org.apache.derby.jdbc.ClientDriver";
-   static final String DB_URL = "jdbc:derby://localhost:1527/KCC"; 
+   //static final String JDBC_DRIVER = "org.apache.derby.jdbc.ClientDriver";
+    static final String JDBC_DRIVER = "org.apache.derby.jdbc.EmbeddedDriver";
+   //static final String DB_URL = "jdbc:derby://localhost:1527/KCC"; 
+   static final String DB_URL = "jdbc:derby:database/KCC;"; 
    static final String USER = "KCC";
    static final String PASS = "KCC";
    

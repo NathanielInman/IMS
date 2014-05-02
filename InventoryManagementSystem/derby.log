@@ -1,0 +1,13 @@
+----------------------------------------------------------------
+Fri May 02 13:42:33 CDT 2014:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.2.0 - (1582446): instance a816c00e-0145-be3e-bb78-000005f5ffa8 
+on database directory C:\Users\Nate\Documents\GitHub\IMS\InventoryManagementSystem\database\KCC with class loader sun.misc.Launcher$AppClassLoader@17e1225d 
+Loaded from file:/C:/Users/Nate/Documents/GitHub/IMS/InventoryManagementSystem/lib/derby.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.7.0_17-b02
+user.dir=C:\Users\Nate\Documents\GitHub\IMS\InventoryManagementSystem
+os.name=Windows 8
+os.arch=amd64
+os.version=6.2
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''
