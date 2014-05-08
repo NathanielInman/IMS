@@ -1,6 +1,6 @@
 ----------------------------------------------------------------
-Thu May 08 01:29:35 CDT 2014:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.2.0 - (1582446): instance a816c00e-0145-da85-d722-000000a288b0 
+Thu May 08 01:41:58 CDT 2014:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.2.0 - (1582446): instance a816c00e-0145-da91-2e4d-000000a309b8 
 on database directory C:\Users\Nate\Documents\GitHub\IMS\CD\database\KCC with class loader sun.misc.Launcher$AppClassLoader@6e1408 
 Loaded from file:/C:/Users/Nate/Documents/GitHub/IMS/CD/lib/derby.jar
 java.vendor=Oracle Corporation
